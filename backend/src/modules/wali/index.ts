@@ -1,0 +1,1 @@
+export { default as waliRoutes } from './wali.routes'

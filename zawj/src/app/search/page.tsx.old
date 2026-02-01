@@ -1,0 +1,329 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Search, Filter, MapPin, Calendar, Heart, MessageCircle, Lock, Crown } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { usersApi, User } from '@/lib/api/users'
+import { useAuthStore } from '@/store/auth'
+
+interface SearchFilters {
+  gender?: 'male' | 'female'
+  minAge?: number
+  maxAge?: number
+  location?: string
+}
+
+export default function SearchPage() {
+  const [filters, setFilters] = useState<SearchFilters>({})
+  const [showFilters, setShowFilters] = useState(false)
+  const [likedUsers, setLikedUsers] = useState<Set<string>>(new Set())
+  const [likeCount, setLikeCount] = useState(0)
+  const { user, isAuthenticated } = useAuthStore()
+
+  // Déterminer le genre opposé pour la recherche
+  const searchGender = user?.gender === 'male' ? 'female' : 'male'
+
+  // Vérifier si l'utilisateur a un abonnement actif
+  const hasActiveSubscription = user?.subscription?.status === 'active' && user?.subscription?.plan !== 'free'
+  const isMale = user?.gender === 'male'
+
+  // Essai gratuit pour les hommes : 3 likes maximum
+  const maxFreeLikes = 3
+  const canLike = !isMale || hasActiveSubscription || likeCount < maxFreeLikes
+
+  const { data: users, isLoading, error } = useQuery({
+    queryKey: ['users', filters, searchGender],
+    queryFn: () => usersApi.searchUsers({ ...filters, gender: searchGender }),
+    enabled: isAuthenticated,
+  })
+
+  const handleFilterChange = (key: keyof SearchFilters, value: any) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: value || undefined
+    }))
+  }
+
+  const clearFilters = () => {
+    setFilters({})
+  }
+
+  const handleLike = (userId: string) => {
+    if (!canLike) return
+
+    setLikedUsers(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(userId)) {
+        newSet.delete(userId)
+        setLikeCount(prev => prev - 1)
+      } else {
+        newSet.add(userId)
+        setLikeCount(prev => prev + 1)
+      }
+      return newSet
+    })
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] relative">
+        {/* Aura d'arrière-plan */}
+        <div className="hero-aura top-[-200px] left-[-100px]"></div>
+        <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
+
+        <div className="text-center relative z-10">
+          <div className="w-16 h-16 bg-[#ff007f] rounded-2xl flex items-center justify-center text-white text-2xl font-black mx-auto mb-4">
+            Z
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-4">Connexion requise</h2>
+          <p className="text-gray-400 mb-6">Vous devez être connecté pour accéder à la recherche.</p>
+          <a
+            href="/login"
+            className="btn-pink px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest inline-block"
+          >
+            Se connecter
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-white mb-2">
+          Trouver votre <span className="text-[#ff007f]">moitié</span>
+        </h1>
+        <p className="text-gray-400">
+          Découvrez des profils compatibles sous supervision Wali
+        </p>
+
+        {/* Status abonnement pour hommes */}
+        {isMale && !hasActiveSubscription && (
+          <div className="mt-4 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Crown className="h-5 w-5 text-yellow-400" />
+                <span className="text-yellow-400 font-medium">Essai gratuit</span>
+              </div>
+              <div className="text-sm text-gray-300">
+                Likes restants: {maxFreeLikes - likeCount}
+              </div>
+            </div>
+            <p className="text-sm text-gray-400 mt-2">
+              Abonnez-vous pour voir les profils complets et envoyer des messages
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Search and Filters */}
+      <div className="glass-card p-6 mb-8">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Search Input */}
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute left-4 top-3.5 h-5 w-5 text-[#ff007f]" />
+              <input
+                type="text"
+                placeholder="Rechercher par nom, localisation..."
+                className="w-full pl-12 pr-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                onChange={(e) => handleFilterChange('location', e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Filter Toggle */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex items-center gap-2 px-6 py-3 border border-[#ff007f]/30 bg-[#1a1a1a] rounded-xl text-white hover:border-[#ff007f] hover:bg-[#ff007f]/10 transition-all"
+          >
+            <Filter className="h-5 w-5" />
+            Filtres
+          </button>
+        </div>
+
+        {/* Advanced Filters */}
+        {showFilters && (
+          <div className="mt-6 pt-6 border-t border-gray-700">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Genre</label>
+                <select
+                  value={filters.gender || ''}
+                  onChange={(e) => handleFilterChange('gender', e.target.value)}
+                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                >
+                  <option value="">Tous</option>
+                  <option value="male">Homme</option>
+                  <option value="female">Femme</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Âge minimum</label>
+                <input
+                  type="number"
+                  min="18"
+                  max="100"
+                  value={filters.minAge || ''}
+                  onChange={(e) => handleFilterChange('minAge', parseInt(e.target.value))}
+                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Âge maximum</label>
+                <input
+                  type="number"
+                  min="18"
+                  max="100"
+                  value={filters.maxAge || ''}
+                  onChange={(e) => handleFilterChange('maxAge', parseInt(e.target.value))}
+                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 text-sm text-gray-400 hover:text-[#ff007f] transition-colors"
+              >
+                Effacer les filtres
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Results */}
+      {isLoading ? (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff007f] mx-auto"></div>
+          <p className="mt-4 text-gray-400">Recherche en cours...</p>
+        </div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-red-400">Une erreur est survenue lors de la recherche.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {users?.map((user) => (
+            <ProfileCard
+              key={user.id}
+              user={user}
+              isLiked={likedUsers.has(user.id)}
+              onLike={() => handleLike(user.id)}
+              canLike={canLike}
+              hasActiveSubscription={hasActiveSubscription}
+              isMale={isMale}
+            />
+          ))}
+        </div>
+      )}
+
+      {users?.length === 0 && !isLoading && (
+        <div className="text-center py-12">
+          <p className="text-gray-400">Aucun résultat trouvé. Essayez de modifier vos filtres.</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ProfileCard({
+  user,
+  isLiked,
+  onLike,
+  canLike,
+  hasActiveSubscription,
+  isMale
+}: {
+  user: User
+  isLiked: boolean
+  onLike: () => void
+  canLike: boolean
+  hasActiveSubscription: boolean
+  isMale: boolean
+}) {
+  const showFullProfile = !isMale || hasActiveSubscription
+
+  return (
+    <div className="glass-card overflow-hidden hover:border-[#ff007f] transition-all group">
+      <div className="p-6">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-[#ff007f] rounded-full flex items-center justify-center">
+              <span className="text-white font-semibold text-lg">
+                {user.firstName[0]}{user.lastName[0]}
+              </span>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white">
+                {showFullProfile ? `${user.firstName} ${user.lastName}` : 'Profil Premium'}
+              </h3>
+              <div className="flex items-center text-sm text-gray-400">
+                <MapPin className="h-4 w-4 mr-1 text-[#ff007f]" />
+                {showFullProfile ? (user.location || 'Localisation non spécifiée') : '••••••••••'}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={onLike}
+              disabled={!canLike}
+              className={`p-2 rounded-full transition-all ${
+                isLiked
+                  ? 'bg-[#ff007f] text-white'
+                  : canLike
+                    ? 'text-gray-400 hover:text-[#ff007f] hover:bg-[#ff007f]/10'
+                    : 'text-gray-600 cursor-not-allowed'
+              }`}
+            >
+              <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-2 mb-4">
+          {user.age && showFullProfile && (
+            <div className="flex items-center text-sm text-gray-400">
+              <Calendar className="h-4 w-4 mr-2 text-[#ff007f]" />
+              {user.age} ans
+            </div>
+          )}
+          {user.bio && showFullProfile && (
+            <p className="text-sm text-gray-400 line-clamp-2">{user.bio}</p>
+          )}
+          {!showFullProfile && (
+            <div className="text-center py-4">
+              <Lock className="h-8 w-8 text-[#ff007f] mx-auto mb-2" />
+              <p className="text-sm text-gray-400">Abonnez-vous pour voir ce profil</p>
+            </div>
+          )}
+        </div>
+
+        <div className="flex space-x-2">
+          {showFullProfile ? (
+            <>
+              <button className="flex-1 btn-pink px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest flex items-center justify-center gap-2">
+                <Heart className="h-4 w-4" />
+                Contacter
+              </button>
+              <button className="p-3 text-gray-400 hover:text-[#ff007f] transition-colors border border-gray-600 rounded-xl hover:border-[#ff007f]">
+                <MessageCircle className="h-5 w-5" />
+              </button>
+            </>
+          ) : (
+            <button className="w-full btn-pink px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest flex items-center justify-center gap-2">
+              <Crown className="h-4 w-4" />
+              S'abonner pour voir
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

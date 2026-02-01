@@ -1,0 +1,319 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Eye, EyeOff, Mail, Lock, User, Heart, CreditCard } from 'lucide-react'
+import { useAuthStore } from '@/store/auth'
+import { authApi, RegisterData } from '@/lib/api/auth'
+
+export default function RegisterPage() {
+  const [step, setStep] = useState(1)
+  const [formData, setFormData] = useState<RegisterData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    gender: 'female',
+    waliInfo: undefined
+  })
+  const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const router = useRouter()
+  const { setUser } = useAuthStore()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (step < 3) {
+      setStep(step + 1)
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await authApi.register(formData)
+      setUser(response.user)
+      router.push('/')
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Une erreur est survenue')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleGenderSelect = (gender: 'male' | 'female') => {
+    setFormData(prev => ({ ...prev, gender }))
+    setStep(2)
+  }
+
+  const handleWaliChoice = (type: 'platform' | 'external') => {
+    setFormData(prev => ({
+      ...prev,
+      waliInfo: { type }
+    }))
+    setStep(3)
+  }
+
+  const renderStep1 = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-lg font-medium text-white">Informations personnelles</h3>
+        <p className="mt-2 text-sm text-gray-400">Remplissez vos informations de base</p>
+      </div>
+
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-300">
+              Prénom
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              required
+              value={formData.firstName}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-300">
+              Nom
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              required
+              value={formData.lastName}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+            Adresse email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+            Mot de passe
+          </label>
+          <div className="mt-1 relative">
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="block w-full px-4 py-3 pr-12 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-3.5 text-gray-400 hover:text-[#ff007f] transition-colors"
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  const renderStep2 = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-lg font-medium text-white">Choisissez votre genre</h3>
+        <p className="mt-2 text-sm text-gray-400">Cette information détermine votre rôle sur la plateforme</p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4">
+        <button
+          type="button"
+          onClick={() => handleGenderSelect('female')}
+          className="p-6 border-2 border-[#ff007f]/30 bg-[#1a1a1a] rounded-xl hover:border-[#ff007f] hover:bg-[#ff007f]/10 transition-all duration-200 text-left group"
+        >
+          <div className="flex items-center space-x-4">
+            <div className="flex-shrink-0">
+              <User className="h-8 w-8 text-[#ff007f] group-hover:text-[#ff85c1]" />
+            </div>
+            <div>
+              <h4 className="text-lg font-medium text-white">Femme</h4>
+              <p className="text-sm text-gray-400">Je cherche un tuteur légal (Wali)</p>
+            </div>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleGenderSelect('male')}
+          className="p-6 border-2 border-gray-600 bg-[#1a1a1a] rounded-xl hover:border-[#ff007f] hover:bg-[#ff007f]/10 transition-all duration-200 text-left group"
+        >
+          <div className="flex items-center space-x-4">
+            <div className="flex-shrink-0">
+              <Heart className="h-8 w-8 text-[#ff007f] group-hover:text-[#ff85c1]" />
+            </div>
+            <div>
+              <h4 className="text-lg font-medium text-white">Homme</h4>
+              <p className="text-sm text-gray-400">Je suis disponible en tant que Wali</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  )
+
+  const renderStep3 = () => (
+    <div className="space-y-6">
+      {formData.gender === 'female' ? (
+        <>
+          <div className="text-center">
+            <h3 className="text-lg font-medium text-white">Choisissez votre service Wali</h3>
+            <p className="mt-2 text-sm text-gray-400">Comment souhaitez-vous obtenir votre tuteur légal ?</p>
+          </div>
+
+          <div className="space-y-4">
+            <button
+              type="button"
+              onClick={() => handleWaliChoice('platform')}
+              className="w-full p-6 border-2 border-[#ff007f]/30 bg-[#1a1a1a] rounded-xl hover:border-[#ff007f] hover:bg-[#ff007f]/10 transition-all duration-200 text-left group"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <Heart className="h-8 w-8 text-[#ff007f] group-hover:text-[#ff85c1]" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-lg font-medium text-white">Service Wali ZAWJ</h4>
+                  <p className="text-sm text-gray-400">Trouvez un Wali vérifié sur notre plateforme</p>
+                  <p className="text-sm font-medium text-[#ff007f] mt-1">5,00 € - Service premium</p>
+                </div>
+                <CreditCard className="h-6 w-6 text-[#ff007f]" />
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleWaliChoice('external')}
+              className="w-full p-6 border-2 border-gray-600 bg-[#1a1a1a] rounded-xl hover:border-[#ff007f] hover:bg-[#ff007f]/10 transition-all duration-200 text-left group"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <User className="h-8 w-8 text-gray-400 group-hover:text-[#ff007f]" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-lg font-medium text-white">Wali externe</h4>
+                  <p className="text-sm text-gray-400">J'ai déjà un tuteur légal désigné</p>
+                  <p className="text-sm text-gray-500 mt-1">Gratuit</p>
+                </div>
+              </div>
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="text-center">
+          <h3 className="text-lg font-medium text-white">Bienvenue !</h3>
+          <p className="mt-2 text-sm text-gray-400">
+            Votre compte sera activé immédiatement. Vous pourrez proposer vos services de Wali.
+          </p>
+        </div>
+      )}
+    </div>
+  )
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] px-4 sm:px-6 lg:px-8 py-12 relative">
+      {/* Aura d'arrière-plan */}
+      <div className="hero-aura top-[-200px] left-[-100px]"></div>
+      <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
+        <div className="text-center">
+          <div className="flex justify-center">
+            <div className="w-16 h-16 bg-[#ff007f] rounded-2xl flex items-center justify-center text-white text-2xl font-black">
+              Z
+            </div>
+          </div>
+          <h2 className="mt-6 text-3xl font-bold text-white">
+            Créer un compte <span className="text-[#ff007f]">ZAWJ</span>
+          </h2>
+          <p className="mt-2 text-sm text-gray-400">
+            Déjà un compte ?{' '}
+            <Link href="/login" className="font-medium text-[#ff007f] hover:text-[#ff85c1] transition-colors">
+              Se connecter
+            </Link>
+          </p>
+        </div>
+
+        {/* Progress indicator */}
+        <div className="flex justify-center space-x-2">
+          {[1, 2, 3].map((stepNumber) => (
+            <div
+              key={stepNumber}
+              className={`h-2 w-8 rounded-full ${
+                stepNumber <= step ? 'bg-[#ff007f]' : 'bg-gray-700'
+              }`}
+            />
+          ))}
+        </div>
+
+        <form className="mt-8" onSubmit={handleSubmit}>
+          {step === 1 && renderStep1()}
+          {step === 2 && renderStep2()}
+          {step === 3 && renderStep3()}
+
+          {error && (
+            <div className="mt-4 rounded-xl bg-red-900/20 border border-red-500/30 p-4">
+              <div className="text-sm text-red-400">{error}</div>
+            </div>
+          )}
+
+          <div className="mt-6 flex space-x-4">
+            {step > 1 && (
+              <button
+                type="button"
+                onClick={() => setStep(step - 1)}
+                className="flex-1 py-3 px-4 border border-gray-600 rounded-xl text-sm font-medium text-gray-300 bg-[#1a1a1a] hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff007f] transition-all"
+              >
+                Précédent
+              </button>
+            )}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1 py-3 px-4 border border-transparent rounded-xl text-sm font-black uppercase tracking-widest text-white bg-[#ff007f] hover:bg-[#ff85c1] focus:outline-none focus:ring-2 focus:ring-[#ff007f] disabled:opacity-50 shadow-[0_0_20px_rgba(255,0,127,0.3)] hover:shadow-[0_0_30px_rgba(255,0,127,0.5)] transition-all"
+            >
+              {isLoading ? 'Création...' : step === 3 ? 'Créer le compte' : 'Suivant'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}

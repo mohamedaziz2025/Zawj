@@ -1,0 +1,105 @@
+import { Router } from 'express'
+import { AuthRequest } from '@/middlewares/auth.middleware'
+import { User } from '@/modules/users/user.model'
+
+const router = Router()
+
+// GET /api/wali/profile - Get Wali profile for a user
+router.get('/profile/:userId', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const { userId } = req.params
+
+    const user = await User.findById(userId).select('waliInfo gender')
+    if (!user) {
+      res.status(404).json({ message: 'User not found' })
+      return
+    }
+
+    // Only allow access if requester is the user themselves or their Wali
+    if (req.userId !== userId && req.userId !== user.waliId) {
+      res.status(403).json({ message: 'Access denied' })
+      return
+    }
+
+    res.json({ waliInfo: user.waliInfo })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// POST /api/wali/validate-match - Wali validates a potential match
+router.post('/validate-match', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const { seekerId, matchId, approved } = req.body
+
+    // Find the seeker
+    const seeker = await User.findById(seekerId)
+    if (!seeker) {
+      res.status(404).json({ message: 'Seeker not found' })
+      return
+    }
+
+    // Check if requester is the Wali for this seeker
+    if (seeker.waliId?.toString() !== req.userId) {
+      res.status(403).json({ message: 'Not authorized as Wali' })
+      return
+    }
+
+    // For platform Wali, check if service is paid
+    if (seeker.waliInfo?.type === 'platform' && !seeker.waliInfo.platformServicePaid) {
+      res.status(402).json({ message: 'Wali service payment required' })
+      return
+    }
+
+    // Here you would typically create a validation record or update match status
+    // For now, just return success
+    res.json({
+      message: `Match ${approved ? 'approved' : 'rejected'} by Wali`,
+      validation: {
+        seekerId,
+        matchId,
+        approved,
+        waliId: req.userId,
+        timestamp: new Date()
+      }
+    })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// PUT /api/wali/update-info - Update Wali information
+router.put('/update-info', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const { waliInfo } = req.body
+
+    const user = await User.findById(req.userId)
+    if (!user) {
+      res.status(404).json({ message: 'User not found' })
+      return
+    }
+
+    // Only women can update Wali info
+    if (user.gender !== 'female') {
+      res.status(403).json({ message: 'Only women can update Wali information' })
+      return
+    }
+
+    // If changing to platform Wali, reset payment status
+    if (waliInfo.type === 'platform' && user.waliInfo?.type !== 'platform') {
+      waliInfo.platformServicePaid = false
+    }
+
+    user.waliInfo = waliInfo
+    await user.save()
+
+    res.json({
+      message: 'Wali information updated',
+      waliInfo: user.waliInfo
+    })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+export default router

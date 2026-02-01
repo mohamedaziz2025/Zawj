@@ -1,0 +1,701 @@
+import Link from "next/link";
+import { Shield, Camera, Gem, Check, Star, Bell, Lock } from "lucide-react";
+
+export default function Home() {
+  return (
+    <div>
+      {/* Aura d'arrière-plan */}
+      <div className="hero-aura top-[-200px] left-[-100px]"></div>
+      <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
+
+      {/* Navigation */}
+      <nav className="fixed w-full z-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto glass-card rounded-full px-8 py-4 flex justify-between items-center shadow-2xl">
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
+            <span className="text-xl font-bold tracking-widest text-white">ZAWJ</span>
+          </div>
+          <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-400">
+            <a href="#concept" className="hover:text-[#ff007f] transition-colors">Concept</a>
+            <a href="#how-to-use" className="hover:text-[#ff007f] transition-colors">Comment utiliser</a>
+            <a href="#wali" className="hover:text-[#ff007f] transition-colors">Wali</a>
+            
+          </div>
+          <Link href="/login" className="btn-pink px-6 py-2 rounded-full text-xs font-black uppercase">Connexion</Link>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <header className="relative min-h-screen flex items-center pt-20">
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right" data-aos-duration="1000">
+            <div className="inline-block border border-[#ff007f] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#ff007f] mb-6">
+              Mariage Halal • Premium • Sécurisé
+            </div>
+            <h1 className="text-5xl lg:text-7xl font-bold leading-none mb-8 text-white">
+              L&apos;union <br />
+              <span className="pink-glow-text">D&apos;excellence</span>
+            </h1>
+            <p className="text-gray-400 text-lg mb-10 leading-relaxed max-w-md">
+              Oubliez les standards. Vivez une expérience matrimoniale où la <strong>pudeur</strong> est magnifiée par la <strong>modernité</strong>.
+            </p>
+            <div className="flex flex-wrap gap-6">
+              <Link href="/register" className="btn-pink px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest">
+                Rejoindre l&apos;élite
+              </Link>
+              <div className="flex items-center space-x-4">
+                <div className="flex -space-x-2">
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-gray-800"></div>
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-gray-700"></div>
+                  <div className="w-10 h-10 rounded-full border-2 border-black bg-gray-600"></div>
+                </div>
+                <span className="text-[10px] font-bold text-gray-500 uppercase">Rejoint par 15k+ membres</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative flex justify-center" data-aos="zoom-in" data-aos-duration="1200">
+            <div className="relative z-10 floating">
+              <div className="bg-[#1a1a1a] p-3 rounded-[3rem] shadow-[0_0_50px_rgba(255,0,127,0.3)] border border-[#ff007f]/30">
+                <div className="bg-black rounded-[2.5rem] w-[280px] h-[580px] overflow-hidden relative">
+                  {/* App Header */}
+                  <div className="p-6 pt-10 flex justify-between items-center">
+                    <div className="text-white font-bold text-sm">Découvrir</div>
+                    <Bell className="h-5 w-5 text-[#ff007f]" />
+                  </div>
+                  {/* Mock Profil */}
+                  <div className="px-4">
+                    <div className="h-80 bg-gray-900 rounded-3xl relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                      <div className="absolute bottom-4 left-4">
+                        <p className="text-white font-bold text-lg">Yassine, 31</p>
+                        <p className="text-[#ff007f] text-xs font-bold">Bruxelles • Entrepreneur</p>
+                      </div>
+                      {/* Photo Floutée Concept */}
+                      <div className="absolute inset-0 backdrop-blur-xl bg-black/40 flex items-center justify-center">
+                        <Lock className="h-12 w-12 text-[#ff007f]" />
+                      </div>
+                    </div>
+                    <div className="mt-6 space-y-3">
+                      <div className="h-2 bg-gray-800 rounded-full w-full"></div>
+                      <div className="h-2 bg-gray-800 rounded-full w-2/3"></div>
+                      <button className="w-full py-4 btn-pink rounded-2xl text-[10px] font-black uppercase mt-6">Envoyer un Salam</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Elements Neon */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#ff007f]/20 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[#ff007f]/10 rounded-full blur-3xl"></div>
+          </div>
+        </div>
+      </header>
+
+      {/* Comment Utiliser - Section Ultra Moderne */}
+      <section id="how-to-use" className="py-32 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0d0d0d] to-black"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff007f]/5 rounded-full blur-[120px]"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-20" data-aos="fade-up">
+            <div className="inline-block border border-[#ff007f]/30 bg-[#ff007f]/5 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-[#ff007f] mb-6">
+              Guide Complet
+            </div>
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+              Comment utiliser <br />
+              <span className="pink-glow-text">ZAWJ</span> en 4 étapes
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#ff007f] to-transparent mx-auto mb-6"></div>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Un parcours simplifié et sécurisé pour trouver votre moitié en respectant vos valeurs
+            </p>
+          </div>
+
+          {/* Timeline Steps */}
+          <div className="relative">
+            {/* Connecting Line */}
+            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#ff007f]/20 via-[#ff007f] to-[#ff007f]/20 -translate-x-1/2"></div>
+            
+            {/* Step 1 - Left */}
+            <div className="grid lg:grid-cols-2 gap-12 mb-24" data-aos="fade-right" data-aos-duration="1000">
+              <div className="lg:text-right lg:pr-16 flex flex-col justify-center">
+                <div className="inline-block lg:ml-auto bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                  ÉTAPE 01
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-white">
+                  Inscription & Profil
+                </h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  Créez votre compte en quelques minutes. Renseignez vos informations de base, vos valeurs et vos critères de recherche. Pour les sœurs, l&apos;inscription est 100% gratuite.
+                </p>
+                <div className="flex flex-wrap gap-3 lg:justify-end">
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">✨ Gratuit pour les femmes</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🔒 Données sécurisées</span>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                      1
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
+                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-[#ff007f]" />
+                        </div>
+                        <span className="text-sm text-gray-300">Informations personnelles</span>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
+                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-[#ff007f]" />
+                        </div>
+                        <span className="text-sm text-gray-300">Valeurs & Religion</span>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
+                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-[#ff007f]" />
+                        </div>
+                        <span className="text-sm text-gray-300">Photos (floutées par défaut)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Center Dot */}
+                <div className="hidden lg:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#ff007f] rounded-full border-4 border-black shadow-lg shadow-[#ff007f]/50"></div>
+              </div>
+            </div>
+
+            {/* Step 2 - Right */}
+            <div className="grid lg:grid-cols-2 gap-12 mb-24" data-aos="fade-left" data-aos-duration="1000">
+              <div className="lg:order-2 flex flex-col justify-center">
+                <div className="inline-block bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                  ÉTAPE 02
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-white">
+                  Recherche & Découverte
+                </h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  Parcourez les profils qui correspondent à vos critères. Utilisez nos filtres avancés pour affiner votre recherche : âge, ville, niveau d&apos;éducation, pratique religieuse...
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🎯 Filtres précis</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👁️ Respect de la pudeur</span>
+                </div>
+              </div>
+              <div className="lg:order-1 relative">
+                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                      2
+                    </div>
+                    <div className="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-bold text-gray-400">PROFILS SUGGÉRÉS</span>
+                        <span className="text-xs text-[#ff007f] font-bold">99% Compatible</span>
+                      </div>
+                      <div className="space-y-3">
+                        {[1, 2, 3].map((i) => (
+                          <div key={i} className="flex items-center gap-4 p-3 bg-black/30 rounded-xl">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-[#ff007f] flex items-center justify-center">
+                              <Lock className="h-5 w-5 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="h-2 bg-slate-700 rounded w-24 mb-2"></div>
+                              <div className="h-2 bg-slate-800 rounded w-16"></div>
+                            </div>
+                            <Star className="h-5 w-5 text-[#ff007f]" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Center Dot */}
+                <div className="hidden lg:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#ff007f] rounded-full border-4 border-black shadow-lg shadow-[#ff007f]/50"></div>
+              </div>
+            </div>
+
+            {/* Step 3 - Left */}
+            <div className="grid lg:grid-cols-2 gap-12 mb-24" data-aos="fade-right" data-aos-duration="1000">
+              <div className="lg:text-right lg:pr-16 flex flex-col justify-center">
+                <div className="inline-block lg:ml-auto bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                  ÉTAPE 03
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-white">
+                  Connexion avec Wali
+                </h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  Pour les sœurs, chaque échange implique automatiquement votre Wali. Vous pouvez choisir un tuteur familial ou bénéficier de notre service Wali plateforme pour plus de confidentialité.
+                </p>
+                <div className="flex flex-wrap gap-3 lg:justify-end">
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👨‍👩‍👧 Wali familial</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🛡️ Wali plateforme</span>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                      3
+                    </div>
+                    <div className="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Shield className="h-6 w-6 text-[#ff007f]" />
+                        <span className="text-sm font-bold text-white">Protection Active</span>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-xs text-gray-300">Wali notifié de chaque message</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-xs text-gray-300">Validation des demandes</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-xs text-gray-300">Modération en temps réel</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Center Dot */}
+                <div className="hidden lg:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#ff007f] rounded-full border-4 border-black shadow-lg shadow-[#ff007f]/50"></div>
+              </div>
+            </div>
+
+            {/* Step 4 - Right */}
+            <div className="grid lg:grid-cols-2 gap-12" data-aos="fade-left" data-aos-duration="1000">
+              <div className="lg:order-2 flex flex-col justify-center">
+                <div className="inline-block bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                  ÉTAPE 04
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-white">
+                  Échange & Mariage
+                </h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  Une fois la connexion établie, échangez dans un environnement sécurisé et respectueux. Passez aux étapes suivantes : rencontre en famille, accord des Walis, et préparation du mariage halal.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">💬 Chat modéré</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🤝 Rencontre organisée</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">💍 Mariage halal</span>
+                </div>
+              </div>
+              <div className="lg:order-1 relative">
+                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                      4
+                    </div>
+                    <div className="space-y-4">
+                      <div className="bg-slate-900/50 rounded-2xl p-4 border border-slate-700/50">
+                        <div className="flex items-center gap-3 mb-3">
+                          <Bell className="h-5 w-5 text-[#ff007f]" />
+                          <span className="text-sm font-bold text-white">Étapes du processus</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center">
+                              <Check className="h-3 w-3 text-green-500" />
+                            </div>
+                            <span className="text-xs text-gray-400">Échanges initiaux</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center">
+                              <Check className="h-3 w-3 text-green-500" />
+                            </div>
+                            <span className="text-xs text-gray-400">Accord mutuel</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-[#ff007f]/20 border-2 border-[#ff007f] flex items-center justify-center animate-pulse">
+                              <div className="w-2 h-2 bg-[#ff007f] rounded-full"></div>
+                            </div>
+                            <span className="text-xs text-gray-300 font-bold">Rencontre en famille</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-slate-700/50 border-2 border-slate-600"></div>
+                            <span className="text-xs text-gray-500">Préparation mariage</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-center py-4 px-6 bg-gradient-to-r from-[#ff007f] to-pink-600 rounded-xl">
+                        <span className="text-sm font-black text-white">💝 Votre histoire commence ici</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Center Dot */}
+                <div className="hidden lg:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#ff007f] rounded-full border-4 border-black shadow-lg shadow-[#ff007f]/50"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-center mt-20" data-aos="zoom-in" data-aos-delay="200">
+            <Link 
+              href="/register"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#ff007f] to-pink-600 px-12 py-6 rounded-2xl text-white font-black uppercase tracking-widest hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all duration-300 group"
+            >
+              <span>Commencer maintenant</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <p className="text-gray-500 text-sm mt-4">Rejoignez 15,000+ membres en quête d&apos;une union halal</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="concept" className="py-32 bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-24" data-aos="fade-up">
+            <h2 className="text-4xl font-bold mb-4">L&apos;ADN <span className="text-[#ff007f]">ZAWJ</span></h2>
+            <div className="w-20 h-1 bg-[#ff007f] mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up">
+              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+                <Shield className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Protection Wali</h3>
+              <p className="text-gray-500 leading-relaxed">Le premier système au monde d&apos;intégration native du tuteur dans vos échanges.</p>
+            </div>
+            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up" data-aos-delay="100">
+              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+                <Camera className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Pudeur Visuelle</h3>
+              <p className="text-gray-500 leading-relaxed">Vos photos ne sont révélées qu&apos;avec votre consentement explicite.</p>
+            </div>
+            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up" data-aos-delay="200">
+              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+                <Gem className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Qualité Élite</h3>
+              <p className="text-gray-500 leading-relaxed">Une communauté de profils vérifiés, éduqués et engagés dans leur Deen.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Wali - Innovation Unique */}
+      <section id="wali" className="py-32 relative overflow-hidden">
+        {/* Background Effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d] via-black to-[#0d0d0d]"></div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#ff007f]/10 rounded-full blur-[150px]"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-20" data-aos="fade-up">
+            <div className="inline-block border border-purple-500/30 bg-purple-500/5 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-purple-400 mb-6">
+              Innovation Mondiale
+            </div>
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+              Le système <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-[#ff007f] to-pink-500">Wali</span>
+              <br />révolutionnaire
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto mb-6"></div>
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+              ZAWJ est la première plateforme au monde à intégrer nativement le rôle du tuteur (Wali) 
+              dans le processus matrimonial, garantissant respect, pudeur et conformité islamique.
+            </p>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Left - Explanation */}
+            <div data-aos="fade-right" data-aos-duration="1000">
+              <h3 className="text-3xl font-bold mb-6 text-white">
+                Pourquoi le Wali est essentiel ?
+              </h3>
+              <p className="text-gray-400 mb-8 leading-relaxed">
+                Dans l&apos;Islam, le Wali (tuteur) joue un rôle fondamental dans le mariage d&apos;une femme. 
+                Il assure sa protection, valide les prétendants et garantit que le processus respecte 
+                les principes islamiques.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Shield className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-2">Protection spirituelle</h4>
+                    <p className="text-sm text-gray-400">Le Wali veille à ce que le mariage soit conforme aux enseignements islamiques</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Check className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-2">Validation des prétendants</h4>
+                    <p className="text-sm text-gray-400">Chaque demande est approuvée par le Wali avant tout échange</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Bell className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-2">Supervision continue</h4>
+                    <p className="text-sm text-gray-400">Le Wali reçoit des notifications et peut intervenir à tout moment</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right - Visual Demo */}
+            <div data-aos="fade-left" data-aos-duration="1000">
+              <div className="relative">
+                {/* Main Card */}
+                <div className="glass-card p-8 rounded-3xl border-2 border-purple-500/30 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/10 rounded-full -translate-y-24 translate-x-24 blur-3xl"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-[#ff007f] rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/50">
+                        <Shield className="h-8 w-8 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-white">Système Wali Actif</h4>
+                        <p className="text-sm text-purple-400">Protection en temps réel</p>
+                      </div>
+                    </div>
+
+                    {/* Workflow Visualization */}
+                    <div className="space-y-4">
+                      <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-bold text-white">Demande reçue</span>
+                          <span className="text-xs text-gray-400">Il y a 2 min</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500"></div>
+                          <div className="flex-1">
+                            <div className="h-2 bg-slate-700 rounded w-32 mb-1"></div>
+                            <div className="h-2 bg-slate-800 rounded w-20"></div>
+                          </div>
+                          <div className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full font-bold">
+                            En attente
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        </div>
+                      </div>
+
+                      <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                            <Shield className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-purple-300">Wali - Ahmed</div>
+                            <div className="text-xs text-gray-400">Tuteur familial</div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button className="flex-1 py-2 bg-green-600 text-white rounded-lg text-xs font-bold hover:bg-green-700 transition-colors">
+                            Approuver
+                          </button>
+                          <button className="flex-1 py-2 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition-colors">
+                            Refuser
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
+                      <div className="flex items-center gap-2 text-green-400">
+                        <Check className="h-4 w-4" />
+                        <span className="text-xs font-bold">Sécurité maximale garantie</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating Elements */}
+                <div className="absolute -top-4 -left-4 w-20 h-20 bg-purple-500/20 rounded-2xl rotate-12 animate-pulse"></div>
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#ff007f]/20 rounded-2xl -rotate-12 animate-pulse" style={{animationDelay: '1s'}}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Two Options */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16" data-aos="fade-up">
+            {/* Wali Familial */}
+            <div className="glass-card p-8 rounded-3xl border-2 border-slate-700/50 hover:border-purple-500/50 transition-all group">
+              <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition-all">
+                <span className="text-3xl group-hover:scale-110 transition-transform">👨‍👩‍👧</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Wali Familial</h3>
+              <p className="text-gray-400 mb-6 leading-relaxed">
+                Invitez votre père, frère ou oncle à superviser vos échanges. Il recevra toutes les 
+                notifications et pourra approuver ou refuser les demandes.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <Check className="h-4 w-4 text-purple-400" />
+                  Contrôle familial total
+                </li>
+                <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <Check className="h-4 w-4 text-purple-400" />
+                  Notifications en temps réel
+                </li>
+                <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <Check className="h-4 w-4 text-purple-400" />
+                  100% gratuit
+                </li>
+              </ul>
+              <div className="px-4 py-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-center">
+                <span className="text-purple-400 font-bold text-sm">Recommandé par défaut</span>
+              </div>
+            </div>
+
+            {/* Wali Plateforme */}
+            <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 hover:border-[#ff007f] transition-all group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/5 rounded-full -translate-y-16 translate-x-16"></div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#ff007f] transition-all">
+                  <span className="text-3xl group-hover:scale-110 transition-transform">🛡️</span>
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <h3 className="text-2xl font-bold text-white">Wali Plateforme</h3>
+                  <span className="px-2 py-1 bg-[#ff007f]/20 text-[#ff007f] text-[8px] font-black rounded uppercase">Premium</span>
+                </div>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  Pour plus de confidentialité, ZAWJ met à disposition un Wali certifié qui supervisera 
+                  vos échanges de manière professionnelle et discrète.
+                </p>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                    <Check className="h-4 w-4 text-[#ff007f]" />
+                    Wali professionnel certifié
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                    <Check className="h-4 w-4 text-[#ff007f]" />
+                    Confidentialité familiale
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                    <Check className="h-4 w-4 text-[#ff007f]" />
+                    Disponibilité 24/7
+                  </li>
+                </ul>
+                <div className="px-4 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 rounded-xl text-center">
+                  <span className="text-white font-bold text-sm">Service premium disponible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center" data-aos="zoom-in">
+            <Link 
+              href="/demo"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 via-[#ff007f] to-pink-600 px-12 py-6 rounded-2xl text-white font-black uppercase tracking-widest hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 group"
+            >
+              <span>Découvrir en démo interactive</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <p className="text-gray-500 text-sm mt-4">Testez le système Wali en conditions réelles</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Noir & Rose */}
+      <section className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Sœurs */}
+            <div className="glass-card p-12 rounded-[3rem] relative overflow-hidden group" data-aos="fade-right">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/5 rounded-full -translate-y-16 translate-x-16"></div>
+              <h3 className="text-3xl font-bold mb-2">SŒURS</h3>
+              <p className="text-gray-500 uppercase tracking-widest text-[10px] font-black mb-8">Gratuité Totale</p>
+              <div className="text-5xl font-black mb-10">0€<span className="text-sm text-gray-600">/mois</span></div>
+              <ul className="space-y-6 mb-12 text-gray-400">
+                <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Accès illimité</li>
+                <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Support Wali 24/7</li>
+                <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Profil certifié</li>
+              </ul>
+              <Link href="/register" className="w-full py-5 border border-[#ff007f] text-[#ff007f] rounded-2xl font-black uppercase tracking-widest hover:bg-[#ff007f] hover:text-white transition-all block text-center">S&apos;inscrire</Link>
+            </div>
+
+            {/* Frères */}
+            <div className="bg-[#ff007f] p-12 rounded-[3rem] text-white shadow-[0_20px_60px_rgba(255,0,127,0.4)] transform lg:scale-105" data-aos="fade-left">
+              <div className="flex justify-between items-start">
+                <h3 className="text-3xl font-bold mb-2">FRÈRES</h3>
+                <span className="bg-black text-white text-[8px] font-black px-3 py-1 rounded-full uppercase">Sérieux</span>
+              </div>
+              <p className="text-white/70 uppercase tracking-widest text-[10px] font-black mb-8">Engagement Premium</p>
+              <div className="text-5xl font-black mb-10">Premium</div>
+              <ul className="space-y-6 mb-12 text-white/90">
+                <li><Star className="h-4 w-4 text-black mr-3" /> Badge de Vérification</li>
+                <li><Star className="h-4 w-4 text-black mr-3" /> Messagerie illimitée</li>
+                <li><Star className="h-4 w-4 text-black mr-3" /> Filtres avancés</li>
+              </ul>
+              <button className="w-full py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest shadow-xl">Découvrir les offres</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-32">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="glass-card rounded-[4rem] p-16 text-center border-t-4 border-[#ff007f]">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-8 italic">Votre moitié vous <span className="text-[#ff007f]">attend.</span></h2>
+            <p className="text-gray-500 mb-12 max-w-xl mx-auto">Rejoignez une communauté qui partage vos valeurs et vos ambitions de vie.</p>
+            <div className="flex flex-wrap justify-center gap-6">
+              <Link href="/register" className="btn-pink px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest">
+                Rejoindre Maintenant 
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-gray-900">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-[#ff007f] rounded flex items-center justify-center text-white font-black text-sm">Z</div>
+            <span className="text-lg font-bold tracking-tighter">ZAWJ</span>
+          </div>
+          <div className="flex space-x-8 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+            <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
+            <a href="#" className="hover:text-white transition-colors">Wali Guide</a>
+            <a href="#" className="hover:text-white transition-colors">Contact</a>
+          </div>
+          <div className="text-[10px] text-gray-800 font-bold uppercase tracking-[0.4em]">
+            &copy; 2024 ZAWJ . TOUS DROITS RÉSERVÉS.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

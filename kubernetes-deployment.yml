@@ -1,0 +1,292 @@
+# ==================================
+# Kubernetes Deployment Configuration
+# ==================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: zawj-production
+
+---
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zawj-backend
+  namespace: zawj-production
+  labels:
+    app: zawj
+    component: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: zawj
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: zawj
+        component: backend
+    spec:
+      containers:
+      - name: backend
+        image: your-registry/zawj-backend:latest
+        ports:
+        - containerPort: 5000
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "5000"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: zawj-secrets
+              key: mongodb-uri
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: zawj-secrets
+              key: jwt-secret
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: zawj-secrets
+              key: stripe-secret-key
+        - name: STRIPE_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: zawj-secrets
+              key: stripe-webhook-secret
+        - name: EMAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: zawj-secrets
+              key: email-password
+        envFrom:
+        - configMapRef:
+            name: zawj-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zawj-frontend
+  namespace: zawj-production
+  labels:
+    app: zawj
+    component: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: zawj
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: zawj
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: your-registry/zawj-frontend:latest
+        ports:
+        - containerPort: 3000
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: NEXT_PUBLIC_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: zawj-config
+              key: api-url
+        - name: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: zawj-config
+              key: stripe-public-key
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: zawj-backend
+  namespace: zawj-production
+spec:
+  selector:
+    app: zawj
+    component: backend
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+  type: ClusterIP
+
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: zawj-frontend
+  namespace: zawj-production
+spec:
+  selector:
+    app: zawj
+    component: frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zawj-ingress
+  namespace: zawj-production
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+spec:
+  tls:
+  - hosts:
+    - your-domain.com
+    - www.your-domain.com
+    secretName: zawj-tls
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: zawj-backend
+            port:
+              number: 5000
+      - path: /socket.io
+        pathType: Prefix
+        backend:
+          service:
+            name: zawj-backend
+            port:
+              number: 5000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: zawj-frontend
+            port:
+              number: 3000
+
+---
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zawj-config
+  namespace: zawj-production
+data:
+  api-url: "https://your-domain.com/api"
+  stripe-public-key: "pk_live_your_public_key"
+  email-host: "smtp.gmail.com"
+  email-port: "587"
+  frontend-url: "https://your-domain.com"
+  allowed-origins: "https://your-domain.com,https://www.your-domain.com"
+
+---
+# HorizontalPodAutoscaler for Backend
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: zawj-backend-hpa
+  namespace: zawj-production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: zawj-backend
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# HorizontalPodAutoscaler for Frontend
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: zawj-frontend-hpa
+  namespace: zawj-production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: zawj-frontend
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70

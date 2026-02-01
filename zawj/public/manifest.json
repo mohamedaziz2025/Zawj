@@ -1,0 +1,13 @@
+{
+  "name": "ZAWJ - Premium Wali Connection Platform",
+  "short_name": "ZAWJ",
+  "description": "Plateforme moderne de connexion entre femmes et tuteurs légaux (Walis) pour un mariage respectueux et sécurisé.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "categories": ["social", "lifestyle"],
+  "lang": "fr",
+  "icons": []
+}
