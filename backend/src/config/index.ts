@@ -8,7 +8,7 @@ export const config = {
   
   /* MongoDB */
   mongodb: {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/zawj',
+    uri: process.env.MONGODB_URI || 'mongodb://mongodb:27017/zawj',
   },
 
   /* JWT */
@@ -27,13 +27,13 @@ export const config = {
 
   /* URLs */
   urls: {
-    frontend: process.env.FRONTEND_URL || 'http://localhost:3000',
-    api: process.env.API_URL || 'http://localhost:5000',
+    frontend: process.env.FRONTEND_URL || 'http://frontend:3000',
+    api: process.env.API_URL || 'http://backend:5000',
   },
 
   /* CORS */
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://frontend:3000',
     credentials: true,
   },
 
@@ -46,7 +46,7 @@ export const config = {
   /* Socket.io */
   socket: {
     cors: {
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      origin: process.env.FRONTEND_URL || 'http://frontend:3000',
       credentials: true,
     },
   },
