@@ -13,6 +13,7 @@ services:
     volumes:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
+      - ./mongodb-init.js:/docker-entrypoint-initdb.d/init.js:ro
     networks:
       - zawj-network
     ports:
