@@ -68,7 +68,7 @@ export const hasValidMahram = async (req: AuthRequest, res: Response, next: Next
 
     // For women, check if they have a valid Mahram
     if (user.gender === 'female') {
-      const hasValidWali = user.waliId || (user.waliInfo?.platformServicePaid === true)
+      const hasValidWali = user.waliInfo && (user.waliInfo.platformServicePaid === true || user.waliInfo.hasAccessToDashboard === true)
 
       if (!hasValidWali) {
         res.status(403).json({
