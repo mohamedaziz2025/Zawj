@@ -3,14 +3,18 @@ import path from 'path'
 import fs from 'fs'
 
 // Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '../../uploads')
+// Use absolute path for Docker container or fallback to relative for local dev
+const uploadsDir = process.env.NODE_ENV === 'production' 
+  ? '/app/uploads' 
+  : path.join(__dirname, '../../uploads')
 const profilesDir = path.join(uploadsDir, 'profiles')
 const documentsDir = path.join(uploadsDir, 'documents')
 const evidenceDir = path.join(uploadsDir, 'evidence')
 
+// Only create directories if they don't exist (Docker creates them with proper permissions)
 ;[uploadsDir, profilesDir, documentsDir, evidenceDir].forEach((dir) => {
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true })
+    fs.mkdirSync(dir, { recursive: true, mode: 0o755 })
   }
 })
 
