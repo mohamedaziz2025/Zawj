@@ -23,6 +23,8 @@ services:
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
       FRONTEND_URL: ${FRONTEND_URL}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+    volumes:
+      - uploads_data:/app/uploads
     networks:
       - zawj-network
     deploy:
@@ -151,4 +153,7 @@ volumes:
   nginx_cache:
     driver: local
   certbot_webroot:
+    driver: local
+  uploads_data:
+    driver: local
     driver: local

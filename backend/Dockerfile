@@ -43,6 +43,10 @@ RUN npm install && npm ci --only=production && \
 # Copy built application from builder stage
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
 
+# Create uploads directory with proper permissions
+RUN mkdir -p /app/uploads/profiles /app/uploads/documents /app/uploads/evidence && \
+    chown -R nodejs:nodejs /app/uploads
+
 # Switch to non-root user
 USER nodejs
 
