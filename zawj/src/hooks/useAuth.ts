@@ -30,7 +30,7 @@ export function useAuth() {
 }
 
 export function useRequireAuth() {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, user } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -39,5 +39,22 @@ export function useRequireAuth() {
     }
   }, [isAuthenticated, isLoading, router])
 
-  return { isAuthenticated, isLoading }
+  return { isAuthenticated, isLoading, user }
+}
+
+export function useRequireAdmin() {
+  const { isAuthenticated, isLoading, user } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isAuthenticated) {
+        router.push('/login')
+      } else if (user?.role !== 'admin') {
+        router.push('/search')
+      }
+    }
+  }, [isAuthenticated, isLoading, user, router])
+
+  return { isAuthenticated, isLoading, user }
 }

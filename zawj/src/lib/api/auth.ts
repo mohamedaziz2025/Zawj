@@ -28,7 +28,7 @@ export interface User {
   bio?: string
   isActive: boolean
   isVerified: boolean
-  role?: 'user' | 'admin' | 'moderator'
+  role?: 'seeker' | 'admin'
   subscription?: {
     plan: string
     status: string

@@ -27,7 +27,15 @@ export default function LoginPage() {
     try {
       const response = await authApi.login(formData)
       setUser(response.user)
-      router.push('/')
+      
+      // Rediriger selon le rôle de l'utilisateur
+      const userRole = response.user.role
+      if (userRole === 'admin') {
+        router.push('/admin')
+      } else {
+        // Pour les utilisateurs normaux (seekers)
+        router.push('/search')
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Une erreur est survenue')
     } finally {
@@ -43,7 +51,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8 relative">
       {/* Aura d'arrière-plan */}
       <div className="hero-aura top-[-200px] left-[-100px]"></div>
       <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
@@ -55,10 +63,10 @@ export default function LoginPage() {
               Z
             </div>
           </div>
-          <h2 className="mt-6 text-3xl font-bold text-white">
+          <h2 className="mt-6 text-3xl font-bold text-black">
             Connexion à <span className="text-[#ff007f]">ZAWJ</span>
           </h2>
-          <p className="mt-2 text-sm text-gray-400">
+          <p className="mt-2 text-sm text-gray-600">
             Ou{' '}
             <Link href="/register" className="font-medium text-[#ff007f] hover:text-[#ff85c1] transition-colors">
               créez un nouveau compte
@@ -69,7 +77,7 @@ export default function LoginPage() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Adresse email
               </label>
               <div className="mt-1 relative">
@@ -81,7 +89,7 @@ export default function LoginPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 pl-12 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                  className="block w-full px-4 py-3 pl-12 bg-white border border-[#ff007f]/30 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
                   placeholder="votre@email.com"
                 />
                 <Mail className="absolute left-4 top-3.5 h-5 w-5 text-[#ff007f]" />
@@ -89,7 +97,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Mot de passe
               </label>
               <div className="mt-1 relative">
@@ -101,7 +109,7 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 pl-12 pr-12 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                  className="block w-full px-4 py-3 pl-12 pr-12 bg-white border border-[#ff007f]/30 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
                   placeholder="••••••••"
                 />
                 <Lock className="absolute left-4 top-3.5 h-5 w-5 text-[#ff007f]" />
@@ -133,7 +141,7 @@ export default function LoginPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/forgot-password" className="text-sm text-gray-400 hover:text-[#ff007f] transition-colors">
+            <Link href="/forgot-password" className="text-sm text-gray-600 hover:text-[#ff007f] transition-colors">
               Mot de passe oublié ?
             </Link>
           </div>

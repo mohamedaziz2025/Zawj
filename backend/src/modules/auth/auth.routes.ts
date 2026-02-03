@@ -129,6 +129,7 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
         firstName: user.firstName,
         lastName: user.lastName,
         gender: user.gender,
+        role: user.role,
       },
       accessToken,
     })
@@ -186,6 +187,7 @@ router.post('/login', authLimiter, async (req, res): Promise<void> => {
         firstName: user.firstName,
         lastName: user.lastName,
         gender: user.gender,
+        role: user.role,
       },
       accessToken,
     })
