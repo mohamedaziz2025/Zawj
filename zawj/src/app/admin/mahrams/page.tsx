@@ -78,7 +78,7 @@ export default function AdminTuteursPage() {
             onClick={() => setFilterStatus('all')}
             className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-medium transition-all text-sm sm:text-base ${
               filterStatus === 'all'
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
@@ -88,7 +88,7 @@ export default function AdminTuteursPage() {
             onClick={() => setFilterStatus('pending')}
             className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-medium transition-all text-sm sm:text-base ${
               filterStatus === 'pending'
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
@@ -99,7 +99,7 @@ export default function AdminTuteursPage() {
             onClick={() => setFilterStatus('approved')}
             className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-medium transition-all text-sm sm:text-base ${
               filterStatus === 'approved'
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
@@ -110,7 +110,7 @@ export default function AdminTuteursPage() {
             onClick={() => setFilterStatus('rejected')}
             className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'rejected'
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >

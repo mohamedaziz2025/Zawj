@@ -77,16 +77,16 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-6 sm:space-y-8 relative z-10">
         <div className="text-center">
           <div className="flex justify-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#ff007f] rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-600 to-red-600 rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black">
               N
             </div>
           </div>
           <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-bold text-black">
-            Connexion à <span className="text-[#ff007f]">Nissfi</span>
+            Connexion à <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600">Nissfi</span>
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-gray-600">
             Ou{' '}
-            <Link href="/register" className="font-medium text-[#ff007f] hover:text-[#ff85c1] transition-colors">
+            <Link href="/register" className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 transition-colors">
               créez un nouveau compte
             </Link>
           </p>
@@ -107,10 +107,10 @@ export default function LoginPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 pl-10 sm:pl-12 bg-white border border-[#ff007f]/30 rounded-xl text-sm sm:text-base text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                  className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 pl-10 sm:pl-12 bg-white border border-pink-600/30 rounded-xl text-sm sm:text-base text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-pink-600 transition-all"
                   placeholder="votre@email.com"
                 />
-                <Mail className="absolute left-3 sm:left-4 top-2.5 sm:top-3.5 h-4 w-4 sm:h-5 sm:w-5 text-[#ff007f]" />
+                <Mail className="absolute left-3 sm:left-4 top-2.5 sm:top-3.5 h-4 w-4 sm:h-5 sm:w-5 text-pink-600" />
               </div>
             </div>
 
@@ -127,14 +127,14 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 pl-10 sm:pl-12 pr-10 sm:pr-12 bg-white border border-[#ff007f]/30 rounded-xl text-sm sm:text-base text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff007f] focus:border-[#ff007f] transition-all"
+                  className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 pl-10 sm:pl-12 pr-10 sm:pr-12 bg-white border border-pink-600/30 rounded-xl text-sm sm:text-base text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-pink-600 transition-all"
                   placeholder="••••••••"
                 />
-                <Lock className="absolute left-3 sm:left-4 top-2.5 sm:top-3.5 h-4 w-4 sm:h-5 sm:w-5 text-[#ff007f]" />
+                <Lock className="absolute left-3 sm:left-4 top-2.5 sm:top-3.5 h-4 w-4 sm:h-5 sm:w-5 text-pink-600" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 sm:right-4 top-2.5 sm:top-3.5 text-gray-400 hover:text-[#ff007f] transition-colors"
+                  className="absolute right-3 sm:right-4 top-2.5 sm:top-3.5 text-gray-400 hover:text-pink-600 transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
                 </button>
@@ -152,14 +152,14 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-3 sm:py-4 px-3 sm:px-4 border border-transparent text-xs sm:text-sm font-black uppercase tracking-widest rounded-xl text-white bg-[#ff007f] hover:bg-[#ff85c1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ff007f] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-[0_0_20px_rgba(255,0,127,0.3)] hover:shadow-[0_0_30px_rgba(255,0,127,0.5)]"
+              className="group relative w-full flex justify-center py-3 sm:py-4 px-3 sm:px-4 border border-transparent text-xs sm:text-sm font-black uppercase tracking-widest rounded-xl text-white bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               {isLoading ? 'Connexion...' : 'Se connecter'}
             </button>
           </div>
 
           <div className="text-center">
-            <Link href="/forgot-password" className="text-xs sm:text-sm text-gray-600 hover:text-[#ff007f] transition-colors">
+            <Link href="/forgot-password" className="text-xs sm:text-sm text-gray-600 hover:text-pink-600 transition-colors">
               Mot de passe oublié ?
             </Link>
           </div>

@@ -70,7 +70,7 @@ export default function AdminDashboard() {
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Accès refusé</h2>
           <p className="text-gray-600 text-lg">Vous n'avez pas les permissions pour accéder à cette page.</p>
-          <Link href="/" className="mt-6 inline-block px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+          <Link href="/" className="mt-6 inline-block px-8 py-3 bg-gradient-to-r from-pink-600 to-red-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
             Retour à l'accueil
           </Link>
         </div>
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div className="w-full sm:w-auto">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">
                 Espace Administration
               </h1>
               <p className="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1">Gestion et supervision de la plateforme Nissfi</p>
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
                   <p className="text-sm font-semibold text-gray-900">Admin</p>
                   <p className="text-xs text-gray-500">{user?.email}</p>
                 </div>
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
                   {user?.firstName?.[0] || 'A'}
                 </div>
               </div>
@@ -285,7 +285,7 @@ export default function AdminDashboard() {
 
           {/* Quick Stats Sidebar */}
           <div className="space-y-4 sm:space-y-6">
-            <div className="bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 text-white">
+            <div className="bg-gradient-to-br from-pink-600 to-red-600 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 text-white">
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <h3 className="font-bold text-base sm:text-lg">Croissance</h3>
                 <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />

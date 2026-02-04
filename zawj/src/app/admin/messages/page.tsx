@@ -117,7 +117,7 @@ export default function AdminMessagesPage() {
                   placeholder="Rechercher..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
                 />
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function AdminMessagesPage() {
                               className={`p-4 rounded-2xl ${
                                 isFirstParticipant
                                   ? 'bg-gray-100 text-gray-900 rounded-tl-none'
-                                  : 'bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-tr-none'
+                                  : 'bg-gradient-to-r from-pink-600 to-red-600 text-white rounded-tr-none'
                               }`}
                             >
                               <p className="text-sm">{message.content}</p>

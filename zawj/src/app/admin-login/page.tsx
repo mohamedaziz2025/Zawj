@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('')
 
   const loginMutation = useMutation({
-    mutationFn: () => authApi.login(email, password),
+    mutationFn: () => authApi.login({ email, password }),
     onSuccess: (response) => {
       console.log('Login response:', response)
       
@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl shadow-2xl mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pink-600 to-red-600 rounded-2xl shadow-2xl mb-4">
             <Shield className="h-10 w-10 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-white mb-2">Administration</h1>
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent transition-all"
                   placeholder="admin@zawj.com"
                   required
                 />
@@ -105,7 +105,7 @@ export default function AdminLoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-12 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-12 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent transition-all"
                   placeholder="••••••••"
                   required
                 />
@@ -123,7 +123,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loginMutation.isPending}
-              className="w-full py-3.5 px-6 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full py-3.5 px-6 bg-gradient-to-r from-pink-600 to-red-600 text-white font-semibold rounded-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {loginMutation.isPending ? (
                 <span className="flex items-center justify-center gap-2">

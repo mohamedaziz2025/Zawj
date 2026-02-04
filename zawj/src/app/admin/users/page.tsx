@@ -95,7 +95,7 @@ export default function AdminUsersPage() {
                 <UserCheck className="h-4 w-4 sm:h-5 sm:w-5" />
                 Créer Utilisateur
               </Link>
-              <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all text-sm sm:text-base">
+              <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-pink-600 to-red-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all text-sm sm:text-base">
                 <Download className="h-4 w-4 sm:h-5 sm:w-5" />
                 Exporter
               </button>
@@ -113,7 +113,7 @@ export default function AdminUsersPage() {
                 placeholder="Rechercher par nom ou email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent transition-all"
               />
             </div>
 
@@ -214,7 +214,7 @@ export default function AdminUsersPage() {
             <div className="space-y-6">
               {/* Avatar & Name */}
               <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-pink-600 to-red-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   {selectedUser.firstName?.[0] || '?'}
                   {selectedUser.lastName?.[0] || ''}
                 </div>
@@ -405,7 +405,7 @@ function FilterButton({
       onClick={onClick}
       className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
         active
-          ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+          ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
       }`}
     >
@@ -433,7 +433,7 @@ function UserCard({
       <div className="flex items-start gap-6">
         {/* Avatar */}
         <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-600 to-red-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
             {user.firstName?.[0] || '?'}
             {user.lastName?.[0] || ''}
           </div>

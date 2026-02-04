@@ -158,7 +158,7 @@ export default function CreateUserPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-sm sm:text-base"
+                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-600 focus:border-pink-600 transition-all text-sm sm:text-base"
                     placeholder="exemple@email.com"
                   />
                 </div>
@@ -176,7 +176,7 @@ export default function CreateUserPage() {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-sm sm:text-base"
+                    className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-600 focus:border-pink-600 transition-all text-sm sm:text-base"
                     placeholder="Mot de passe sécurisé"
                   />
                   <button
@@ -299,7 +299,7 @@ export default function CreateUserPage() {
             <button
               type="submit"
               disabled={createUserMutation.isPending}
-              className="flex-1 py-3 sm:py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+              className="flex-1 py-3 sm:py-4 bg-gradient-to-r from-pink-600 to-red-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
             >
               {createUserMutation.isPending ? 'Création en cours...' : 'Créer l\'utilisateur'}
             </button>

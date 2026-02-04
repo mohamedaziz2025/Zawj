@@ -113,7 +113,7 @@ export default function AdminReportsPage() {
             onClick={() => setFilterStatus('all')}
             className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'all'
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                ? 'bg-gradient-to-r from-pink-600 to-red-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
