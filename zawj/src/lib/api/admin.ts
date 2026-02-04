@@ -56,6 +56,9 @@ export interface Mahram {
   verifiedBy?: string
 }
 
+// Alias pour Tuteur (ancien Mahram)
+export type Tuteur = Mahram;
+
 export interface Report {
   _id: string // MongoDB ID
   id: string
