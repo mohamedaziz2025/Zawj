@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { adminApi } from '@/lib/api/admin'
+import { authApi } from '@/lib/api/auth'
+import { useAuthStore } from '@/store/auth'
 import { 
   Shield, UserPlus, Edit2, Trash2, Users, 
   CheckCircle, XCircle, Eye, UserCheck, X 
@@ -42,6 +44,7 @@ interface User {
 
 export default function ModeratorsPage() {
   const queryClient = useQueryClient()
+  const { user, setUser, isLoading: authLoading, setLoading } = useAuthStore()
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showAssignModal, setShowAssignModal] = useState(false)
   const [selectedModerator, setSelectedModerator] = useState<Moderator | null>(null)
@@ -51,6 +54,40 @@ export default function ModeratorsPage() {
     canViewMessages: true,
     canBlockUsers: false
   })
+
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('accessToken')
+      
+      if (token && !user) {
+        try {
+          const userData = await authApi.getCurrentUser()
+          setUser(userData)
+          setLoading(false)
+          
+          // Verify admin role
+          if (userData.role !== 'admin') {
+            window.location.href = '/login'
+          }
+        } catch (error) {
+          console.error('Auth error:', error)
+          localStorage.removeItem('accessToken')
+          setLoading(false)
+          window.location.href = '/login'
+        }
+      } else if (!token) {
+        setLoading(false)
+        window.location.href = '/login'
+      } else if (user?.role !== 'admin') {
+        window.location.href = '/login'
+      } else {
+        setLoading(false)
+      }
+    }
+
+    checkAuth()
+  }, [user, setUser, setLoading])
 
   // Fetch moderators
   const { data: moderators = [], isLoading } = useQuery({
@@ -129,6 +166,23 @@ export default function ModeratorsPage() {
   const availableUsers = usersData?.users?.filter(u => 
     u.role !== 'moderator' && u.role !== 'admin'
   ) || []
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-pink-600 mx-auto"></div>
+          <p className="text-gray-600 mt-4 font-medium">Vérification de l'authentification...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Block access if not admin
+  if (!user || user.role !== 'admin') {
+    return null
+  }
 
   if (isLoading) {
     return (
