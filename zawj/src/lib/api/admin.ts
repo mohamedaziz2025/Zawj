@@ -5,6 +5,7 @@ export interface AdminStats {
   totalUsers: number
   totalWalis: number
   pendingMahrams: number
+  pendingTuteurs?: number // Alias pour pendingMahrams
   totalReports: number
   activeToday: number
   growthRate: number

@@ -107,7 +107,7 @@ export default function AdminDashboard() {
           />
           <StatCard
             title="En attente d'approbation"
-            value={stats?.pendingTuteurs || 0}
+            value={stats?.pendingTuteurs || stats?.pendingMahrams || 0}
             icon={AlertTriangle}
             gradient="from-orange-500 to-amber-500"
             trend="À traiter"
