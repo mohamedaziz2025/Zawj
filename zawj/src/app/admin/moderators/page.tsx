@@ -136,15 +136,17 @@ export default function ModeratorsPage() {
   // Create new user and moderator mutation
   const createNewUserMutation = useMutation({
     mutationFn: async (data: typeof newUserData & { permissions: any }) => {
-      // First create the user
+      // First create the user with moderator role
       const newUser = await authApi.register({
-        ...data,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
         gender: 'male',
-        role: 'moderator',
         phoneNumber: '',
         city: '',
         dateOfBirth: new Date().toISOString(),
-      })
+      } as any)
       
       // Then create the moderator profile
       return adminApi.createModerator({
