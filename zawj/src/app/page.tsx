@@ -1,7 +1,12 @@
+'use client'
+
+import { useState } from 'react'
 import Link from "next/link";
-import { Shield, Camera, Gem, Check, Star, Bell, Lock } from "lucide-react";
+import { Shield, Camera, Gem, Check, Star, Bell, Lock, Menu, X } from "lucide-react";
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <div>
       {/* Aura d'arrière-plan */}
@@ -9,20 +14,59 @@ export default function Home() {
       <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 px-4 md:px-6 py-4">
-        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-gray-200 rounded-full px-4 md:px-8 py-4 flex justify-between items-center shadow-xl">
+      <nav className="fixed w-full z-50 px-2 sm:px-4 md:px-6 py-3 md:py-4">
+        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-gray-200 rounded-full px-3 sm:px-4 md:px-8 py-3 md:py-4 flex justify-between items-center shadow-xl">
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
-            <span className="text-lg md:text-xl font-bold tracking-widest text-gray-900">Nissfi</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg flex items-center justify-center text-white font-black text-lg sm:text-xl">N</div>
+            <span className="text-base sm:text-lg md:text-xl font-bold tracking-widest text-gray-900">Nissfi</span>
           </div>
+          
+          {/* Menu Desktop */}
           <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-600">
             <a href="#concept" className="hover:text-pink-600 transition-colors">Concept</a>
             <a href="#how-to-use" className="hover:text-pink-600 transition-colors">Comment utiliser</a>
             <a href="#Tuteur" className="hover:text-pink-600 transition-colors">Tuteur</a>
-            
           </div>
-          <Link href="/login" className="bg-gradient-to-r from-pink-600 to-red-600 hover:opacity-90 text-white px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase transition-all">Connexion</Link>
+
+          {/* Boutons */}
+          <div className="flex items-center gap-2">
+            <Link href="/login" className="hidden sm:flex bg-gradient-to-r from-pink-600 to-red-600 hover:opacity-90 text-white px-3 sm:px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase transition-all">
+              Connexion
+            </Link>
+            
+            {/* Bouton menu mobile */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5 text-gray-900" />
+              ) : (
+                <Menu className="h-5 w-5 text-gray-900" />
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Menu mobile */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-2 mx-2 sm:mx-4 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-xl overflow-hidden">
+            <div className="flex flex-col">
+              <a href="#concept" onClick={() => setMobileMenuOpen(false)} className="px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900">
+                Concept
+              </a>
+              <a href="#how-to-use" onClick={() => setMobileMenuOpen(false)} className="px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900">
+                Comment utiliser
+              </a>
+              <a href="#Tuteur" onClick={() => setMobileMenuOpen(false)} className="px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 font-semibold text-gray-900">
+                Tuteur
+              </a>
+              <Link href="/login" className="sm:hidden px-6 py-4 hover:bg-gray-50 transition-colors font-semibold text-pink-600">
+                Connexion
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -226,15 +270,15 @@ export default function Home() {
                 <div className="inline-block lg:ml-auto bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
                   ÉTAPE 03
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-white">
+                <h3 className="text-3xl font-bold mb-4 text-gray-900">
                   Connexion avec Tuteur
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-700 mb-6 leading-relaxed">
                   Pour les sœurs, chaque échange implique automatiquement votre Tuteur. Vous pouvez choisir un tuteur familial ou bénéficier de notre service Tuteur plateforme pour plus de confidentialité.
                 </p>
                 <div className="flex flex-wrap gap-3 lg:justify-end">
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👨‍👩‍👧 Tuteur familial</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🛡️ Tuteur plateforme</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">👨‍👩‍👧 Tuteur familial</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">🛡️ Tuteur plateforme</span>
                 </div>
               </div>
               <div className="relative">
@@ -277,16 +321,16 @@ export default function Home() {
                 <div className="inline-block bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
                   ÉTAPE 04
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-white">
+                <h3 className="text-3xl font-bold mb-4 text-gray-900">
                   Échange & Mariage
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-700 mb-6 leading-relaxed">
                   Une fois la connexion établie, échangez dans un environnement sécurisé et respectueux. Passez aux étapes suivantes : rencontre en famille, accord des Walis, et préparation du mariage halal.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">💬 Chat modéré</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🤝 Rencontre organisée</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">💍 Mariage halal</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">💬 Chat modéré</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">🤝 Rencontre organisée</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">💍 Mariage halal</span>
                 </div>
               </div>
               <div className="lg:order-1 relative">
@@ -547,59 +591,59 @@ export default function Home() {
           {/* Two Options */}
           <div className="grid md:grid-cols-2 gap-8 mb-16" data-aos="fade-up">
             {/* Tuteur Familial */}
-            <div className="glass-card p-8 rounded-3xl border-2 border-slate-700/50 hover:border-purple-500/50 transition-all group">
-              <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition-all">
+            <div className="bg-white p-8 rounded-3xl border-2 border-purple-300 hover:border-purple-500 transition-all group shadow-lg">
+              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition-all">
                 <span className="text-3xl group-hover:scale-110 transition-transform">👨‍👩‍👧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Tuteur Familial</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">Tuteur Familial</h3>
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 Invitez votre père, frère ou oncle à superviser vos échanges. Il recevra toutes les 
                 notifications et pourra approuver ou refuser les demandes.
               </p>
               <ul className="space-y-3 mb-6">
-                <li className="flex items-center gap-2 text-sm text-gray-300">
-                  <Check className="h-4 w-4 text-purple-400" />
+                <li className="flex items-center gap-2 text-sm text-gray-700">
+                  <Check className="h-4 w-4 text-purple-600" />
                   Contrôle familial total
                 </li>
-                <li className="flex items-center gap-2 text-sm text-gray-300">
-                  <Check className="h-4 w-4 text-purple-400" />
+                <li className="flex items-center gap-2 text-sm text-gray-700">
+                  <Check className="h-4 w-4 text-purple-600" />
                   Notifications en temps réel
                 </li>
-                <li className="flex items-center gap-2 text-sm text-gray-300">
-                  <Check className="h-4 w-4 text-purple-400" />
+                <li className="flex items-center gap-2 text-sm text-gray-700">
+                  <Check className="h-4 w-4 text-purple-600" />
                   100% gratuit
                 </li>
               </ul>
-              <div className="px-4 py-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-center">
-                <span className="text-purple-400 font-bold text-sm">Recommandé par défaut</span>
+              <div className="px-4 py-3 bg-purple-100 border border-purple-300 rounded-xl text-center">
+                <span className="text-purple-700 font-bold text-sm">Recommandé par défaut</span>
               </div>
             </div>
 
             {/* Tuteur Plateforme */}
-            <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 hover:border-[#ff007f] transition-all group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/5 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="bg-white p-8 rounded-3xl border-2 border-pink-300 hover:border-[#ff007f] transition-all group relative overflow-hidden shadow-lg">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-100/50 rounded-full -translate-y-16 translate-x-16"></div>
               <div className="relative z-10">
-                <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#ff007f] transition-all">
+                <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#ff007f] transition-all">
                   <span className="text-3xl group-hover:scale-110 transition-transform">🛡️</span>
                 </div>
                 <div className="flex items-center gap-2 mb-4">
-                  <h3 className="text-2xl font-bold text-white">Tuteur Plateforme</h3>
-                  <span className="px-2 py-1 bg-[#ff007f]/20 text-[#ff007f] text-[8px] font-black rounded uppercase">Premium</span>
+                  <h3 className="text-2xl font-bold text-gray-900">Tuteur Plateforme</h3>
+                  <span className="px-2 py-1 bg-pink-100 text-pink-700 text-[8px] font-black rounded uppercase border border-pink-300">Premium</span>
                 </div>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-700 mb-6 leading-relaxed">
                   Pour plus de confidentialité, Nissfi met à disposition un Tuteur certifié qui supervisera 
                   vos échanges de manière professionnelle et discrète.
                 </p>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <li className="flex items-center gap-2 text-sm text-gray-700">
                     <Check className="h-4 w-4 text-[#ff007f]" />
                     Tuteur professionnel certifié
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <li className="flex items-center gap-2 text-sm text-gray-700">
                     <Check className="h-4 w-4 text-[#ff007f]" />
                     Confidentialité familiale
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-gray-300">
+                  <li className="flex items-center gap-2 text-sm text-gray-700">
                     <Check className="h-4 w-4 text-[#ff007f]" />
                     Disponibilité 24/7
                   </li>

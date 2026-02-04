@@ -592,7 +592,7 @@ export default function RegisterPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-12 h-12 bg-[#ff007f] rounded-lg flex items-center justify-center text-gray-900 font-black text-2xl">Z</div>
+                <div className="w-12 h-12 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-2xl">N</div>
                 <span className="text-2xl font-bold tracking-widest text-gray-900">Nissfi</span>
               </div>
             </Link>

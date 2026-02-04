@@ -87,10 +87,19 @@ export default function AdminUsersPage() {
                 {filteredUsers.length} utilisateur{filteredUsers.length > 1 ? 's' : ''} trouvé{filteredUsers.length > 1 ? 's' : ''}
               </p>
             </div>
-            <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
-              <Download className="h-5 w-5" />
-              Exporter
-            </button>
+            <div className="flex gap-3">
+              <Link
+                href="/register"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
+              >
+                <UserCheck className="h-5 w-5" />
+                Créer Utilisateur
+              </Link>
+              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                <Download className="h-5 w-5" />
+                Exporter
+              </button>
+            </div>
           </div>
         </div>
 

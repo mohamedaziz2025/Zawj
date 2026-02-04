@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { MessageSquare, Search, ChevronLeft, Eye, Users, Calendar, ArrowRight } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import Link from 'next/link'
-import { api } from '@/lib/api/client'
+import { adminApi } from '@/lib/api/admin'
 
 interface Conversation {
   _id: string
@@ -44,25 +44,23 @@ export default function AdminMessagesPage() {
   // Fetch all conversations
   const { data: conversationsData, isLoading } = useQuery({
     queryKey: ['admin-conversations'],
-    queryFn: async () => {
-      const response = await api.get('/admin/conversations')
-      return response.data
-    },
+    queryFn: adminApi.getConversations,
     enabled: isAuthenticated && user?.role === 'admin',
   })
 
   // Fetch messages for selected conversation
   const { data: messagesData } = useQuery({
     queryKey: ['admin-messages', selectedConversation],
-    queryFn: async () => {
-      const response = await api.get(`/admin/conversations/${selectedConversation}/messages`)
-      return response.data
-    },
+    queryFn: () => adminApi.getConversationMessages(selectedConversation!),
     enabled: !!selectedConversation,
   })
 
-  const conversations: Conversation[] = conversationsData?.conversations || []
-  const messages: Message[] = messagesData?.messages || []
+  const conversations: Conversation[] = Array.isArray(conversationsData) 
+    ? conversationsData 
+    : ((conversationsData as any)?.conversations || [])
+  const messages: Message[] = Array.isArray(messagesData)
+    ? messagesData
+    : ((messagesData as any)?.messages || [])
 
   const filteredConversations = conversations.filter((conv) =>
     conv.participants.some((p) =>
