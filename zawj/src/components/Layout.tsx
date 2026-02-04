@@ -118,7 +118,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="w-10 h-10 bg-gradient-to-br from-[#ff007f] to-[#ff4d94] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-[#ff007f]/30">
                 Z
               </div>
-              <h2 className="text-xl font-black tracking-wider text-white">ZAWJ</h2>
+              <h2 className="text-xl font-black tracking-wider text-white">Nissfi</h2>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -193,7 +193,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Z
               </div>
               <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                ZAWJ
+                Nissfi
               </h1>
             </div>
           </div>
@@ -268,7 +268,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Z
               </div>
               <h1 className="text-lg font-black tracking-wider text-white">
-                ZAWJ
+                Nissfi
               </h1>
             </div>
             <div className="w-10" /> {/* Spacer */}

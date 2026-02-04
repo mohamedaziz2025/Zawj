@@ -207,7 +207,7 @@ export default function DemoPage() {
           Étape 1/5 - Commencer
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-gray-900">
-          Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span>
+          Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Nissfi</span>
         </h1>
         <p className="text-gray-700 text-base sm:text-lg max-w-2xl mx-auto mb-8 sm:mb-12">
           Découvrez comment fonctionne notre plateforme matrimoniale halal avec protection Tuteur intégrée
@@ -790,7 +790,7 @@ export default function DemoPage() {
               <span className="px-2 py-1 bg-pink-600/20 text-pink-600 text-[8px] font-black rounded uppercase">Premium</span>
             </div>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Un Tuteur certifié ZAWJ supervise vos échanges en toute discrétion
+              Un Tuteur certifié Nissfi supervise vos échanges en toute discrétion
             </p>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-gray-700">
@@ -820,7 +820,7 @@ export default function DemoPage() {
               </div>
               <div>
                 <h4 className="text-xl font-bold text-gray-900">
-                  {waliType === "platform" ? "Tuteur ZAWJ" : "Tuteur - Ahmed"}
+                  {waliType === "platform" ? "Tuteur Nissfi" : "Tuteur - Ahmed"}
                 </h4>
                 <p className="text-sm text-purple-600">
                   {waliType === "platform" ? "Tuteur certifié" : "Tuteur familial"}
@@ -1208,7 +1208,7 @@ export default function DemoPage() {
           Démo terminée !
         </h3>
         <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
-          Vous avez découvert le parcours complet de ZAWJ : découverte de profils, 
+          Vous avez découvert le parcours complet de Nissfi : découverte de profils, 
           protection Tuteur, messagerie sécurisée et options Premium. Prêt à commencer votre vraie recherche ?
         </p>
         <div className="flex flex-wrap justify-center gap-4">

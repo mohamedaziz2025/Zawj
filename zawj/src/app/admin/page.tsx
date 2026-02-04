@@ -54,7 +54,7 @@ export default function AdminDashboard() {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
                 Espace Administration
               </h1>
-              <p className="text-sm text-gray-500 mt-1">Gestion et supervision de la plateforme ZAWJ</p>
+              <p className="text-sm text-gray-500 mt-1">Gestion et supervision de la plateforme Nissfi</p>
             </div>
             <div className="flex items-center gap-3">
               <button className="p-2.5 hover:bg-gray-100 rounded-xl transition-colors relative">

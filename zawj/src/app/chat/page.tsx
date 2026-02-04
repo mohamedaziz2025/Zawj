@@ -111,7 +111,7 @@ export default function ChatPage() {
               <span className="font-semibold">Communication Restreinte</span>
             </div>
             <p className="text-gray-300 text-sm">
-              Pour communiquer sur ZAWJ, vous devez avoir un Tuteur (tuteur légal) validé qui supervise vos échanges.
+              Pour communiquer sur Nissfi, vous devez avoir un Tuteur (tuteur légal) validé qui supervise vos échanges.
             </p>
           </div>
           <p className="text-gray-400 mb-6">

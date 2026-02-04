@@ -57,7 +57,7 @@ export default function SubscribePage() {
             Rejoignez l'<span className="text-[#ff007f]">élite</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Débloquez tout le potentiel de ZAWJ avec nos abonnements premium
+            Débloquez tout le potentiel de Nissfi avec nos abonnements premium
           </p>
         </div>
 

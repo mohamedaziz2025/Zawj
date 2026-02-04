@@ -95,7 +95,7 @@ export default function PremiumPage() {
         <div className="max-w-7xl mx-auto glass-card rounded-full px-8 py-4 flex justify-between items-center shadow-2xl">
           <Link href="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
-            <span className="text-xl font-bold tracking-widest text-white">ZAWJ</span>
+            <span className="text-xl font-bold tracking-widest text-white">Nissfi</span>
           </Link>
           <Link href="/login" className="btn-pink px-6 py-2 rounded-full text-xs font-black uppercase">Connexion</Link>
         </div>

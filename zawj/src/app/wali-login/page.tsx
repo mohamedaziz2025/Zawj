@@ -56,7 +56,7 @@ export default function WaliLoginPage() {
               <div className="w-12 h-12 bg-[#ff007f] rounded-lg flex items-center justify-center">
                 <Shield className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-bold tracking-widest text-white">ZAWJ</span>
+              <span className="text-2xl font-bold tracking-widest text-white">Nissfi</span>
             </div>
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Espace Tuteur</h1>
@@ -146,7 +146,7 @@ export default function WaliLoginPage() {
         <div className="text-center mt-6">
           <p className="text-sm text-gray-400">
             Vous n&apos;avez pas reçu votre code d&apos;accès ?{' '}
-            <a href="mailto:support@zawj.com" className="text-[#ff007f] hover:underline">
+            <a href="mailto:support@Nissfi.com" className="text-[#ff007f] hover:underline">
               Contactez le support
             </a>
           </p>

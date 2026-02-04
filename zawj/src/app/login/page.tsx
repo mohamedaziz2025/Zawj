@@ -64,7 +64,7 @@ export default function LoginPage() {
             </div>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-black">
-            Connexion à <span className="text-[#ff007f]">ZAWJ</span>
+            Connexion à <span className="text-[#ff007f]">Nissfi</span>
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Ou{' '}

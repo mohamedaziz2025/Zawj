@@ -2,41 +2,11 @@
 
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { moderatorApi, ModeratorProfile } from '@/lib/api/moderator'
 import { 
   Users, MessageCircle, CheckCircle, XCircle, 
   Shield, TrendingUp, Eye
 } from 'lucide-react'
-
-interface ModeratorProfile {
-  _id: string
-  userId: {
-    _id: string
-    firstName: string
-    lastName: string
-    email: string
-  }
-  isActive: boolean
-  assignedUsers: Array<{
-    _id: string
-    firstName: string
-    lastName: string
-    email: string
-    city?: string
-    age?: number
-    profession?: string
-  }>
-  canAccessAllMessages: boolean
-  permissions: {
-    canApprovePaidTutor: boolean
-    canViewMessages: boolean
-    canBlockUsers: boolean
-  }
-  statistics: {
-    totalAssigned: number
-    totalApprovals: number
-    totalRejections: number
-  }
-}
 
 export default function ModeratorDashboard() {
   const [selectedUser, setSelectedUser] = useState<string | null>(null)
@@ -44,15 +14,7 @@ export default function ModeratorDashboard() {
   // Fetch moderator profile
   const { data: profile, isLoading } = useQuery<ModeratorProfile>({
     queryKey: ['moderator-profile'],
-    queryFn: async () => {
-      const res = await fetch('http://localhost:5000/api/moderators/me', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-      if (!res.ok) throw new Error('Failed to fetch profile')
-      return res.json()
-    },
+    queryFn: moderatorApi.getProfile
   })
 
   if (isLoading) {

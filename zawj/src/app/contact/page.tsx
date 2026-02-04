@@ -68,10 +68,10 @@ export default function ContactPage() {
                 Envoyez-nous un email et nous vous répondrons sous 24h
               </p>
               <a
-                href="mailto:support@zawj.com"
+                href="mailto:support@Nissfi.com"
                 className="text-[#ff007f] hover:text-[#ff4d94] font-medium text-sm"
               >
-                support@zawj.com
+                support@Nissfi.com
               </a>
             </div>
 

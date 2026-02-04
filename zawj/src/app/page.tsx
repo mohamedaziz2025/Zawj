@@ -13,7 +13,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-gray-200 rounded-full px-4 md:px-8 py-4 flex justify-between items-center shadow-xl">
           <div className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
-            <span className="text-lg md:text-xl font-bold tracking-widest text-gray-900">ZAWJ</span>
+            <span className="text-lg md:text-xl font-bold tracking-widest text-gray-900">Nissfi</span>
           </div>
           <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-600">
             <a href="#concept" className="hover:text-pink-600 transition-colors">Concept</a>
@@ -105,7 +105,7 @@ export default function Home() {
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
               Comment utiliser <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span> en 4 étapes
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Nissfi</span> en 4 étapes
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-pink-600 to-transparent mx-auto mb-6"></div>
             <p className="text-gray-700 text-lg max-w-2xl mx-auto">
@@ -357,7 +357,7 @@ export default function Home() {
       <section id="concept" className="py-16 sm:py-32 bg-gradient-to-b from-white via-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16 sm:mb-24" data-aos="fade-up">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">L&apos;ADN <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">L&apos;ADN <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Nissfi</span></h2>
             <div className="w-20 h-1 bg-gradient-to-r from-pink-600 to-purple-600 mx-auto"></div>
           </div>
 
@@ -405,7 +405,7 @@ export default function Home() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto mb-6"></div>
             <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
-              ZAWJ est la première plateforme au monde à intégrer nativement le rôle du tuteur (Tuteur) 
+              Nissfi est la première plateforme au monde à intégrer nativement le rôle du tuteur (Tuteur) 
               dans le processus matrimonial, garantissant respect, pudeur et conformité islamique.
             </p>
           </div>
@@ -587,7 +587,7 @@ export default function Home() {
                   <span className="px-2 py-1 bg-[#ff007f]/20 text-[#ff007f] text-[8px] font-black rounded uppercase">Premium</span>
                 </div>
                 <p className="text-gray-400 mb-6 leading-relaxed">
-                  Pour plus de confidentialité, ZAWJ met à disposition un Tuteur certifié qui supervisera 
+                  Pour plus de confidentialité, Nissfi met à disposition un Tuteur certifié qui supervisera 
                   vos échanges de manière professionnelle et discrète.
                 </p>
                 <ul className="space-y-3 mb-6">
@@ -682,7 +682,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-[#ff007f] rounded flex items-center justify-center text-white font-black text-sm">Z</div>
-            <span className="text-lg font-bold tracking-tighter">ZAWJ</span>
+            <span className="text-lg font-bold tracking-tighter">Nissfi</span>
           </div>
           <div className="flex space-x-8 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
             <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
@@ -690,7 +690,7 @@ export default function Home() {
             <a href="#" className="hover:text-white transition-colors">Contact</a>
           </div>
           <div className="text-[10px] text-gray-800 font-bold uppercase tracking-[0.4em]">
-            &copy; 2024 ZAWJ . TOUS DROITS RÉSERVÉS.
+            &copy; 2024 Nissfi . TOUS DROITS RÉSERVÉS.
           </div>
         </div>
       </footer>

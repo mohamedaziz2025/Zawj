@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { adminApi } from '@/lib/api/admin'
 import { 
   Shield, UserPlus, Edit2, Trash2, Users, 
-  CheckCircle, XCircle, Eye, UserCheck 
+  CheckCircle, XCircle, Eye, UserCheck, X 
 } from 'lucide-react'
 
 interface Moderator {
@@ -31,38 +32,57 @@ interface Moderator {
   createdAt: string
 }
 
+interface User {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  role: string
+}
+
 export default function ModeratorsPage() {
   const queryClient = useQueryClient()
-  const [showAddModal, setShowAddModal] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showAssignModal, setShowAssignModal] = useState(false)
   const [selectedModerator, setSelectedModerator] = useState<Moderator | null>(null)
-  const [showEditModal, setShowEditModal] = useState(false)
+  const [selectedUserId, setSelectedUserId] = useState('')
+  const [permissions, setPermissions] = useState({
+    canApprovePaidTutor: true,
+    canViewMessages: true,
+    canBlockUsers: false
+  })
 
   // Fetch moderators
   const { data: moderators = [], isLoading } = useQuery({
     queryKey: ['moderators'],
-    queryFn: async () => {
-      const res = await fetch('http://localhost:5000/api/moderators', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
+    queryFn: adminApi.getModerators
+  })
+
+  // Fetch users for dropdown
+  const { data: usersData } = useQuery({
+    queryKey: ['admin-users'],
+    queryFn: () => adminApi.getUsers({ limit: 1000 })
+  })
+
+  // Create moderator mutation
+  const createMutation = useMutation({
+    mutationFn: (data: { userId: string; permissions: any; canAccessAllMessages: boolean }) => 
+      adminApi.createModerator(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['moderators'] })
+      setShowCreateModal(false)
+      setSelectedUserId('')
+      setPermissions({
+        canApprovePaidTutor: true,
+        canViewMessages: true,
+        canBlockUsers: false
       })
-      if (!res.ok) throw new Error('Failed to fetch moderators')
-      return res.json()
     },
   })
 
   // Delete mutation
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch(`http://localhost:5000/api/moderators/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-      if (!res.ok) throw new Error('Failed to delete moderator')
-      return res.json()
-    },
+    mutationFn: (id: string) => adminApi.deleteModerator(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['moderators'] })
     },
@@ -71,21 +91,44 @@ export default function ModeratorsPage() {
   // Toggle active status
   const toggleActiveMutation = useMutation({
     mutationFn: async ({ id, isActive }: { id: string; isActive: boolean }) => {
-      const res = await fetch(`http://localhost:5000/api/moderators/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        body: JSON.stringify({ isActive: !isActive }),
-      })
-      if (!res.ok) throw new Error('Failed to update moderator')
-      return res.json()
+      return adminApi.updateModerator(id, { isActive: !isActive })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['moderators'] })
     },
   })
+
+  // Assign user to moderator
+  const assignMutation = useMutation({
+    mutationFn: ({ moderatorId, userId }: { moderatorId: string; userId: string }) =>
+      adminApi.assignUserToModerator(moderatorId, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['moderators'] })
+      setShowAssignModal(false)
+      setSelectedUserId('')
+    },
+  })
+
+  const handleCreateModerator = () => {
+    if (!selectedUserId) return
+    createMutation.mutate({
+      userId: selectedUserId,
+      permissions,
+      canAccessAllMessages: false
+    })
+  }
+
+  const handleAssignUser = () => {
+    if (!selectedModerator || !selectedUserId) return
+    assignMutation.mutate({
+      moderatorId: selectedModerator._id,
+      userId: selectedUserId
+    })
+  }
+
+  const availableUsers = usersData?.users?.filter(u => 
+    u.role !== 'moderator' && u.role !== 'admin'
+  ) || []
 
   if (isLoading) {
     return (
@@ -94,6 +137,9 @@ export default function ModeratorsPage() {
       </div>
     )
   }
+
+  const activeCount = moderators.filter((m: Moderator) => m.isActive).length
+  const totalAssigned = moderators.reduce((sum: number, m: Moderator) => sum + m.assignedUsers.length, 0)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 lg:p-8">
@@ -106,11 +152,11 @@ export default function ModeratorsPage() {
               <p className="text-gray-600">Gérez les modérateurs qui supervisent les utilisatrices</p>
             </div>
             <button
-              onClick={() => setShowAddModal(true)}
+              onClick={() => setShowCreateModal(true)}
               className="flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg"
             >
               <UserPlus className="h-5 w-5" />
-              Ajouter un Modérateur
+              Créer Modérateur
             </button>
           </div>
         </div>
@@ -128,95 +174,117 @@ export default function ModeratorsPage() {
           <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <CheckCircle className="h-8 w-8 text-green-600" />
-              <span className="text-2xl font-bold text-gray-900">
-                {moderators.filter((m: Moderator) => m.isActive).length}
-              </span>
+              <span className="text-2xl font-bold text-gray-900">{activeCount}</span>
             </div>
             <p className="text-sm text-gray-600">Actifs</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <Users className="h-8 w-8 text-purple-600" />
-              <span className="text-2xl font-bold text-gray-900">
-                {moderators.reduce((sum: number, m: Moderator) => sum + m.statistics.totalAssigned, 0)}
-              </span>
+              <Users className="h-8 w-8 text-blue-600" />
+              <span className="text-2xl font-bold text-gray-900">{totalAssigned}</span>
             </div>
             <p className="text-sm text-gray-600">Utilisatrices Assignées</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <Eye className="h-8 w-8 text-blue-600" />
+              <Eye className="h-8 w-8 text-purple-600" />
               <span className="text-2xl font-bold text-gray-900">
-                {moderators.reduce((sum: number, m: Moderator) => sum + m.statistics.totalApprovals, 0)}
+                {moderators.reduce((sum: number, m: Moderator) => sum + (m.statistics?.totalApprovals || 0), 0)}
               </span>
             </div>
-            <p className="text-sm text-gray-600">Approbations Totales</p>
+            <p className="text-sm text-gray-600">Total Approbations</p>
           </div>
         </div>
 
         {/* Moderators List */}
-        <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden">
-          <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+        <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-gray-200">
             <h2 className="text-xl font-bold text-gray-900">Liste des Modérateurs</h2>
           </div>
-
-          <div className="divide-y divide-gray-200">
+          <div className="p-6">
             {moderators.length === 0 ? (
-              <div className="p-12 text-center">
-                <Shield className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Aucun modérateur pour le moment</p>
+              <div className="text-center py-12">
+                <Shield className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 mb-4">Aucun modérateur pour le moment</p>
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="text-pink-600 hover:text-pink-700 font-semibold"
+                >
+                  Créer le premier modérateur
+                </button>
               </div>
             ) : (
               moderators.map((moderator: Moderator) => (
-                <div key={moderator._id} className="p-6 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        {moderator.userId.firstName[0]}{moderator.userId.lastName[0]}
+                <div
+                  key={moderator._id}
+                  className="mb-4 p-6 bg-gray-50 rounded-xl border-2 border-gray-200 hover:border-pink-300 transition-all"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-bold text-gray-900">
+                          {moderator.userId.firstName} {moderator.userId.lastName}
+                        </h3>
+                        {moderator.isActive ? (
+                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                            Actif
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
+                            Inactif
+                          </span>
+                        )}
                       </div>
+                      <p className="text-sm text-gray-600 mb-3">{moderator.userId.email}</p>
                       
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {moderator.userId.firstName} {moderator.userId.lastName}
-                          </h3>
-                          {moderator.isActive ? (
-                            <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
-                              Actif
-                            </span>
-                          ) : (
-                            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
-                              Inactif
-                            </span>
-                          )}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div>
+                          <p className="text-xs text-gray-500">Utilisatrices</p>
+                          <p className="text-lg font-bold text-gray-900">{moderator.assignedUsers.length}</p>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{moderator.userId.email}</p>
-                        
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className="text-gray-600">
-                            <Users className="inline h-4 w-4 mr-1" />
-                            {moderator.statistics.totalAssigned} assignées
-                          </span>
-                          <span className="text-gray-600">
-                            <CheckCircle className="inline h-4 w-4 mr-1 text-green-600" />
-                            {moderator.statistics.totalApprovals} approbations
-                          </span>
-                          <span className="text-gray-600">
-                            <XCircle className="inline h-4 w-4 mr-1 text-red-600" />
-                            {moderator.statistics.totalRejections} rejets
-                          </span>
+                        <div>
+                          <p className="text-xs text-gray-500">Approbations</p>
+                          <p className="text-lg font-bold text-gray-900">{moderator.statistics?.totalApprovals || 0}</p>
                         </div>
+                        <div>
+                          <p className="text-xs text-gray-500">Rejets</p>
+                          <p className="text-lg font-bold text-gray-900">{moderator.statistics?.totalRejections || 0}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500">Messages</p>
+                          <p className="text-lg font-bold text-gray-900">
+                            {moderator.canAccessAllMessages ? 'Tous' : moderator.assignedUsers.length}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {moderator.permissions.canApprovePaidTutor && (
+                          <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                            Approuver Tuteur
+                          </span>
+                        )}
+                        {moderator.permissions.canViewMessages && (
+                          <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded">
+                            Voir Messages
+                          </span>
+                        )}
+                        {moderator.permissions.canBlockUsers && (
+                          <span className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">
+                            Bloquer Utilisateurs
+                          </span>
+                        )}
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-2">
+                    
+                    <div className="flex gap-2 ml-4">
                       <button
                         onClick={() => toggleActiveMutation.mutate({ id: moderator._id, isActive: moderator.isActive })}
                         className={`p-2 rounded-lg transition-colors ${
-                          moderator.isActive
-                            ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          moderator.isActive 
+                            ? 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200' 
                             : 'bg-green-100 text-green-600 hover:bg-green-200'
                         }`}
                         title={moderator.isActive ? 'Désactiver' : 'Activer'}
@@ -227,12 +295,12 @@ export default function ModeratorsPage() {
                       <button
                         onClick={() => {
                           setSelectedModerator(moderator)
-                          setShowEditModal(true)
+                          setShowAssignModal(true)
                         }}
-                        className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
-                        title="Modifier"
+                        className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors"
+                        title="Assigner Utilisatrice"
                       >
-                        <Edit2 className="h-5 w-5" />
+                        <UserCheck className="h-5 w-5" />
                       </button>
                       
                       <button
@@ -254,6 +322,159 @@ export default function ModeratorsPage() {
           </div>
         </div>
       </div>
+
+      {/* Create Moderator Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Créer un Modérateur</h3>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Sélectionner Utilisateur
+                </label>
+                <select
+                  value={selectedUserId}
+                  onChange={(e) => setSelectedUserId(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                >
+                  <option value="">Choisir un utilisateur...</option>
+                  {availableUsers.map((user: User) => (
+                    <option key={user.id} value={user.id}>
+                      {user.firstName} {user.lastName} ({user.email})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Permissions
+                </label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={permissions.canApprovePaidTutor}
+                      onChange={(e) => setPermissions({...permissions, canApprovePaidTutor: e.target.checked})}
+                      className="w-4 h-4 text-pink-600 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-sm text-gray-700">Approuver les tuteurs payants</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={permissions.canViewMessages}
+                      onChange={(e) => setPermissions({...permissions, canViewMessages: e.target.checked})}
+                      className="w-4 h-4 text-pink-600 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-sm text-gray-700">Voir les messages</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={permissions.canBlockUsers}
+                      onChange={(e) => setPermissions({...permissions, canBlockUsers: e.target.checked})}
+                      className="w-4 h-4 text-pink-600 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-sm text-gray-700">Bloquer des utilisateurs</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={handleCreateModerator}
+                  disabled={!selectedUserId || createMutation.isPending}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
+                >
+                  {createMutation.isPending ? 'Création...' : 'Créer'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Assign User Modal */}
+      {showAssignModal && selectedModerator && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Assigner Utilisatrice</h3>
+              <button
+                onClick={() => {
+                  setShowAssignModal(false)
+                  setSelectedUserId('')
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-4">
+              Assigner une utilisatrice à <strong>{selectedModerator.userId.firstName} {selectedModerator.userId.lastName}</strong>
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Sélectionner Utilisatrice
+                </label>
+                <select
+                  value={selectedUserId}
+                  onChange={(e) => setSelectedUserId(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                >
+                  <option value="">Choisir une utilisatrice...</option>
+                  {availableUsers
+                    .filter((user: User) => user.role === 'seeker') // Only seekers
+                    .map((user: User) => (
+                      <option key={user.id} value={user.id}>
+                        {user.firstName} {user.lastName} ({user.email})
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => {
+                    setShowAssignModal(false)
+                    setSelectedUserId('')
+                  }}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={handleAssignUser}
+                  disabled={!selectedUserId || assignMutation.isPending}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
+                >
+                  {assignMutation.isPending ? 'Assignment...' : 'Assigner'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

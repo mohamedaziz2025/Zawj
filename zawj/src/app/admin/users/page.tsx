@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Search, Filter, UserCheck, UserX, Trash2, Mail, MapPin, Calendar, Shield, ChevronLeft, Download, MoreVertical } from 'lucide-react'
+import { Search, Filter, UserCheck, UserX, Trash2, Mail, MapPin, Calendar, Shield, ChevronLeft, Download, MoreVertical, Edit, Eye, X } from 'lucide-react'
 import { adminApi, AdminUser } from '@/lib/api/admin'
 import { useAuthStore } from '@/store/auth'
 import Link from 'next/link'
@@ -10,6 +10,9 @@ import Link from 'next/link'
 export default function AdminUsersPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null)
   const queryClient = useQueryClient()
   const { isAuthenticated, user } = useAuthStore()
 
@@ -147,6 +150,14 @@ export default function AdminUsersPage() {
             <UserCard
               key={user.id}
               user={user}
+              onView={() => {
+                setSelectedUser(user)
+                setShowDetailsModal(true)
+              }}
+              onEdit={() => {
+                setSelectedUser(user)
+                setShowEditModal(true)
+              }}
               onBlock={(blocked) =>
                 blockUserMutation.mutate({
                   userId: user.id,
@@ -176,6 +187,195 @@ export default function AdminUsersPage() {
           </div>
         )}
       </div>
+
+      {/* User Details Modal */}
+      {showDetailsModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">Détails de l'utilisateur</h3>
+              <button
+                onClick={() => setShowDetailsModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {/* Avatar & Name */}
+              <div className="flex items-center gap-4">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  {selectedUser.firstName?.[0] || '?'}
+                  {selectedUser.lastName?.[0] || ''}
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-900">
+                    {selectedUser.firstName} {selectedUser.lastName}
+                  </h4>
+                  <p className="text-gray-600">{selectedUser.email}</p>
+                </div>
+              </div>
+
+              {/* Info Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-sm text-gray-600 mb-1">Rôle</p>
+                  <p className="font-semibold text-gray-900">{selectedUser.role}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-sm text-gray-600 mb-1">Genre</p>
+                  <p className="font-semibold text-gray-900">{selectedUser.gender === 'male' ? 'Homme' : 'Femme'}</p>
+                </div>
+                {selectedUser.age && (
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-600 mb-1">Âge</p>
+                    <p className="font-semibold text-gray-900">{selectedUser.age} ans</p>
+                  </div>
+                )}
+                {selectedUser.city && (
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-600 mb-1">Ville</p>
+                    <p className="font-semibold text-gray-900">{selectedUser.city}</p>
+                  </div>
+                )}
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-sm text-gray-600 mb-1">Statut</p>
+                  <p className="font-semibold text-gray-900">{selectedUser.isActive ? 'Actif' : 'Bloqué'}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-sm text-gray-600 mb-1">Vérifié</p>
+                  <p className="font-semibold text-gray-900">{selectedUser.isVerified ? 'Oui' : 'Non'}</p>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-xl">
+                <p className="text-sm text-gray-600 mb-1">Date d'inscription</p>
+                <p className="font-semibold text-gray-900">
+                  {new Date(selectedUser.createdAt).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              </div>
+
+              {selectedUser.lastLogin && (
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-sm text-gray-600 mb-1">Dernière connexion</p>
+                  <p className="font-semibold text-gray-900">
+                    {new Date(selectedUser.lastLogin).toLocaleDateString('fr-FR', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">Modifier l'utilisateur</h3>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+                <input
+                  type="text"
+                  defaultValue={selectedUser.firstName}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                <input
+                  type="text"
+                  defaultValue={selectedUser.lastName}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input
+                  type="email"
+                  defaultValue={selectedUser.email}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
+                <select
+                  defaultValue={selectedUser.role}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                >
+                  <option value="seeker">Seeker</option>
+                  <option value="moderator">Moderator</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    defaultChecked={selectedUser.isActive}
+                    className="w-4 h-4 text-pink-600 rounded focus:ring-pink-500"
+                  />
+                  <span className="text-sm text-gray-700">Actif</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    defaultChecked={selectedUser.isVerified}
+                    className="w-4 h-4 text-pink-600 rounded focus:ring-pink-500"
+                  />
+                  <span className="text-sm text-gray-700">Vérifié</span>
+                </label>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => setShowEditModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={() => {
+                    // TODO: Add update user API call
+                    alert('Fonctionnalité de mise à jour à implémenter')
+                    setShowEditModal(false)
+                  }}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-all"
+                >
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -209,11 +409,15 @@ function FilterButton({
 function UserCard({
   user,
   onBlock,
-  onDelete
+  onDelete,
+  onEdit,
+  onView
 }: {
   user: AdminUser
   onBlock: (blocked: boolean) => void
   onDelete: () => void
+  onEdit: () => void
+  onView: () => void
 }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all">
@@ -255,10 +459,24 @@ function UserCard({
             {/* Action Buttons */}
             <div className="flex items-center gap-2">
               <button
+                onClick={onView}
+                className="p-2.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition-all"
+                title="Voir détails"
+              >
+                <Eye className="h-5 w-5" />
+              </button>
+              <button
+                onClick={onEdit}
+                className="p-2.5 bg-purple-50 text-purple-600 hover:bg-purple-100 rounded-xl transition-all"
+                title="Modifier"
+              >
+                <Edit className="h-5 w-5" />
+              </button>
+              <button
                 onClick={() => onBlock(!user.isActive)}
                 className={`p-2.5 rounded-xl transition-all ${
                   user.isActive
-                    ? 'bg-red-50 text-red-600 hover:bg-red-100'
+                    ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100'
                     : 'bg-green-50 text-green-600 hover:bg-green-100'
                 }`}
                 title={user.isActive ? 'Bloquer' : 'Débloquer'}

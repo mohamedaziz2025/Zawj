@@ -199,4 +199,49 @@ export const adminApi = {
     const response = await api.get('/api/admin/financial/metrics')
     return response.data
   },
+
+  // Moderators
+  getModerators: async (): Promise<any[]> => {
+    const response = await api.get('/api/moderators')
+    return response.data
+  },
+
+  createModerator: async (data: { userId: string; permissions?: any; canAccessAllMessages?: boolean }): Promise<any> => {
+    const response = await api.post('/api/moderators', data)
+    return response.data
+  },
+
+  updateModerator: async (id: string, data: { isActive?: boolean; permissions?: any; canAccessAllMessages?: boolean }): Promise<any> => {
+    const response = await api.put(`/api/moderators/${id}`, data)
+    return response.data
+  },
+
+  deleteModerator: async (id: string): Promise<void> => {
+    await api.delete(`/api/moderators/${id}`)
+  },
+
+  assignUserToModerator: async (moderatorId: string, userId: string): Promise<any> => {
+    const response = await api.post(`/api/moderators/${moderatorId}/assign`, { userId })
+    return response.data
+  },
+
+  unassignUserFromModerator: async (moderatorId: string, userId: string): Promise<any> => {
+    const response = await api.delete(`/api/moderators/${moderatorId}/assign/${userId}`)
+    return response.data
+  },
+
+  // Messages
+  getConversations: async (): Promise<any[]> => {
+    const response = await api.get('/api/admin/conversations')
+    return response.data
+  },
+
+  getConversationMessages: async (conversationId: string): Promise<any[]> => {
+    const response = await api.get(`/api/admin/conversations/${conversationId}/messages`)
+    return response.data
+  },
+
+  deleteMessage: async (messageId: string): Promise<void> => {
+    await api.delete(`/api/admin/messages/${messageId}`)
+  },
 }

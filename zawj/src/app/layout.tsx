@@ -9,7 +9,7 @@ import { AOSInit } from "@/components/AOSInit";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Zawj - L'Amour Halal & Élégant",
+  title: "Nissfi - L'Amour Halal & Élégant",
   description: "Oubliez les standards. Vivez une expérience matrimoniale où la pudeur est magnifiée par la modernité.",
   manifest: "/manifest.json",
 };

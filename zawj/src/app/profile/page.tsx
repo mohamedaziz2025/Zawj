@@ -257,7 +257,7 @@ export default function ProfilePage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Service Tuteur Requis</h3>
               <p className="text-gray-400 mb-6">
-                Pour communiquer sur ZAWJ, vous devez avoir un Tuteur (tuteur légal) validé.
+                Pour communiquer sur Nissfi, vous devez avoir un Tuteur (tuteur légal) validé.
                 Notre service Tuteur plateforme vous permet de bénéficier de ce service de manière sécurisée.
               </p>
 
