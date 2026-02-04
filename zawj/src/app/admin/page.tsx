@@ -1,13 +1,43 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Users, Heart, MessageCircle, AlertTriangle, TrendingUp, Shield, DollarSign, Activity, ChevronRight, Bell, Settings } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { adminApi } from '@/lib/api/admin'
+import { authApi } from '@/lib/api/auth'
 import Link from 'next/link'
 
 export default function AdminDashboard() {
-  const { user, isAuthenticated } = useAuthStore()
+  const { user, isAuthenticated, setUser, isLoading: authLoading, setLoading } = useAuthStore()
+
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('accessToken')
+      console.log('Token trouvé:', token ? 'Oui' : 'Non')
+      
+      if (token && !user) {
+        try {
+          console.log('Récupération des données utilisateur...')
+          const userData = await authApi.getCurrentUser()
+          console.log('Données utilisateur:', userData)
+          setUser(userData)
+        } catch (error) {
+          console.error('Erreur récupération utilisateur:', error)
+          localStorage.removeItem('accessToken')
+          setLoading(false)
+          window.location.href = '/login'
+        }
+      } else if (!token) {
+        console.log('Pas de token, redirection vers login')
+        setLoading(false)
+        window.location.href = '/login'
+      }
+    }
+
+    checkAuth()
+  }, [user, setUser, setLoading])
 
   // Fetch real stats from API
   const { data: stats, isLoading } = useQuery({
@@ -15,6 +45,18 @@ export default function AdminDashboard() {
     queryFn: () => adminApi.getStats(),
     enabled: isAuthenticated && user?.role === 'admin',
   })
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-pink-600 mx-auto"></div>
+          <p className="text-gray-600 mt-4 font-medium">Vérification de l'authentification...</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!isAuthenticated || user?.role !== 'admin') {
     return (

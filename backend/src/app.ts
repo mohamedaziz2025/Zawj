@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import path from 'path'
 import { config } from '@/config'
-import { authMiddleware, errorHandler } from '@/middlewares/auth.middleware'
+import { authMiddleware, authenticateToken, errorHandler } from '@/middlewares/auth.middleware'
 import { apiLimiter } from '@/middlewares/security.middleware'
 import authRoutes from '@/modules/auth/auth.routes'
 import userRoutes from '@/modules/users/user.routes'
@@ -51,14 +51,14 @@ export function createApp(): Express {
   // Public routes
   app.use('/api/auth', authRoutes)
 
-  // Protected routes
-  app.use('/api/users', authMiddleware, userRoutes)
-  app.use('/api/chat', authMiddleware, chatRoutes)
-  app.use('/api/subscription', authMiddleware, subscriptionRoutes)
-  app.use('/api/likes', authMiddleware, likeRoutes)
-  app.use('/api/search', authMiddleware, searchRoutes)
-  app.use('/api/wali', authMiddleware, waliRoutes)
-  app.use('/api/moderators', authMiddleware, moderatorRoutes)
+  // Protected routes - Use authenticateToken for header-based auth
+  app.use('/api/users', authenticateToken, userRoutes)
+  app.use('/api/chat', authenticateToken, chatRoutes)
+  app.use('/api/subscription', authenticateToken, subscriptionRoutes)
+  app.use('/api/likes', authenticateToken, likeRoutes)
+  app.use('/api/search', authenticateToken, searchRoutes)
+  app.use('/api/wali', authenticateToken, waliRoutes)
+  app.use('/api/moderators', authenticateToken, moderatorRoutes)
   app.use('/api/upload', uploadRoutes)
   app.use('/api/admin', adminRoutes)
 

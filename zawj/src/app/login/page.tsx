@@ -25,26 +25,37 @@ export default function LoginPage() {
     setError('')
 
     try {
+      console.log('Tentative de connexion avec:', formData.email)
       const response = await authApi.login(formData)
+      console.log('Réponse login:', response)
       
       // Store token explicitly
       if (response.accessToken) {
         localStorage.setItem('accessToken', response.accessToken)
+        console.log('Token stocké:', response.accessToken.substring(0, 20) + '...')
+      } else {
+        console.warn('Aucun accessToken dans la réponse')
       }
       
       // Set user in store
       setUser(response.user)
+      console.log('Utilisateur connecté:', response.user)
       
       // Rediriger selon le rôle de l'utilisateur
       const userRole = response.user.role
+      console.log('Rôle utilisateur:', userRole)
       
       // Use window.location for hard navigation to ensure proper page load
       if (userRole === 'admin') {
+        console.log('Redirection vers /admin')
         window.location.href = '/admin'
       } else {
+        console.log('Redirection vers /search')
         window.location.href = '/search'
       }
     } catch (err: any) {
+      console.error('Erreur de connexion:', err)
+      console.error('Détails erreur:', err.response?.data)
       setError(err.response?.data?.message || 'Une erreur est survenue')
       setIsLoading(false)
     }
