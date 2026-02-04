@@ -40,9 +40,10 @@ export default function CreateUserPage() {
       if (data.gender === 'female' && 
           data.waliInfo?.type === 'platform' && 
           selectedModeratorId && 
-          response.user?.id) {
+          response.user) {
         try {
-          await adminApi.assignUserToModerator(selectedModeratorId, response.user.id)
+          const userId = response.user.id || response.user._id
+          await adminApi.assignUserToModerator(selectedModeratorId, userId)
         } catch (error) {
           console.error('Failed to assign moderator:', error)
           // Continue anyway, user is created
