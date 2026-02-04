@@ -45,6 +45,7 @@ interface User {
 export default function ModeratorsPage() {
   const queryClient = useQueryClient()
   const { user, setUser, isLoading: authLoading, setLoading } = useAuthStore()
+  const [isAuthChecked, setIsAuthChecked] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showAssignModal, setShowAssignModal] = useState(false)
   const [selectedModerator, setSelectedModerator] = useState<Moderator | null>(null)
@@ -69,6 +70,8 @@ export default function ModeratorsPage() {
           // Verify admin role
           if (userData.role !== 'admin') {
             window.location.href = '/login'
+          } else {
+            setIsAuthChecked(true)
           }
         } catch (error) {
           console.error('Auth error:', error)
@@ -83,6 +86,7 @@ export default function ModeratorsPage() {
         window.location.href = '/login'
       } else {
         setLoading(false)
+        setIsAuthChecked(true)
       }
     }
 
@@ -93,14 +97,14 @@ export default function ModeratorsPage() {
   const { data: moderators = [], isLoading } = useQuery({
     queryKey: ['moderators'],
     queryFn: adminApi.getModerators,
-    enabled: !authLoading && !!user && user.role === 'admin'
+    enabled: isAuthChecked && !!user && user.role === 'admin'
   })
 
   // Fetch users for dropdown - only when authenticated as admin
   const { data: usersData } = useQuery({
     queryKey: ['admin-users'],
     queryFn: () => adminApi.getUsers({ limit: 1000 }),
-    enabled: !authLoading && !!user && user.role === 'admin'
+    enabled: isAuthChecked && !!user && user.role === 'admin'
   })
 
   // Create moderator mutation
