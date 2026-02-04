@@ -26,19 +26,26 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.login(formData)
+      
+      // Store token explicitly
+      if (response.accessToken) {
+        localStorage.setItem('accessToken', response.accessToken)
+      }
+      
+      // Set user in store
       setUser(response.user)
       
       // Rediriger selon le rôle de l'utilisateur
       const userRole = response.user.role
+      
+      // Use window.location for hard navigation to ensure proper page load
       if (userRole === 'admin') {
-        router.push('/admin')
+        window.location.href = '/admin'
       } else {
-        // Pour les utilisateurs normaux (seekers)
-        router.push('/search')
+        window.location.href = '/search'
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Une erreur est survenue')
-    } finally {
       setIsLoading(false)
     }
   }

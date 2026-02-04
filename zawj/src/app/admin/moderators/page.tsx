@@ -142,75 +142,75 @@ export default function ModeratorsPage() {
   const totalAssigned = moderators.reduce((sum: number, m: Moderator) => sum + m.assignedUsers.length, 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestion des Modérateurs</h1>
-              <p className="text-gray-600">Gérez les modérateurs qui supervisent les utilisatrices</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Gestion des Modérateurs</h1>
+              <p className="text-sm sm:text-base text-gray-600">Gérez les modérateurs qui supervisent les utilisatrices</p>
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg text-sm sm:text-base"
             >
-              <UserPlus className="h-5 w-5" />
+              <UserPlus className="h-4 w-4 sm:h-5 sm:w-5" />
               Créer Modérateur
             </button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <Shield className="h-8 w-8 text-pink-600" />
-              <span className="text-2xl font-bold text-gray-900">{moderators.length}</span>
+              <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-pink-600" />
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">{moderators.length}</span>
             </div>
-            <p className="text-sm text-gray-600">Total Modérateurs</p>
+            <p className="text-xs sm:text-sm text-gray-600">Total Modérateurs</p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <CheckCircle className="h-8 w-8 text-green-600" />
-              <span className="text-2xl font-bold text-gray-900">{activeCount}</span>
+              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600" />
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">{activeCount}</span>
             </div>
-            <p className="text-sm text-gray-600">Actifs</p>
+            <p className="text-xs sm:text-sm text-gray-600">Actifs</p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <Users className="h-8 w-8 text-blue-600" />
-              <span className="text-2xl font-bold text-gray-900">{totalAssigned}</span>
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600" />
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">{totalAssigned}</span>
             </div>
-            <p className="text-sm text-gray-600">Utilisatrices Assignées</p>
+            <p className="text-xs sm:text-sm text-gray-600">Utilisatrices Assignées</p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <Eye className="h-8 w-8 text-purple-600" />
-              <span className="text-2xl font-bold text-gray-900">
+              <Eye className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600" />
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">
                 {moderators.reduce((sum: number, m: Moderator) => sum + (m.statistics?.totalApprovals || 0), 0)}
               </span>
             </div>
-            <p className="text-sm text-gray-600">Total Approbations</p>
+            <p className="text-xs sm:text-sm text-gray-600">Total Approbations</p>
           </div>
         </div>
 
         {/* Moderators List */}
         <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Liste des Modérateurs</h2>
+          <div className="p-4 sm:p-6 border-b border-gray-200">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Liste des Modérateurs</h2>
           </div>
-          <div className="p-6">
+          <div className="p-3 sm:p-4 md:p-6">
             {moderators.length === 0 ? (
               <div className="text-center py-12">
-                <Shield className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">Aucun modérateur pour le moment</p>
+                <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-sm sm:text-base text-gray-600 mb-4">Aucun modérateur pour le moment</p>
                 <button
                   onClick={() => setShowCreateModal(true)}
-                  className="text-pink-600 hover:text-pink-700 font-semibold"
+                  className="text-sm sm:text-base text-pink-600 hover:text-pink-700 font-semibold"
                 >
                   Créer le premier modérateur
                 </button>
@@ -219,27 +219,27 @@ export default function ModeratorsPage() {
               moderators.map((moderator: Moderator) => (
                 <div
                   key={moderator._id}
-                  className="mb-4 p-6 bg-gray-50 rounded-xl border-2 border-gray-200 hover:border-pink-300 transition-all"
+                  className="mb-3 sm:mb-4 p-4 sm:p-6 bg-gray-50 rounded-xl border-2 border-gray-200 hover:border-pink-300 transition-all"
                 >
-                  <div className="flex items-start justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-lg font-bold text-gray-900">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                        <h3 className="text-base sm:text-lg font-bold text-gray-900">
                           {moderator.userId.firstName} {moderator.userId.lastName}
                         </h3>
                         {moderator.isActive ? (
-                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                          <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
                             Actif
                           </span>
                         ) : (
-                          <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
+                          <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
                             Inactif
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 mb-3">{moderator.userId.email}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 mb-3">{moderator.userId.email}</p>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4">
                         <div>
                           <p className="text-xs text-gray-500">Utilisatrices</p>
                           <p className="text-lg font-bold text-gray-900">{moderator.assignedUsers.length}</p>
