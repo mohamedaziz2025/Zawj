@@ -14,17 +14,17 @@ const adminOnly = async (req: any, res: any, next: any) => {
 };
 
 // GET /api/moderators - Liste tous les modérateurs
-router.get('/', authMiddleware, adminOnly, async (req, res) => {
+router.get('/', authMiddleware, adminOnly, async (_req, res) => {
   try {
     const moderators = await Moderator.find()
       .populate('userId', 'firstName lastName email')
       .populate('assignedUsers', 'firstName lastName email')
       .sort({ createdAt: -1 });
 
-    res.json(moderators);
+    return res.json(moderators);
   } catch (error) {
     console.error('Error fetching moderators:', error);
-    res.status(500).json({ message: 'Erreur lors de la récupération des modérateurs' });
+    return res.status(500).json({ message: 'Erreur lors de la récupération des modérateurs' });
   }
 });
 
@@ -59,10 +59,10 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
     const populatedModerator = await Moderator.findById(moderator._id)
       .populate('userId', 'firstName lastName email');
 
-    res.status(201).json(populatedModerator);
+    return res.status(201).json(populatedModerator);
   } catch (error) {
     console.error('Error creating moderator:', error);
-    res.status(500).json({ message: 'Erreur lors de la création du modérateur' });
+    return res.status(500).json({ message: 'Erreur lors de la création du modérateur' });
   }
 });
 
@@ -86,10 +86,10 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
       return res.status(404).json({ message: 'Modérateur non trouvé' });
     }
 
-    res.json(moderator);
+    return res.json(moderator);
   } catch (error) {
     console.error('Error updating moderator:', error);
-    res.status(500).json({ message: 'Erreur lors de la mise à jour du modérateur' });
+    return res.status(500).json({ message: 'Erreur lors de la mise à jour du modérateur' });
   }
 });
 
@@ -108,10 +108,10 @@ router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
 
     await Moderator.findByIdAndDelete(id);
 
-    res.json({ message: 'Modérateur supprimé avec succès' });
+    return res.json({ message: 'Modérateur supprimé avec succès' });
   } catch (error) {
     console.error('Error deleting moderator:', error);
-    res.status(500).json({ message: 'Erreur lors de la suppression du modérateur' });
+    return res.status(500).json({ message: 'Erreur lors de la suppression du modérateur' });
   }
 });
 
@@ -149,10 +149,10 @@ router.post('/:id/assign', authMiddleware, adminOnly, async (req, res) => {
       });
     }
 
-    res.json(moderator);
+    return res.json(moderator);
   } catch (error) {
     console.error('Error assigning user:', error);
-    res.status(500).json({ message: 'Erreur lors de l\'assignation' });
+    return res.status(500).json({ message: 'Erreur lors de l\'assignation' });
   }
 });
 
@@ -177,10 +177,10 @@ router.delete('/:id/assign/:userId', authMiddleware, adminOnly, async (req, res)
       $unset: { 'tuteurInfo.tuteurId': 1, 'tuteurInfo.isPaid': 1, 'tuteurInfo.assignedByAdmin': 1 }
     });
 
-    res.json(moderator);
+    return res.json(moderator);
   } catch (error) {
     console.error('Error unassigning user:', error);
-    res.status(500).json({ message: 'Erreur lors du retrait de l\'assignation' });
+    return res.status(500).json({ message: 'Erreur lors du retrait de l\'assignation' });
   }
 });
 
@@ -199,10 +199,10 @@ router.get('/me', authMiddleware, async (req: any, res) => {
       return res.status(404).json({ message: 'Profil modérateur non trouvé' });
     }
 
-    res.json(moderator);
+    return res.json(moderator);
   } catch (error) {
     console.error('Error fetching moderator profile:', error);
-    res.status(500).json({ message: 'Erreur lors de la récupération du profil' });
+    return res.status(500).json({ message: 'Erreur lors de la récupération du profil' });
   }
 });
 
