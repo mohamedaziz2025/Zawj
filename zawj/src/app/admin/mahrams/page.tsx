@@ -19,7 +19,7 @@ export default function AdminTuteursPage() {
   })
 
   const approveMutation = useMutation({
-    mutationFn: (mahramId: string) => adminApi.approveMahram(mahramId),
+    mutationFn: (tuteurId: string) => adminApi.approveTuteur(tuteurId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-Tuteurs'] })
       queryClient.invalidateQueries({ queryKey: ['admin-stats'] })
@@ -27,26 +27,26 @@ export default function AdminTuteursPage() {
   })
 
   const rejectMutation = useMutation({
-    mutationFn: ({ mahramId, reason }: { mahramId: string; reason: string }) =>
-      adminApi.rejectMahram(mahramId, reason),
+    mutationFn: ({ tuteurId, reason }: { tuteurId: string; reason: string }) =>
+      adminApi.rejectTuteur(tuteurId, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-Tuteurs'] })
       queryClient.invalidateQueries({ queryKey: ['admin-stats'] })
     },
   })
 
-  const Tuteurs = TuteursData?.Tuteurs || []
+  const Tuteurs = TuteursData?.tuteurs || TuteursData?.mahrams || []
 
-  const handleApprove = (mahramId: string) => {
+  const handleApprove = (tuteurId: string) => {
     if (confirm('Voulez-vous approuver cette demande de Tuteur ?')) {
-      approveMutation.mutate(mahramId)
+      approveMutation.mutate(tuteurId)
     }
   }
 
-  const handleReject = (mahramId: string) => {
+  const handleReject = (tuteurId: string) => {
     const reason = prompt('Raison du rejet :')
     if (reason) {
-      rejectMutation.mutate({ mahramId, reason })
+      rejectMutation.mutate({ tuteurId, reason })
     }
   }
 
@@ -141,13 +141,13 @@ export default function AdminTuteursPage() {
                       </h3>
                       <span className="text-gray-400">→</span>
                       <h3 className="text-xl font-semibold text-white">
-                        {Tuteur.Tuteur.name}
+                        {Tuteur.mahram.name}
                       </h3>
                     </div>
                     <div className="flex gap-6 text-sm text-gray-400">
-                      <span>{Tuteur.Tuteur.email}</span>
-                      <span>{Tuteur.Tuteur.phone}</span>
-                      <span className="capitalize">{Tuteur.Tuteur.relationship}</span>
+                      <span>{Tuteur.mahram.email}</span>
+                      <span>{Tuteur.mahram.phone}</span>
+                      <span className="capitalize">{Tuteur.mahram.relationship}</span>
                     </div>
                   </div>
                   <span

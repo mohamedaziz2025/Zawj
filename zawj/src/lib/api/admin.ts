@@ -126,19 +126,40 @@ export const adminApi = {
     await api.delete(`/api/admin/users/${userId}`)
   },
 
-  // Mahrams
+  // Mahrams (Tuteurs)
   getMahrams: async (status?: string): Promise<{ mahrams: Mahram[] }> => {
     const params = status && status !== 'all' ? { status } : {}
     const response = await api.get('/api/admin/mahrams', { params })
     return response.data
   },
 
+  // Alias pour getTuteurs
+  getTuteurs: async (status?: string): Promise<{ mahrams: Tuteur[]; tuteurs?: Tuteur[] }> => {
+    const params = status && status !== 'all' ? { status } : {}
+    const response = await api.get('/api/admin/mahrams', { params })
+    // Retourner avec les deux propriétés pour compatibilité
+    return { 
+      mahrams: response.data.mahrams,
+      tuteurs: response.data.mahrams 
+    }
+  },
+
   approveMahram: async (mahramId: string): Promise<void> => {
     await api.patch(`/api/admin/mahrams/${mahramId}/approve`)
   },
 
+  // Alias pour approveTuteur
+  approveTuteur: async (tuteurId: string): Promise<void> => {
+    await api.patch(`/api/admin/mahrams/${tuteurId}/approve`)
+  },
+
   rejectMahram: async (mahramId: string, reason: string): Promise<void> => {
     await api.patch(`/api/admin/mahrams/${mahramId}/reject`, { reason })
+  },
+
+  // Alias pour rejectTuteur
+  rejectTuteur: async (tuteurId: string, reason: string): Promise<void> => {
+    await api.patch(`/api/admin/mahrams/${tuteurId}/reject`, { reason })
   },
 
   // Reports
