@@ -5,6 +5,7 @@ import financialRoutes from './admin.financial.routes'
 import { Mahram } from './mahram.model'
 import { Report } from './report.model'
 import { User } from '../users/user.model'
+import { Conversation, Message } from '../chat/chat.model'
 
 const router = Router()
 
@@ -310,4 +311,54 @@ router.patch('/reports/:reportId/dismiss', adminOnly, async (req: Request, res: 
   }
 })
 
+// GET /api/admin/conversations - Get all conversations
+router.get('/conversations', adminOnly, async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const conversations = await Conversation.find()
+      .populate('participants', 'firstName lastName email gender')
+      .sort({ updatedAt: -1 })
+      .lean()
+
+    // Get last message and message count for each conversation
+    const conversationsWithDetails = await Promise.all(
+      conversations.map(async (conv: any) => {
+        const messageCount = await Message.countDocuments({ conversationId: conv._id })
+        const lastMessage = await Message.findOne({ conversationId: conv._id })
+          .sort({ createdAt: -1 })
+          .select('content sender createdAt')
+          .lean()
+
+        return {
+          ...conv,
+          messageCount,
+          lastMessage,
+        }
+      })
+    )
+
+    res.json({ conversations: conversationsWithDetails })
+  } catch (error) {
+    console.error('Error fetching conversations:', error)
+    res.status(500).json({ message: 'Error fetching conversations' })
+  }
+})
+
+// GET /api/admin/conversations/:conversationId/messages - Get all messages in a conversation
+router.get('/conversations/:conversationId/messages', adminOnly, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { conversationId } = req.params
+
+    const messages = await Message.find({ conversationId })
+      .populate('sender', 'firstName lastName')
+      .sort({ createdAt: 1 })
+      .lean()
+
+    res.json({ messages })
+  } catch (error) {
+    console.error('Error fetching messages:', error)
+    res.status(500).json({ message: 'Error fetching messages' })
+  }
+})
+
 export default router
+

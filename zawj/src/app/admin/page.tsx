@@ -158,20 +158,20 @@ export default function AdminDashboard() {
               badge={`${stats?.pendingMahrams || 0}`}
             />
             <QuickAction
+              title="Voir messagerie"
+              description="Superviser les conversations"
+              href="/admin/messages"
+              icon={MessageCircle}
+              gradient="from-indigo-500 to-purple-600"
+              badge="Admin"
+            />
+            <QuickAction
               title="Modérer signalements"
               description="Traiter les rapports"
               href="/admin/reports"
               icon={Shield}
               gradient="from-red-500 to-pink-600"
               badge={`${stats?.reports || 0}`}
-            />
-            <QuickAction
-              title="Finances"
-              description="Revenus et abonnements"
-              href="/admin/financial"
-              icon={DollarSign}
-              gradient="from-green-500 to-emerald-500"
-              badge="Nouveau"
             />
           </div>
         </div>

@@ -93,23 +93,22 @@ export default function Home() {
       </header>
 
       {/* Comment Utiliser - Section Ultra Moderne */}
-      <section id="how-to-use" className="py-32 relative overflow-hidden">
+      <section id="how-to-use" className="py-32 relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0d0d0d] to-black"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff007f]/5 rounded-full blur-[120px]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-100/50 rounded-full blur-[120px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Header */}
           <div className="text-center mb-20" data-aos="fade-up">
-            <div className="inline-block border border-[#ff007f]/30 bg-[#ff007f]/5 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-[#ff007f] mb-6">
+            <div className="inline-block border border-pink-300 bg-pink-50 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-pink-600 mb-6">
               Guide Complet
             </div>
-            <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
               Comment utiliser <br />
-              <span className="pink-glow-text">ZAWJ</span> en 4 étapes
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span> en 4 étapes
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#ff007f] to-transparent mx-auto mb-6"></div>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-pink-600 to-transparent mx-auto mb-6"></div>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto">
               Un parcours simplifié et sécurisé pour trouver votre moitié en respectant vos valeurs
             </p>
           </div>
@@ -117,87 +116,87 @@ export default function Home() {
           {/* Timeline Steps */}
           <div className="relative">
             {/* Connecting Line */}
-            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#ff007f]/20 via-[#ff007f] to-[#ff007f]/20 -translate-x-1/2"></div>
+            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-pink-200 via-pink-600 to-pink-200 -translate-x-1/2"></div>
             
             {/* Step 1 - Left */}
             <div className="grid lg:grid-cols-2 gap-12 mb-24" data-aos="fade-right" data-aos-duration="1000">
               <div className="lg:text-right lg:pr-16 flex flex-col justify-center">
-                <div className="inline-block lg:ml-auto bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                <div className="inline-block lg:ml-auto bg-pink-100 border border-pink-300 px-4 py-1 rounded-full text-xs font-black text-pink-700 mb-4 w-fit">
                   ÉTAPE 01
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-white">
+                <h3 className="text-3xl font-bold mb-4 text-gray-900">
                   Inscription & Profil
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-700 mb-6 leading-relaxed">
                   Créez votre compte en quelques minutes. Renseignez vos informations de base, vos valeurs et vos critères de recherche. Pour les sœurs, l&apos;inscription est 100% gratuite.
                 </p>
                 <div className="flex flex-wrap gap-3 lg:justify-end">
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">✨ Gratuit pour les femmes</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🔒 Données sécurisées</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">✨ Gratuit pour les femmes</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">🔒 Données sécurisées</span>
                 </div>
               </div>
               <div className="relative">
-                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                <div className="bg-white p-8 rounded-3xl border-2 border-pink-300 relative overflow-hidden group hover:border-pink-500 hover:shadow-xl transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-pink-100 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
                   <div className="relative z-10">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                    <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-pink-500/30">
                       1
                     </div>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
-                          <Check className="h-4 w-4 text-[#ff007f]" />
+                      <div className="flex items-center gap-3 p-3 bg-pink-50 rounded-xl border border-pink-200">
+                        <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-pink-600" />
                         </div>
-                        <span className="text-sm text-gray-300">Informations personnelles</span>
+                        <span className="text-sm text-gray-800">Informations personnelles</span>
                       </div>
-                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
-                          <Check className="h-4 w-4 text-[#ff007f]" />
+                      <div className="flex items-center gap-3 p-3 bg-pink-50 rounded-xl border border-pink-200">
+                        <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-pink-600" />
                         </div>
-                        <span className="text-sm text-gray-300">Valeurs & Religion</span>
+                        <span className="text-sm text-gray-800">Valeurs & Religion</span>
                       </div>
-                      <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                        <div className="w-8 h-8 rounded-full bg-[#ff007f]/20 flex items-center justify-center">
-                          <Check className="h-4 w-4 text-[#ff007f]" />
+                      <div className="flex items-center gap-3 p-3 bg-pink-50 rounded-xl border border-pink-200">
+                        <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                          <Check className="h-4 w-4 text-pink-600" />
                         </div>
-                        <span className="text-sm text-gray-300">Photos (floutées par défaut)</span>
+                        <span className="text-sm text-gray-800">Photos (floutées par défaut)</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* Center Dot */}
-                <div className="hidden lg:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#ff007f] rounded-full border-4 border-black shadow-lg shadow-[#ff007f]/50"></div>
+                <div className="hidden lg:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-pink-600 rounded-full border-4 border-white shadow-lg shadow-pink-600/30"></div>
               </div>
             </div>
 
             {/* Step 2 - Right */}
             <div className="grid lg:grid-cols-2 gap-12 mb-24" data-aos="fade-left" data-aos-duration="1000">
               <div className="lg:order-2 flex flex-col justify-center">
-                <div className="inline-block bg-[#ff007f]/10 border border-[#ff007f]/30 px-4 py-1 rounded-full text-xs font-black text-[#ff007f] mb-4 w-fit">
+                <div className="inline-block bg-pink-100 border border-pink-300 px-4 py-1 rounded-full text-xs font-black text-pink-700 mb-4 w-fit">
                   ÉTAPE 02
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-white">
+                <h3 className="text-3xl font-bold mb-4 text-gray-900">
                   Recherche & Découverte
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-gray-700 mb-6 leading-relaxed">
                   Parcourez les profils qui correspondent à vos critères. Utilisez nos filtres avancés pour affiner votre recherche : âge, ville, niveau d&apos;éducation, pratique religieuse...
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🎯 Filtres précis</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👁️ Respect de la pudeur</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">🎯 Filtres précis</span>
+                  <span className="px-4 py-2 bg-white border border-gray-300 rounded-xl text-xs text-gray-700 shadow-sm">👁️ Respect de la pudeur</span>
                 </div>
               </div>
               <div className="lg:order-1 relative">
-                <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 relative overflow-hidden group hover:border-[#ff007f] transition-all duration-500">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-[#ff007f]/10 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
+                <div className="bg-white p-8 rounded-3xl border-2 border-pink-300 relative overflow-hidden group hover:border-pink-500 hover:shadow-xl transition-all duration-500">
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-pink-100 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
                   <div className="relative z-10">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#ff007f] to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-[#ff007f]/50">
+                    <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6 shadow-lg shadow-pink-500/30">
                       2
                     </div>
-                    <div className="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-bold text-gray-400">PROFILS SUGGÉRÉS</span>
-                        <span className="text-xs text-[#ff007f] font-bold">99% Compatible</span>
+                        <span className="text-xs font-bold text-gray-600">PROFILS SUGGÉRÉS</span>
+                        <span className="text-xs text-pink-600 font-bold">99% Compatible</span>
                       </div>
                       <div className="space-y-3">
                         {[1, 2, 3].map((i) => (
@@ -389,24 +388,23 @@ export default function Home() {
       </section>
 
       {/* Section Wali - Innovation Unique */}
-      <section id="wali" className="py-32 relative overflow-hidden">
+      <section id="wali" className="py-32 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
         {/* Background Effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d] via-black to-[#0d0d0d]"></div>
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#ff007f]/10 rounded-full blur-[150px]"></div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-100/50 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-pink-100/50 rounded-full blur-[150px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Header */}
           <div className="text-center mb-20" data-aos="fade-up">
-            <div className="inline-block border border-purple-500/30 bg-purple-500/5 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-purple-400 mb-6">
+            <div className="inline-block border border-purple-300 bg-purple-50 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-purple-700 mb-6">
               Innovation Mondiale
             </div>
-            <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-              Le système <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-[#ff007f] to-pink-500">Wali</span>
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
+              Le système <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-pink-500">Wali</span>
               <br />révolutionnaire
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto mb-6"></div>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
               ZAWJ est la première plateforme au monde à intégrer nativement le rôle du tuteur (Wali) 
               dans le processus matrimonial, garantissant respect, pudeur et conformité islamique.
             </p>
@@ -416,49 +414,49 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             {/* Left - Explanation */}
             <div data-aos="fade-right" data-aos-duration="1000">
-              <h3 className="text-3xl font-bold mb-6 text-white">
+              <h3 className="text-3xl font-bold mb-6 text-gray-900">
                 Pourquoi le Wali est essentiel ?
               </h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
+              <p className="text-gray-700 mb-8 leading-relaxed">
                 Dans l&apos;Islam, le Wali (tuteur) joue un rôle fondamental dans le mariage d&apos;une femme. 
                 Il assure sa protection, valide les prétendants et garantit que le processus respecte 
                 les principes islamiques.
               </p>
               
               <div className="space-y-6">
-                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                <div className="flex gap-4 p-6 bg-white border border-gray-200 rounded-2xl hover:border-purple-400 hover:shadow-lg transition-all group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
-                      <Shield className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Shield className="h-6 w-6 text-purple-600 group-hover:text-white" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2">Protection spirituelle</h4>
-                    <p className="text-sm text-gray-400">Le Wali veille à ce que le mariage soit conforme aux enseignements islamiques</p>
+                    <h4 className="font-bold text-gray-900 mb-2">Protection spirituelle</h4>
+                    <p className="text-sm text-gray-700">Le Wali veille à ce que le mariage soit conforme aux enseignements islamiques</p>
                   </div>
                 </div>
 
-                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                <div className="flex gap-4 p-6 bg-white border border-gray-200 rounded-2xl hover:border-purple-400 hover:shadow-lg transition-all group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
-                      <Check className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Check className="h-6 w-6 text-purple-600 group-hover:text-white" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2">Validation des prétendants</h4>
-                    <p className="text-sm text-gray-400">Chaque demande est approuvée par le Wali avant tout échange</p>
+                    <h4 className="font-bold text-gray-900 mb-2">Validation des prétendants</h4>
+                    <p className="text-sm text-gray-700">Chaque demande est approuvée par le Wali avant tout échange</p>
                   </div>
                 </div>
 
-                <div className="flex gap-4 p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl hover:border-purple-500/50 transition-all group">
+                <div className="flex gap-4 p-6 bg-white border border-gray-200 rounded-2xl hover:border-purple-400 hover:shadow-lg transition-all group">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
-                      <Bell className="h-6 w-6 text-purple-400 group-hover:text-white" />
+                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+                      <Bell className="h-6 w-6 text-purple-600 group-hover:text-white" />
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2">Supervision continue</h4>
-                    <p className="text-sm text-gray-400">Le Wali reçoit des notifications et peut intervenir à tout moment</p>
+                    <h4 className="font-bold text-gray-900 mb-2">Supervision continue</h4>
+                    <p className="text-sm text-gray-700">Le Wali reçoit des notifications et peut intervenir à tout moment</p>
                   </div>
                 </div>
               </div>
@@ -468,34 +466,34 @@ export default function Home() {
             <div data-aos="fade-left" data-aos-duration="1000">
               <div className="relative">
                 {/* Main Card */}
-                <div className="glass-card p-8 rounded-3xl border-2 border-purple-500/30 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/10 rounded-full -translate-y-24 translate-x-24 blur-3xl"></div>
+                <div className="bg-white p-8 rounded-3xl border-2 border-purple-300 relative overflow-hidden hover:shadow-xl transition-all">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-purple-100 rounded-full -translate-y-24 translate-x-24 blur-3xl"></div>
                   
                   <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-8">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-[#ff007f] rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/50">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30">
                         <Shield className="h-8 w-8 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-bold text-white">Système Wali Actif</h4>
-                        <p className="text-sm text-purple-400">Protection en temps réel</p>
+                        <h4 className="text-xl font-bold text-gray-900">Système Wali Actif</h4>
+                        <p className="text-sm text-purple-600">Protection en temps réel</p>
                       </div>
                     </div>
 
                     {/* Workflow Visualization */}
                     <div className="space-y-4">
-                      <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-bold text-white">Demande reçue</span>
-                          <span className="text-xs text-gray-400">Il y a 2 min</span>
+                          <span className="text-sm font-bold text-gray-900">Demande reçue</span>
+                          <span className="text-xs text-gray-600">Il y a 2 min</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500"></div>
                           <div className="flex-1">
-                            <div className="h-2 bg-slate-700 rounded w-32 mb-1"></div>
-                            <div className="h-2 bg-slate-800 rounded w-20"></div>
+                            <div className="h-2 bg-gray-300 rounded w-32 mb-1"></div>
+                            <div className="h-2 bg-gray-200 rounded w-20"></div>
                           </div>
-                          <div className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full font-bold">
+                          <div className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-bold">
                             En attente
                           </div>
                         </div>
@@ -509,14 +507,14 @@ export default function Home() {
                         </div>
                       </div>
 
-                      <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4">
+                      <div className="bg-purple-50 border border-purple-300 rounded-xl p-4">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                             <Shield className="h-5 w-5 text-white" />
                           </div>
                           <div>
-                            <div className="text-sm font-bold text-purple-300">Wali - Ahmed</div>
-                            <div className="text-xs text-gray-400">Tuteur familial</div>
+                            <div className="text-sm font-bold text-purple-900">Wali - Ahmed</div>
+                            <div className="text-xs text-purple-700">Tuteur familial</div>
                           </div>
                         </div>
                         <div className="flex gap-2">
