@@ -50,6 +50,13 @@ export default function ModeratorsPage() {
   const [showAssignModal, setShowAssignModal] = useState(false)
   const [selectedModerator, setSelectedModerator] = useState<Moderator | null>(null)
   const [selectedUserId, setSelectedUserId] = useState('')
+  const [createMode, setCreateMode] = useState<'existing' | 'new'>('existing')
+  const [newUserData, setNewUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  })
   const [permissions, setPermissions] = useState({
     canApprovePaidTutor: true,
     canViewMessages: true,
@@ -113,8 +120,46 @@ export default function ModeratorsPage() {
       adminApi.createModerator(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['moderators'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
       setShowCreateModal(false)
       setSelectedUserId('')
+      setCreateMode('existing')
+      setNewUserData({ firstName: '', lastName: '', email: '', password: '' })
+      setPermissions({
+        canApprovePaidTutor: true,
+        canViewMessages: true,
+        canBlockUsers: false
+      })
+    },
+  })
+
+  // Create new user and moderator mutation
+  const createNewUserMutation = useMutation({
+    mutationFn: async (data: typeof newUserData & { permissions: any }) => {
+      // First create the user
+      const newUser = await authApi.register({
+        ...data,
+        gender: 'male',
+        role: 'moderator',
+        phoneNumber: '',
+        city: '',
+        dateOfBirth: new Date().toISOString(),
+      })
+      
+      // Then create the moderator profile
+      return adminApi.createModerator({
+        userId: newUser._id,
+        permissions: data.permissions,
+        canAccessAllMessages: false
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['moderators'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+      setShowCreateModal(false)
+      setSelectedUserId('')
+      setCreateMode('existing')
+      setNewUserData({ firstName: '', lastName: '', email: '', password: '' })
       setPermissions({
         canApprovePaidTutor: true,
         canViewMessages: true,
@@ -153,12 +198,20 @@ export default function ModeratorsPage() {
   })
 
   const handleCreateModerator = () => {
-    if (!selectedUserId) return
-    createMutation.mutate({
-      userId: selectedUserId,
-      permissions,
-      canAccessAllMessages: false
-    })
+    if (createMode === 'existing') {
+      if (!selectedUserId) return
+      createMutation.mutate({
+        userId: selectedUserId,
+        permissions,
+        canAccessAllMessages: false
+      })
+    } else {
+      if (!newUserData.firstName || !newUserData.lastName || !newUserData.email || !newUserData.password) return
+      createNewUserMutation.mutate({
+        ...newUserData,
+        permissions
+      })
+    }
   }
 
   const handleAssignUser = () => {
@@ -386,35 +439,119 @@ export default function ModeratorsPage() {
       {/* Create Moderator Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">Créer un Modérateur</h3>
               <button
-                onClick={() => setShowCreateModal(false)}
+                onClick={() => {
+                  setShowCreateModal(false)
+                  setCreateMode('existing')
+                  setNewUserData({ firstName: '', lastName: '', email: '', password: '' })
+                }}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
+            {/* Tabs */}
+            <div className="flex gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
+              <button
+                onClick={() => setCreateMode('existing')}
+                className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                  createMode === 'existing'
+                    ? 'bg-white text-pink-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Utilisateur existant
+              </button>
+              <button
+                onClick={() => setCreateMode('new')}
+                className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
+                  createMode === 'new'
+                    ? 'bg-white text-pink-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Nouveau compte
+              </button>
+            </div>
+
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sélectionner Utilisateur
-                </label>
-                <select
-                  value={selectedUserId}
-                  onChange={(e) => setSelectedUserId(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                >
-                  <option value="">Choisir un utilisateur...</option>
-                  {availableUsers.map((user: User) => (
-                    <option key={user.id} value={user.id}>
-                      {user.firstName} {user.lastName} ({user.email})
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {createMode === 'existing' ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Sélectionner Utilisateur
+                  </label>
+                  <select
+                    value={selectedUserId}
+                    onChange={(e) => setSelectedUserId(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  >
+                    <option value="">Choisir un utilisateur...</option>
+                    {availableUsers.map((user: User) => (
+                      <option key={user.id} value={user.id}>
+                        {user.firstName} {user.lastName} ({user.email})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Prénom
+                    </label>
+                    <input
+                      type="text"
+                      value={newUserData.firstName}
+                      onChange={(e) => setNewUserData({...newUserData, firstName: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Prénom du modérateur"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Nom
+                    </label>
+                    <input
+                      type="text"
+                      value={newUserData.lastName}
+                      onChange={(e) => setNewUserData({...newUserData, lastName: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Nom du modérateur"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={newUserData.email}
+                      onChange={(e) => setNewUserData({...newUserData, email: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="email@exemple.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Mot de passe
+                    </label>
+                    <input
+                      type="password"
+                      value={newUserData.password}
+                      onChange={(e) => setNewUserData({...newUserData, password: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="Minimum 6 caractères"
+                    />
+                  </div>
+                </>
+              )}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -453,17 +590,26 @@ export default function ModeratorsPage() {
 
               <div className="flex gap-3 pt-4">
                 <button
-                  onClick={() => setShowCreateModal(false)}
+                  onClick={() => {
+                    setShowCreateModal(false)
+                    setCreateMode('existing')
+                    setNewUserData({ firstName: '', lastName: '', email: '', password: '' })
+                  }}
                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Annuler
                 </button>
                 <button
                   onClick={handleCreateModerator}
-                  disabled={!selectedUserId || createMutation.isPending}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
+                  disabled={
+                    (createMode === 'existing' && !selectedUserId) ||
+                    (createMode === 'new' && (!newUserData.firstName || !newUserData.lastName || !newUserData.email || !newUserData.password)) ||
+                    createMutation.isPending ||
+                    createNewUserMutation.isPending
+                  }
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-pink-600 to-red-600 text-white rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
                 >
-                  {createMutation.isPending ? 'Création...' : 'Créer'}
+                  {(createMutation.isPending || createNewUserMutation.isPending) ? 'Création...' : 'Créer'}
                 </button>
               </div>
             </div>
