@@ -52,44 +52,44 @@ export default function AdminMahramsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto"></div>
-          <p className="text-gray-400 mt-4">Chargement des mahrams...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-pink-600 mx-auto"></div>
+          <p className="text-gray-600 mt-4 font-medium">Chargement des mahrams...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Gestion des Mahrams
           </h1>
-          <p className="text-gray-400">Vérification et approbation des demandes de mahram</p>
+          <p className="text-gray-600">Vérification et approbation des demandes de mahram</p>
         </div>
 
         {/* Filters */}
         <div className="mb-6 flex gap-4">
           <button
             onClick={() => setFilterStatus('all')}
-            className={`px-4 py-2 rounded-lg transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'all'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
             Tous
           </button>
           <button
             onClick={() => setFilterStatus('pending')}
-            className={`px-4 py-2 rounded-lg transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'pending'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
             <Clock className="inline mr-2 h-4 w-4" />
@@ -97,10 +97,10 @@ export default function AdminMahramsPage() {
           </button>
           <button
             onClick={() => setFilterStatus('approved')}
-            className={`px-4 py-2 rounded-lg transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'approved'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
             <CheckCircle className="inline mr-2 h-4 w-4" />
@@ -108,10 +108,10 @@ export default function AdminMahramsPage() {
           </button>
           <button
             onClick={() => setFilterStatus('rejected')}
-            className={`px-4 py-2 rounded-lg transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'rejected'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
             <XCircle className="inline mr-2 h-4 w-4" />
@@ -122,20 +122,21 @@ export default function AdminMahramsPage() {
         {/* Mahrams List */}
         <div className="space-y-4">
           {mahrams.length === 0 ? (
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8 text-center">
-              <Clock className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-              <p className="text-gray-400">Aucune demande de mahram</p>
+            <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-200">
+              <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune demande trouvée</h3>
+              <p className="text-gray-600">Il n'y a pas de demandes de mahram {filterStatus !== 'all' ? `en statut "${filterStatus}"` : ''}</p>
             </div>
           ) : (
             mahrams.map((mahram: Mahram) => (
               <div
                 key={mahram._id}
-                className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-purple-500/50 transition-all"
+                className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center gap-4 mb-2">
-                      <h3 className="text-xl font-semibold text-white">
+                      <h3 className="text-xl font-semibold text-gray-900">
                         {mahram.user?.name || 'Utilisateur'}
                       </h3>
                       <span className="text-gray-400">→</span>

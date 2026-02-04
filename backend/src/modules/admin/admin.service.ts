@@ -11,17 +11,19 @@ export interface AdminStatsResponse {
 
 export interface AdminUserResponse {
   id: string
-  name: string
+  firstName: string
+  lastName: string
   email: string
   gender: 'male' | 'female'
   age: number
+  city?: string
   location: string
   phone?: string
-  role: 'user' | 'wali' | 'admin'
+  role: 'user' | 'wali' | 'admin' | 'seeker'
   createdAt: string
   photos: string[]
   isVerified: boolean
-  isBlocked: boolean
+  isActive: boolean
 }
 
 export interface AdminMahramResponse {
@@ -94,17 +96,19 @@ export class AdminService {
 
       return users.map((user: any) => ({
         id: user._id.toString(),
-        name: user.name,
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
         email: user.email,
         gender: user.gender,
         age: user.age,
+        city: user.city || user.location,
         location: user.location,
         phone: user.phone,
         role: user.role,
         createdAt: user.createdAt.toISOString(),
         photos: user.photos || [],
         isVerified: user.isVerified || false,
-        isBlocked: user.isBlocked || false,
+        isActive: !(user.isBlocked || false),
       }))
     } catch (error) {
       throw error

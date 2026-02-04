@@ -87,34 +87,34 @@ export default function AdminReportsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto"></div>
-          <p className="text-gray-400 mt-4">Chargement des rapports...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-pink-600 mx-auto"></div>
+          <p className="text-gray-600 mt-4 font-medium">Chargement des rapports...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Rapports & Signalements
           </h1>
-          <p className="text-gray-400">Gérer les signalements et modérer la plateforme</p>
+          <p className="text-gray-600">Gérer les signalements et modérer la plateforme</p>
         </div>
 
         {/* Filters */}
         <div className="mb-6 flex gap-4">
           <button
             onClick={() => setFilterStatus('all')}
-            className={`px-4 py-2 rounded-lg transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
               filterStatus === 'all'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
             }`}
           >
             Tous
