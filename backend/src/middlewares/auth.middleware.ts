@@ -26,7 +26,7 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
 }
 
 // Authenticate token from header (for API calls)
-export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
+export const authenticateToken = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -38,6 +38,15 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
 
     const decoded = jwt.verify(token, config.jwt.secret) as { userId: string }
     req.userId = decoded.userId
+    
+    // Load the full user object including role
+    const user = await User.findById(decoded.userId).select('-password')
+    if (!user) {
+      res.status(401).json({ message: 'User not found' })
+      return
+    }
+    
+    req.user = user
     next()
   } catch (error) {
     res.status(401).json({ message: 'Invalid or expired token' })

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { Moderator } from './moderator.model';
 import { User } from '../users/user.model';
-import { authMiddleware } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -14,7 +13,7 @@ const adminOnly = async (req: any, res: any, next: any) => {
 };
 
 // GET /api/moderators - Liste tous les modérateurs
-router.get('/', authMiddleware, adminOnly, async (_req, res) => {
+router.get('/', adminOnly, async (_req, res) => {
   try {
     const moderators = await Moderator.find()
       .populate('userId', 'firstName lastName email')
@@ -29,7 +28,7 @@ router.get('/', authMiddleware, adminOnly, async (_req, res) => {
 });
 
 // POST /api/moderators - Créer un nouveau modérateur
-router.post('/', authMiddleware, adminOnly, async (req, res) => {
+router.post('/', adminOnly, async (req, res) => {
   try {
     const { userId, permissions, canAccessAllMessages } = req.body;
 
@@ -67,7 +66,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
 });
 
 // PUT /api/moderators/:id - Mettre à jour un modérateur
-router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
+router.put('/:id', adminOnly, async (req, res) => {
   try {
     const { id } = req.params;
     const { isActive, permissions, canAccessAllMessages } = req.body;
@@ -94,7 +93,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
 });
 
 // DELETE /api/moderators/:id - Supprimer un modérateur
-router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
+router.delete('/:id', adminOnly, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -116,7 +115,7 @@ router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
 });
 
 // POST /api/moderators/:id/assign - Assigner une utilisatrice à un modérateur
-router.post('/:id/assign', authMiddleware, adminOnly, async (req, res) => {
+router.post('/:id/assign', adminOnly, async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
@@ -157,7 +156,7 @@ router.post('/:id/assign', authMiddleware, adminOnly, async (req, res) => {
 });
 
 // DELETE /api/moderators/:id/assign/:userId - Retirer une assignation
-router.delete('/:id/assign/:userId', authMiddleware, adminOnly, async (req, res) => {
+router.delete('/:id/assign/:userId', adminOnly, async (req, res) => {
   try {
     const { id, userId } = req.params;
 
@@ -185,7 +184,7 @@ router.delete('/:id/assign/:userId', authMiddleware, adminOnly, async (req, res)
 });
 
 // GET /api/moderators/me - Obtenir les infos du modérateur connecté
-router.get('/me', authMiddleware, async (req: any, res) => {
+router.get('/me', async (req: any, res) => {
   try {
     if (req.user?.role !== 'moderator') {
       return res.status(403).json({ message: 'Accès réservé aux modérateurs' });
