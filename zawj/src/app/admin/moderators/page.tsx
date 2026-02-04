@@ -89,16 +89,18 @@ export default function ModeratorsPage() {
     checkAuth()
   }, [user, setUser, setLoading])
 
-  // Fetch moderators
+  // Fetch moderators - only when authenticated as admin
   const { data: moderators = [], isLoading } = useQuery({
     queryKey: ['moderators'],
-    queryFn: adminApi.getModerators
+    queryFn: adminApi.getModerators,
+    enabled: !authLoading && !!user && user.role === 'admin'
   })
 
-  // Fetch users for dropdown
+  // Fetch users for dropdown - only when authenticated as admin
   const { data: usersData } = useQuery({
     queryKey: ['admin-users'],
-    queryFn: () => adminApi.getUsers({ limit: 1000 })
+    queryFn: () => adminApi.getUsers({ limit: 1000 }),
+    enabled: !authLoading && !!user && user.role === 'admin'
   })
 
   // Create moderator mutation
