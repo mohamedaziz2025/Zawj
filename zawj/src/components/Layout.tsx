@@ -55,7 +55,9 @@ const maleFreeNavigation = [
 const adminNavigation = [
   { name: 'Dashboard', href: '/admin', icon: Shield },
   { name: 'Utilisateurs', href: '/admin/users', icon: User },
-  { name: 'Mahrams', href: '/admin/mahrams', icon: Heart },
+  { name: 'Modérateurs', href: '/admin/moderators', icon: Shield },
+  { name: 'Tuteurs', href: '/admin/mahrams', icon: Heart },
+  { name: 'Messages', href: '/admin/messages', icon: MessageCircle },
   { name: 'Rapports', href: '/admin/reports', icon: Shield },
 ]
 

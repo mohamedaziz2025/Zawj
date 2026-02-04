@@ -23,7 +23,7 @@ export default function ChatPage() {
     enabled: isAuthenticated,
   })
 
-  // Check if user has valid Mahram
+  // Check if user has valid Tuteur
   const hasValidMahram = user?.role === 'admin' ||
     user?.gender === 'male' ||
     (user?.gender === 'female' && (user?.waliId || user?.waliInfo?.platformServicePaid))
@@ -104,24 +104,24 @@ export default function ChatPage() {
           <div className="w-16 h-16 bg-[#ff007f] rounded-2xl flex items-center justify-center text-white text-2xl font-black mx-auto mb-4">
             <Shield className="h-8 w-8" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-4">Mahram Requis</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Tuteur Requis</h2>
           <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-xl p-4 mb-6">
             <div className="flex items-center text-yellow-400 mb-2">
               <AlertTriangle className="h-5 w-5 mr-2" />
               <span className="font-semibold">Communication Restreinte</span>
             </div>
             <p className="text-gray-300 text-sm">
-              Pour communiquer sur ZAWJ, vous devez avoir un Mahram (tuteur légal) validé qui supervise vos échanges.
+              Pour communiquer sur ZAWJ, vous devez avoir un Tuteur (tuteur légal) validé qui supervise vos échanges.
             </p>
           </div>
           <p className="text-gray-400 mb-6">
-            Si vous n'avez pas de Mahram familial, vous pouvez bénéficier de notre service Mahram plateforme.
+            Si vous n'avez pas de Tuteur familial, vous pouvez bénéficier de notre service Tuteur plateforme.
           </p>
           <Link
             href="/profile"
             className="btn-pink px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest inline-block"
           >
-            Demander un Mahram
+            Demander un Tuteur
           </Link>
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function ChatPage() {
             <div className="p-8 text-center text-gray-400">
               <MessageCircle className="h-12 w-12 mx-auto mb-4 text-gray-600" />
               <p>Aucune conversation</p>
-              <p className="text-sm mt-1">Commencez par contacter un Wali</p>
+              <p className="text-sm mt-1">Commencez par contacter un Tuteur</p>
             </div>
           ) : (
             conversations.map((conversation) => (

@@ -10,18 +10,18 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="fixed w-full z-50 px-4 md:px-6 py-4">
-        <div className="max-w-7xl mx-auto bg-black/90 backdrop-blur-xl border border-white/10 rounded-full px-4 md:px-8 py-4 flex justify-between items-center shadow-2xl">
+        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-gray-200 rounded-full px-4 md:px-8 py-4 flex justify-between items-center shadow-xl">
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
-            <span className="text-lg md:text-xl font-bold tracking-widest text-white">ZAWJ</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
+            <span className="text-lg md:text-xl font-bold tracking-widest text-gray-900">ZAWJ</span>
           </div>
-          <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-400">
-            <a href="#concept" className="hover:text-[#ff007f] transition-colors">Concept</a>
-            <a href="#how-to-use" className="hover:text-[#ff007f] transition-colors">Comment utiliser</a>
-            <a href="#wali" className="hover:text-[#ff007f] transition-colors">Wali</a>
+          <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-600">
+            <a href="#concept" className="hover:text-pink-600 transition-colors">Concept</a>
+            <a href="#how-to-use" className="hover:text-pink-600 transition-colors">Comment utiliser</a>
+            <a href="#Tuteur" className="hover:text-pink-600 transition-colors">Tuteur</a>
             
           </div>
-          <Link href="/login" className="btn-pink px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase">Connexion</Link>
+          <Link href="/login" className="bg-gradient-to-r from-pink-600 to-red-600 hover:opacity-90 text-white px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase transition-all">Connexion</Link>
         </div>
       </nav>
 
@@ -33,7 +33,7 @@ export default function Home() {
               Mariage Halal • Premium • Sécurisé
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-none mb-8 text-white">
-              L&apos;union <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">L&apos;union</span> <br />
               <span className="pink-glow-text">D&apos;excellence</span>
             </h1>
             <p className="text-gray-400 text-base sm:text-lg mb-10 leading-relaxed max-w-md">
@@ -227,14 +227,14 @@ export default function Home() {
                   ÉTAPE 03
                 </div>
                 <h3 className="text-3xl font-bold mb-4 text-white">
-                  Connexion avec Wali
+                  Connexion avec Tuteur
                 </h3>
                 <p className="text-gray-400 mb-6 leading-relaxed">
-                  Pour les sœurs, chaque échange implique automatiquement votre Wali. Vous pouvez choisir un tuteur familial ou bénéficier de notre service Wali plateforme pour plus de confidentialité.
+                  Pour les sœurs, chaque échange implique automatiquement votre Tuteur. Vous pouvez choisir un tuteur familial ou bénéficier de notre service Tuteur plateforme pour plus de confidentialité.
                 </p>
                 <div className="flex flex-wrap gap-3 lg:justify-end">
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👨‍👩‍👧 Wali familial</span>
-                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🛡️ Wali plateforme</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">👨‍👩‍👧 Tuteur familial</span>
+                  <span className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-xs text-gray-300">🛡️ Tuteur plateforme</span>
                 </div>
               </div>
               <div className="relative">
@@ -252,7 +252,7 @@ export default function Home() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
                           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                          <span className="text-xs text-gray-300">Wali notifié de chaque message</span>
+                          <span className="text-xs text-gray-300">Tuteur notifié de chaque message</span>
                         </div>
                         <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg">
                           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -366,7 +366,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 text-2xl mb-8 group-hover:bg-pink-600 group-hover:text-white transition-all">
                 <Shield className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Protection Wali</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Protection Tuteur</h3>
               <p className="text-gray-700 leading-relaxed">Le premier système au monde d&apos;intégration native du tuteur dans vos échanges.</p>
             </div>
             <div className="bg-white p-10 rounded-[2rem] border-2 border-gray-200 hover:border-pink-500 hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="100">
@@ -387,8 +387,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Wali - Innovation Unique */}
-      <section id="wali" className="py-16 sm:py-32 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+      {/* Section Tuteur - Innovation Unique */}
+      <section id="Tuteur" className="py-16 sm:py-32 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
         {/* Background Effect */}
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-100/50 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-pink-100/50 rounded-full blur-[150px]"></div>
@@ -400,12 +400,12 @@ export default function Home() {
               Innovation Mondiale
             </div>
             <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
-              Le système <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-pink-500">Wali</span>
+              Le système <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-pink-500">Tuteur</span>
               <br />révolutionnaire
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto mb-6"></div>
             <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
-              ZAWJ est la première plateforme au monde à intégrer nativement le rôle du tuteur (Wali) 
+              ZAWJ est la première plateforme au monde à intégrer nativement le rôle du tuteur (Tuteur) 
               dans le processus matrimonial, garantissant respect, pudeur et conformité islamique.
             </p>
           </div>
@@ -415,10 +415,10 @@ export default function Home() {
             {/* Left - Explanation */}
             <div data-aos="fade-right" data-aos-duration="1000">
               <h3 className="text-3xl font-bold mb-6 text-gray-900">
-                Pourquoi le Wali est essentiel ?
+                Pourquoi le Tuteur est essentiel ?
               </h3>
               <p className="text-gray-700 mb-8 leading-relaxed">
-                Dans l&apos;Islam, le Wali (tuteur) joue un rôle fondamental dans le mariage d&apos;une femme. 
+                Dans l&apos;Islam, le Tuteur (tuteur) joue un rôle fondamental dans le mariage d&apos;une femme. 
                 Il assure sa protection, valide les prétendants et garantit que le processus respecte 
                 les principes islamiques.
               </p>
@@ -432,7 +432,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Protection spirituelle</h4>
-                    <p className="text-sm text-gray-700">Le Wali veille à ce que le mariage soit conforme aux enseignements islamiques</p>
+                    <p className="text-sm text-gray-700">Le Tuteur veille à ce que le mariage soit conforme aux enseignements islamiques</p>
                   </div>
                 </div>
 
@@ -444,7 +444,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Validation des prétendants</h4>
-                    <p className="text-sm text-gray-700">Chaque demande est approuvée par le Wali avant tout échange</p>
+                    <p className="text-sm text-gray-700">Chaque demande est approuvée par le Tuteur avant tout échange</p>
                   </div>
                 </div>
 
@@ -456,7 +456,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Supervision continue</h4>
-                    <p className="text-sm text-gray-700">Le Wali reçoit des notifications et peut intervenir à tout moment</p>
+                    <p className="text-sm text-gray-700">Le Tuteur reçoit des notifications et peut intervenir à tout moment</p>
                   </div>
                 </div>
               </div>
@@ -475,7 +475,7 @@ export default function Home() {
                         <Shield className="h-8 w-8 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-bold text-gray-900">Système Wali Actif</h4>
+                        <h4 className="text-xl font-bold text-gray-900">Système Tuteur Actif</h4>
                         <p className="text-sm text-purple-600">Protection en temps réel</p>
                       </div>
                     </div>
@@ -513,7 +513,7 @@ export default function Home() {
                             <Shield className="h-5 w-5 text-white" />
                           </div>
                           <div>
-                            <div className="text-sm font-bold text-purple-900">Wali - Ahmed</div>
+                            <div className="text-sm font-bold text-purple-900">Tuteur - Ahmed</div>
                             <div className="text-xs text-purple-700">Tuteur familial</div>
                           </div>
                         </div>
@@ -546,12 +546,12 @@ export default function Home() {
 
           {/* Two Options */}
           <div className="grid md:grid-cols-2 gap-8 mb-16" data-aos="fade-up">
-            {/* Wali Familial */}
+            {/* Tuteur Familial */}
             <div className="glass-card p-8 rounded-3xl border-2 border-slate-700/50 hover:border-purple-500/50 transition-all group">
               <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition-all">
                 <span className="text-3xl group-hover:scale-110 transition-transform">👨‍👩‍👧</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Wali Familial</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Tuteur Familial</h3>
               <p className="text-gray-400 mb-6 leading-relaxed">
                 Invitez votre père, frère ou oncle à superviser vos échanges. Il recevra toutes les 
                 notifications et pourra approuver ou refuser les demandes.
@@ -575,7 +575,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Wali Plateforme */}
+            {/* Tuteur Plateforme */}
             <div className="glass-card p-8 rounded-3xl border-2 border-[#ff007f]/30 hover:border-[#ff007f] transition-all group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff007f]/5 rounded-full -translate-y-16 translate-x-16"></div>
               <div className="relative z-10">
@@ -583,17 +583,17 @@ export default function Home() {
                   <span className="text-3xl group-hover:scale-110 transition-transform">🛡️</span>
                 </div>
                 <div className="flex items-center gap-2 mb-4">
-                  <h3 className="text-2xl font-bold text-white">Wali Plateforme</h3>
+                  <h3 className="text-2xl font-bold text-white">Tuteur Plateforme</h3>
                   <span className="px-2 py-1 bg-[#ff007f]/20 text-[#ff007f] text-[8px] font-black rounded uppercase">Premium</span>
                 </div>
                 <p className="text-gray-400 mb-6 leading-relaxed">
-                  Pour plus de confidentialité, ZAWJ met à disposition un Wali certifié qui supervisera 
+                  Pour plus de confidentialité, ZAWJ met à disposition un Tuteur certifié qui supervisera 
                   vos échanges de manière professionnelle et discrète.
                 </p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-center gap-2 text-sm text-gray-300">
                     <Check className="h-4 w-4 text-[#ff007f]" />
-                    Wali professionnel certifié
+                    Tuteur professionnel certifié
                   </li>
                   <li className="flex items-center gap-2 text-sm text-gray-300">
                     <Check className="h-4 w-4 text-[#ff007f]" />
@@ -620,7 +620,7 @@ export default function Home() {
               <span>Découvrir en démo interactive</span>
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </Link>
-            <p className="text-gray-500 text-sm mt-4">Testez le système Wali en conditions réelles</p>
+            <p className="text-gray-500 text-sm mt-4">Testez le système Tuteur en conditions réelles</p>
           </div>
         </div>
       </section>
@@ -637,7 +637,7 @@ export default function Home() {
               <div className="text-5xl font-black mb-10">0€<span className="text-sm text-gray-600">/mois</span></div>
               <ul className="space-y-6 mb-12 text-gray-400">
                 <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Accès illimité</li>
-                <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Support Wali 24/7</li>
+                <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Support Tuteur 24/7</li>
                 <li><Check className="h-4 w-4 text-[#ff007f] mr-3" /> Profil certifié</li>
               </ul>
               <Link href="/register" className="w-full py-5 border border-[#ff007f] text-[#ff007f] rounded-2xl font-black uppercase tracking-widest hover:bg-[#ff007f] hover:text-white transition-all block text-center">S&apos;inscrire</Link>
@@ -686,7 +686,7 @@ export default function Home() {
           </div>
           <div className="flex space-x-8 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
             <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
-            <a href="#" className="hover:text-white transition-colors">Wali Guide</a>
+            <a href="#" className="hover:text-white transition-colors">Tuteur Guide</a>
             <a href="#" className="hover:text-white transition-colors">Contact</a>
           </div>
           <div className="text-[10px] text-gray-800 font-bold uppercase tracking-[0.4em]">

@@ -96,7 +96,7 @@ export default function DemoPage() {
   const [showLimitModal, setShowLimitModal] = useState(false);
   const [showPhotoRequest, setShowPhotoRequest] = useState(false);
   
-  // Step 3: Wali System
+  // Step 3: Tuteur System
   const [waliType, setWaliType] = useState<"family" | "platform" | null>(null);
   const [showWaliNotification, setShowWaliNotification] = useState(false);
   const [waliDecision, setWaliDecision] = useState<"pending" | "approved" | "rejected">("pending");
@@ -127,7 +127,7 @@ export default function DemoPage() {
       setLikesUsedToday(likesUsedToday + 1);
     }
 
-    // Simulate Wali notification
+    // Simulate Tuteur notification
     if (userType === "sister") {
       setShowWaliNotification(true);
       setTimeout(() => setShowWaliNotification(false), 3000);
@@ -210,7 +210,7 @@ export default function DemoPage() {
           Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span>
         </h1>
         <p className="text-gray-700 text-base sm:text-lg max-w-2xl mx-auto mb-8 sm:mb-12">
-          Découvrez comment fonctionne notre plateforme matrimoniale halal avec protection Wali intégrée
+          Découvrez comment fonctionne notre plateforme matrimoniale halal avec protection Tuteur intégrée
         </p>
       </div>
 
@@ -228,7 +228,7 @@ export default function DemoPage() {
           </div>
           <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Je suis un Frère</h3>
           <p className="text-gray-700 mb-6 leading-relaxed">
-            Découvrez les profils et initiez des conversations avec l'approbation du Wali
+            Découvrez les profils et initiez des conversations avec l'approbation du Tuteur
           </p>
           <ul className="space-y-3 mb-8">
             <li className="flex items-center gap-2 text-sm text-gray-700">
@@ -241,7 +241,7 @@ export default function DemoPage() {
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-700">
               <Check className="h-4 w-4 text-pink-600" />
-              Respect du processus Wali
+              Respect du processus Tuteur
             </li>
           </ul>
           <div className="text-pink-600 font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
@@ -263,7 +263,7 @@ export default function DemoPage() {
           </div>
           <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Je suis une Sœur</h3>
           <p className="text-gray-700 mb-6 leading-relaxed">
-            Recevez des demandes protégées par votre Wali et gardez le contrôle total
+            Recevez des demandes protégées par votre Tuteur et gardez le contrôle total
           </p>
           <ul className="space-y-3 mb-8">
             <li className="flex items-center gap-2 text-sm text-gray-700">
@@ -272,7 +272,7 @@ export default function DemoPage() {
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-700">
               <Check className="h-4 w-4 text-purple-600" />
-              Protection Wali automatique
+              Protection Tuteur automatique
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-700">
               <Check className="h-4 w-4 text-purple-600" />
@@ -301,7 +301,7 @@ export default function DemoPage() {
               Vos demandes <span className="text-purple-600">protégées</span>
             </h2>
             <p className="text-gray-700 max-w-2xl mx-auto">
-              En tant que sœur, vous recevez des demandes qui seront filtrées par votre Wali. 
+              En tant que sœur, vous recevez des demandes qui seront filtrées par votre Tuteur. 
               Vos photos restent floutées jusqu'à ce que vous donniez votre accord explicite.
             </p>
           </div>
@@ -344,16 +344,16 @@ export default function DemoPage() {
                   
                   <p className="text-gray-700 text-sm mb-4 leading-relaxed">
                     Salam alaykoum, j'ai été impressionné par votre profil et vos valeurs. 
-                    Je serais honoré de faire connaissance avec l'accord de votre Wali.
+                    Je serais honoré de faire connaissance avec l'accord de votre Tuteur.
                   </p>
 
                   <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4 mb-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Shield className="h-4 w-4 text-purple-600" />
-                      <span className="text-sm font-bold text-purple-300">Protection Wali Active</span>
+                      <span className="text-sm font-bold text-purple-300">Protection Tuteur Active</span>
                     </div>
                     <p className="text-xs text-gray-700">
-                      Cette demande sera transmise à votre Wali pour validation avant tout échange
+                      Cette demande sera transmise à votre Tuteur pour validation avant tout échange
                     </p>
                   </div>
 
@@ -363,7 +363,7 @@ export default function DemoPage() {
                       className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#ff007f] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
                     >
                       <Check className="h-5 w-5" />
-                      Transmettre au Wali
+                      Transmettre au Tuteur
                     </button>
                     <button className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-500 transition-all">
                       <X className="h-5 w-5" />
@@ -413,10 +413,10 @@ export default function DemoPage() {
                   <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4 mb-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Shield className="h-4 w-4 text-purple-600" />
-                      <span className="text-sm font-bold text-purple-300">Protection Wali Active</span>
+                      <span className="text-sm font-bold text-purple-300">Protection Tuteur Active</span>
                     </div>
                     <p className="text-xs text-gray-700">
-                      Votre Wali validera cette demande avant tout contact
+                      Votre Tuteur validera cette demande avant tout contact
                     </p>
                   </div>
 
@@ -426,7 +426,7 @@ export default function DemoPage() {
                       className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#ff007f] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
                     >
                       <Check className="h-5 w-5" />
-                      Transmettre au Wali
+                      Transmettre au Tuteur
                     </button>
                     <button className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-500 transition-all">
                       <X className="h-5 w-5" />
@@ -460,7 +460,7 @@ export default function DemoPage() {
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
                   <span className="text-sm text-gray-700">
-                    <strong className="text-gray-900">Wali obligatoire</strong> - Chaque demande passe par votre tuteur
+                    <strong className="text-gray-900">Tuteur obligatoire</strong> - Chaque demande passe par votre tuteur
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -625,7 +625,7 @@ export default function DemoPage() {
         </div>
       </div>
 
-      {/* Wali Notification */}
+      {/* Tuteur Notification */}
       {showWaliNotification && (
         <div className="fixed top-24 right-8 bg-white border-2 border-gray-200 hover:shadow-xl p-6 rounded-2xl border-2 border-purple-500 shadow-2xl z-50 animate-in slide-in-from-right max-w-sm">
           <div className="flex items-start gap-4">
@@ -633,7 +633,7 @@ export default function DemoPage() {
               <Shield className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 mb-1">Wali Notifié</h4>
+              <h4 className="font-bold text-gray-900 mb-1">Tuteur Notifié</h4>
               <p className="text-sm text-gray-700">
                 Votre tuteur a été informé de cette action
               </p>
@@ -736,19 +736,19 @@ export default function DemoPage() {
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-12">
         <div className="inline-block bg-purple-500/10 border border-purple-500/30 px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest text-purple-600 mb-6">
-          Étape 3/5 - Système Wali
+          Étape 3/5 - Système Tuteur
         </div>
         <h2 className="text-4xl font-bold mb-4 text-gray-900">
-          Protection par le <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#ff007f]">Wali</span>
+          Protection par le <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#ff007f]">Tuteur</span>
         </h2>
         <p className="text-gray-700 max-w-2xl mx-auto">
           {userType === "sister" 
-            ? "Votre Wali supervise et valide chaque interaction pour votre protection"
-            : "Le Wali de la sœur doit approuver votre demande avant tout échange"}
+            ? "Votre Tuteur supervise et valide chaque interaction pour votre protection"
+            : "Le Tuteur de la sœur doit approuver votre demande avant tout échange"}
         </p>
       </div>
 
-      {/* Wali Type Selection */}
+      {/* Tuteur Type Selection */}
       {userType === "sister" && !waliType && (
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <button
@@ -758,7 +758,7 @@ export default function DemoPage() {
             <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition-all">
               <span className="text-3xl">👨‍👩‍👧</span>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">Wali Familial</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">Tuteur Familial</h3>
             <p className="text-gray-700 mb-6 leading-relaxed">
               Invitez votre père, frère ou oncle à superviser vos échanges
             </p>
@@ -786,11 +786,11 @@ export default function DemoPage() {
               <span className="text-3xl">🛡️</span>
             </div>
             <div className="flex items-center gap-2 mb-4">
-              <h3 className="text-2xl font-bold text-gray-900">Wali Plateforme</h3>
+              <h3 className="text-2xl font-bold text-gray-900">Tuteur Plateforme</h3>
               <span className="px-2 py-1 bg-pink-600/20 text-pink-600 text-[8px] font-black rounded uppercase">Premium</span>
             </div>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Un Wali certifié ZAWJ supervise vos échanges en toute discrétion
+              Un Tuteur certifié ZAWJ supervise vos échanges en toute discrétion
             </p>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-gray-700">
@@ -810,7 +810,7 @@ export default function DemoPage() {
         </div>
       )}
 
-      {/* Wali Approval Simulation */}
+      {/* Tuteur Approval Simulation */}
       {(waliType || userType === "brother") && (
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-purple-500/30">
@@ -820,7 +820,7 @@ export default function DemoPage() {
               </div>
               <div>
                 <h4 className="text-xl font-bold text-gray-900">
-                  {waliType === "platform" ? "Wali ZAWJ" : "Wali - Ahmed"}
+                  {waliType === "platform" ? "Tuteur ZAWJ" : "Tuteur - Ahmed"}
                 </h4>
                 <p className="text-sm text-purple-600">
                   {waliType === "platform" ? "Tuteur certifié" : "Tuteur familial"}
@@ -917,8 +917,8 @@ export default function DemoPage() {
                   <h5 className="font-bold text-purple-300 mb-1">Protection active</h5>
                   <p className="text-sm text-gray-700">
                     {userType === "sister" 
-                      ? "Votre Wali reçoit une notification pour chaque action importante"
-                      : "Le Wali peut refuser la demande si le profil ne convient pas"}
+                      ? "Votre Tuteur reçoit une notification pour chaque action importante"
+                      : "Le Tuteur peut refuser la demande si le profil ne convient pas"}
                   </p>
                 </div>
               </div>
@@ -955,7 +955,7 @@ export default function DemoPage() {
           Échangez en toute <span className="text-pink-600">sécurité</span>
         </h2>
         <p className="text-gray-700">
-          Tous les messages sont supervisés par le Wali pour garantir un environnement respectueux
+          Tous les messages sont supervisés par le Tuteur pour garantir un environnement respectueux
         </p>
       </div>
 
@@ -980,7 +980,7 @@ export default function DemoPage() {
               <div className="flex items-center gap-2">
                 <div className="px-3 py-1 bg-purple-500/20 text-purple-600 text-xs rounded-full font-bold flex items-center gap-1">
                   <Shield className="h-3 w-3" />
-                  Wali Actif
+                  Tuteur Actif
                 </div>
               </div>
             </div>
@@ -1005,7 +1005,7 @@ export default function DemoPage() {
                     <span className="text-xs opacity-70">{msg.time}</span>
                     {msg.status === "pending" && (
                       <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
-                        En attente Wali
+                        En attente Tuteur
                       </span>
                     )}
                   </div>
@@ -1035,13 +1035,13 @@ export default function DemoPage() {
           </div>
         </div>
 
-        {/* Wali Warning */}
+        {/* Tuteur Warning */}
         {showWaliWarning && (
           <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-4 rounded-2xl border border-purple-500/30 mb-6 animate-in slide-in-from-bottom">
             <div className="flex items-center gap-3">
               <Shield className="h-5 w-5 text-purple-600" />
               <p className="text-sm text-gray-700">
-                <span className="font-bold text-purple-600">Wali notifié</span> - Votre tuteur a reçu une copie de ce message
+                <span className="font-bold text-purple-600">Tuteur notifié</span> - Votre tuteur a reçu une copie de ce message
               </p>
             </div>
           </div>
@@ -1057,7 +1057,7 @@ export default function DemoPage() {
             <li className="flex items-start gap-3">
               <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
               <span className="text-sm text-gray-700">
-                Tous les messages sont modérés et supervisés par le Wali
+                Tous les messages sont modérés et supervisés par le Tuteur
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -1127,7 +1127,7 @@ export default function DemoPage() {
             </li>
             <li className="flex items-center gap-3">
               <Check className="h-5 w-5 text-green-500" />
-              <span className="text-gray-700">Protection Wali</span>
+              <span className="text-gray-700">Protection Tuteur</span>
             </li>
             <li className="flex items-center gap-3">
               <Check className="h-5 w-5 text-green-500" />
@@ -1186,7 +1186,7 @@ export default function DemoPage() {
             </li>
             <li className="flex items-center gap-3">
               <Check className="h-5 w-5 text-white" />
-              <span className="font-medium">Wali plateforme (optionnel)</span>
+              <span className="font-medium">Tuteur plateforme (optionnel)</span>
             </li>
             <li className="flex items-center gap-3">
               <Check className="h-5 w-5 text-white" />
@@ -1209,7 +1209,7 @@ export default function DemoPage() {
         </h3>
         <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
           Vous avez découvert le parcours complet de ZAWJ : découverte de profils, 
-          protection Wali, messagerie sécurisée et options Premium. Prêt à commencer votre vraie recherche ?
+          protection Tuteur, messagerie sécurisée et options Premium. Prêt à commencer votre vraie recherche ?
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link

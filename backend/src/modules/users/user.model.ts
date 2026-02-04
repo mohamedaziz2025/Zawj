@@ -7,7 +7,7 @@ export interface IUser extends Document {
   firstName: string
   lastName: string
   gender: 'male' | 'female'
-  role: 'seeker' | 'admin' // Removed 'wali' - Wali is not a user role
+  role: 'seeker' | 'admin' | 'moderator'
   avatar?: string
   photos: {
     url: string
@@ -60,6 +60,14 @@ export interface IUser extends Document {
     platformServicePaid?: boolean // For platform wali - has she paid?
     platformServiceStartDate?: Date
     platformServiceEndDate?: Date
+  }
+  
+  // tuteur Information (pour les tuteurs payants assignés par admin)
+  tuteurInfo?: {
+    tuteurId?: mongoose.Types.ObjectId // Référence au modérateur assigné
+    isPaid?: boolean // Est-ce un tuteur payant?
+    assignedByAdmin?: boolean // Assigné par l'admin?
+    assignmentDate?: Date
   }
   
   // Search Preferences
@@ -118,7 +126,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ['seeker', 'admin'],
+      enum: ['seeker', 'admin', 'moderator'],
       default: 'seeker',
     },
     avatar: String,
@@ -193,6 +201,17 @@ const UserSchema = new mongoose.Schema<IUser>(
       platformServicePaid: { type: Boolean, default: false },
       platformServiceStartDate: Date,
       platformServiceEndDate: Date,
+    },
+    
+    // tuteur Information (assigné par admin)
+    tuteurInfo: {
+      tuteurId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+      isPaid: { type: Boolean, default: false },
+      assignedByAdmin: { type: Boolean, default: false },
+      assignmentDate: Date,
     },
     
     preferences: {

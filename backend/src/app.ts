@@ -16,6 +16,7 @@ import uploadRoutes from '@/modules/upload/upload.routes'
 import { waliRoutes } from '@/modules/wali'
 import { likeRoutes } from '@/modules/likes'
 import { searchRoutes } from '@/modules/search'
+import { moderatorRoutes } from '@/modules/moderator'
 import webhookRoutes from '@/routes/webhooks.routes'
 
 export function createApp(): Express {
@@ -57,6 +58,7 @@ export function createApp(): Express {
   app.use('/api/likes', authMiddleware, likeRoutes)
   app.use('/api/search', authMiddleware, searchRoutes)
   app.use('/api/wali', authMiddleware, waliRoutes)
+  app.use('/api/moderators', authMiddleware, moderatorRoutes)
   app.use('/api/upload', uploadRoutes)
   app.use('/api/admin', adminRoutes)
 

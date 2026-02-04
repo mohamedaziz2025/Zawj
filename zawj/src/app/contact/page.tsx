@@ -179,7 +179,7 @@ export default function ContactPage() {
                     <option value="">Sélectionnez un sujet</option>
                     <option value="support">Support technique</option>
                     <option value="billing">Facturation</option>
-                    <option value="wali">Questions sur le Wali</option>
+                    <option value="Tuteur">Questions sur le Tuteur</option>
                     <option value="account">Problème de compte</option>
                     <option value="feature">Suggestion de fonctionnalité</option>
                     <option value="other">Autre</option>
@@ -242,10 +242,10 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="glass-card rounded-2xl p-6">
               <h3 className="text-white font-semibold mb-2">
-                Comment fonctionne le service Wali plateforme ?
+                Comment fonctionne le service Tuteur plateforme ?
               </h3>
               <p className="text-gray-400 text-sm">
-                Notre service Wali plateforme est disponible pour les femmes sans tuteur
+                Notre service Tuteur plateforme est disponible pour les femmes sans tuteur
                 familial disponible. Pour 5€/mois, nous assurons la supervision de vos
                 conversations conformément aux principes islamiques.
               </p>

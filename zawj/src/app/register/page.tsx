@@ -43,7 +43,7 @@ interface FormData {
     numberOfChildrenDesired?: number
   }
   
-  // Wali pour femmes
+  // Tuteur pour femmes
   waliInfo?: {
     fullName: string
     relationship: 'father' | 'brother' | 'uncle' | 'grandfather' | 'imam' | 'trusted-community-member' | ''
@@ -139,8 +139,8 @@ export default function RegisterPage() {
   const renderStep1 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-white mb-2">État Civil</h3>
-        <p className="text-sm text-gray-400">Vos informations personnelles</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">État Civil</h3>
+        <p className="text-sm text-gray-700">Vos informations personnelles</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -151,7 +151,7 @@ export default function RegisterPage() {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
         <div>
@@ -161,7 +161,7 @@ export default function RegisterPage() {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
       </div>
@@ -174,7 +174,7 @@ export default function RegisterPage() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         />
       </div>
 
@@ -188,12 +188,12 @@ export default function RegisterPage() {
             onChange={handleChange}
             required
             minLength={8}
-            className="w-full px-4 py-3 pr-12 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 pr-12 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-3.5 text-gray-400 hover:text-[#ff007f]"
+            className="absolute right-4 top-3.5 text-gray-700 hover:text-[#ff007f]"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
@@ -208,7 +208,7 @@ export default function RegisterPage() {
             value={formData.gender}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           >
             <option value="male">Homme</option>
             <option value="female">Femme</option>
@@ -224,7 +224,7 @@ export default function RegisterPage() {
             value={formData.age}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function RegisterPage() {
             value={formData.city}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
         <div>
@@ -247,7 +247,7 @@ export default function RegisterPage() {
             value={formData.country}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
       </div>
@@ -260,7 +260,7 @@ export default function RegisterPage() {
             value={formData.nationality}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
         <div>
@@ -270,7 +270,7 @@ export default function RegisterPage() {
             value={formData.profession}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
           />
         </div>
       </div>
@@ -281,7 +281,7 @@ export default function RegisterPage() {
           name="education"
           value={formData.education}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="high-school">Baccalauréat</option>
@@ -298,8 +298,8 @@ export default function RegisterPage() {
   const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-white mb-2">Pratique Religieuse</h3>
-        <p className="text-sm text-gray-400">Votre relation avec l&apos;Islam</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Pratique Religieuse</h3>
+        <p className="text-sm text-gray-700">Votre relation avec l&apos;Islam</p>
       </div>
 
       <div>
@@ -309,7 +309,7 @@ export default function RegisterPage() {
           value={formData.religiousInfo.prayerFrequency}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="always">Toujours (5 prières/jour)</option>
@@ -327,7 +327,7 @@ export default function RegisterPage() {
           value={formData.religiousInfo.madhab}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="hanafi">Hanafi</option>
@@ -346,7 +346,7 @@ export default function RegisterPage() {
           value={formData.religiousInfo.practiceLevel}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="strict">Strict (applique tous les piliers)</option>
@@ -363,7 +363,7 @@ export default function RegisterPage() {
               name="religiousInfo.wearsHijab"
               checked={formData.religiousInfo.wearsHijab || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#1a1a1a] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+              className="w-5 h-5 rounded border-[#ff007f]/30 bg-white text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
             />
             <span className="text-sm text-gray-300">Je porte le Hijab</span>
           </label>
@@ -378,7 +378,7 @@ export default function RegisterPage() {
               name="religiousInfo.hasBeard"
               checked={formData.religiousInfo.hasBeard || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#1a1a1a] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+              className="w-5 h-5 rounded border-[#ff007f]/30 bg-white text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
             />
             <span className="text-sm text-gray-300">Je porte la barbe</span>
           </label>
@@ -391,7 +391,7 @@ export default function RegisterPage() {
           name="religiousInfo.quranMemorization"
           value={formData.religiousInfo.quranMemorization}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         >
           <option value="none">Aucune</option>
           <option value="few-surahs">Quelques sourates</option>
@@ -409,7 +409,7 @@ export default function RegisterPage() {
           onChange={handleChange}
           rows={3}
           placeholder="Ex: Diplômé de l'institut Al-Azhar, cours du soir à la mosquée..."
-          className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-[#ff007f]/30 rounded-xl text-gray-900 placeholder-gray-500 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
         />
       </div>
     </div>
@@ -419,11 +419,11 @@ export default function RegisterPage() {
   const renderStep3 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-white mb-2">Attentes Matrimoniales</h3>
-        <p className="text-sm text-gray-400">Vos critères pour le mariage</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Attentes Matrimoniales</h3>
+        <p className="text-sm text-gray-700">Vos critères pour le mariage</p>
       </div>
 
-      <div className="bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl p-6 space-y-4">
+      <div className="bg-white border border-[#ff007f]/30 rounded-xl p-6 space-y-4">
         {formData.gender === 'female' ? (
           <div>
             <label className="flex items-center space-x-3 cursor-pointer">
@@ -432,7 +432,7 @@ export default function RegisterPage() {
                 name="marriageExpectations.acceptsPolygamy"
                 checked={formData.marriageExpectations.acceptsPolygamy || false}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+                className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
               />
               <span className="text-sm text-gray-300">J&apos;accepte la polygamie</span>
             </label>
@@ -445,7 +445,7 @@ export default function RegisterPage() {
                 name="marriageExpectations.wantsPolygamy"
                 checked={formData.marriageExpectations.wantsPolygamy || false}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+                className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
               />
               <span className="text-sm text-gray-300">Je souhaite la polygamie</span>
             </label>
@@ -459,7 +459,7 @@ export default function RegisterPage() {
               name="marriageExpectations.willingToRelocate"
               checked={formData.marriageExpectations.willingToRelocate || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+              className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
             />
             <span className="text-sm text-gray-300">Prêt(e) à déménager</span>
           </label>
@@ -472,7 +472,7 @@ export default function RegisterPage() {
               name="marriageExpectations.wantsChildren"
               checked={formData.marriageExpectations.wantsChildren || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+              className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
             />
             <span className="text-sm text-gray-300">Je souhaite avoir des enfants</span>
           </label>
@@ -488,25 +488,25 @@ export default function RegisterPage() {
               max="10"
               value={formData.marriageExpectations.numberOfChildrenDesired || ''}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-[#0d0d0d] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
             />
           </div>
         )}
       </div>
 
-      {/* Wali Information for Women */}
+      {/* Tuteur Information for Women */}
       {formData.gender === 'female' && (
-        <div className="bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl p-6 space-y-4">
-          <h4 className="text-lg font-semibold text-white mb-4">Informations du Wali (Tuteur)</h4>
+        <div className="bg-white border border-[#ff007f]/30 rounded-xl p-6 space-y-4">
+          <h4 className="text-lg font-semibold text-gray-900 mb-4">Informations du Tuteur (Tuteur)</h4>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Nom complet du Wali *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Nom complet du Tuteur *</label>
             <input
               name="waliInfo.fullName"
               value={formData.waliInfo?.fullName || ''}
               onChange={handleChange}
               required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-[#0d0d0d] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
             />
           </div>
 
@@ -517,7 +517,7 @@ export default function RegisterPage() {
               value={formData.waliInfo?.relationship || ''}
               onChange={handleChange}
               required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-[#0d0d0d] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
             >
               <option value="">Sélectionnez...</option>
               <option value="father">Père</option>
@@ -530,25 +530,25 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email du Wali *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Email du Tuteur *</label>
             <input
               name="waliInfo.email"
               type="email"
               value={formData.waliInfo?.email || ''}
               onChange={handleChange}
               required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-[#0d0d0d] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Téléphone du Wali</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Téléphone du Tuteur</label>
             <input
               name="waliInfo.phone"
               type="tel"
               value={formData.waliInfo?.phone || ''}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-[#0d0d0d] border border-[#ff007f]/30 rounded-xl text-white focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
+              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-[#ff007f]/30 rounded-xl text-gray-900 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all"
             />
           </div>
 
@@ -559,9 +559,9 @@ export default function RegisterPage() {
                 name="waliInfo.hasAccessToDashboard"
                 checked={formData.waliInfo?.hasAccessToDashboard || false}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+                className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
               />
-              <span className="text-sm text-gray-300">Donner accès au dashboard (le Wali peut voir mes conversations)</span>
+              <span className="text-sm text-gray-300">Donner accès au dashboard (le Tuteur peut voir mes conversations)</span>
             </label>
 
             <label className="flex items-center space-x-3 cursor-pointer">
@@ -570,7 +570,7 @@ export default function RegisterPage() {
                 name="waliInfo.notifyOnNewMessage"
                 checked={formData.waliInfo?.notifyOnNewMessage ?? true}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-[#ff007f]/30 bg-[#0d0d0d] text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
+                className="w-5 h-5 rounded border-[#ff007f]/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20"
               />
               <span className="text-sm text-gray-300">Notifier par email à chaque nouveau message</span>
             </label>
@@ -581,7 +581,7 @@ export default function RegisterPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative">
       {/* Background effects */}
       <div className="hero-aura top-0 left-0"></div>
       <div className="hero-aura bottom-0 right-0"></div>
@@ -592,12 +592,12 @@ export default function RegisterPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-12 h-12 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-2xl">Z</div>
-                <span className="text-2xl font-bold tracking-widest text-white">ZAWJ</span>
+                <div className="w-12 h-12 bg-[#ff007f] rounded-lg flex items-center justify-center text-gray-900 font-black text-2xl">Z</div>
+                <span className="text-2xl font-bold tracking-widest text-gray-900">ZAWJ</span>
               </div>
             </Link>
-            <h2 className="text-3xl font-bold text-white mb-2">Créer un compte</h2>
-            <p className="text-gray-400">Rejoignez la plateforme matrimoniale halal</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Créer un compte</h2>
+            <p className="text-gray-700">Rejoignez la plateforme matrimoniale halal</p>
           </div>
 
           {/* Progress Stepper */}
@@ -606,13 +606,13 @@ export default function RegisterPage() {
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center flex-1">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
-                    step >= s ? 'bg-[#ff007f] border-[#ff007f] text-white' : 'bg-[#1a1a1a] border-gray-600 text-gray-500'
+                    step >= s ? 'bg-[#ff007f] border-[#ff007f] text-gray-900' : 'bg-white border-gray-300 text-gray-500'
                   }`}>
                     {step > s ? <Check className="h-5 w-5" /> : s}
                   </div>
                   {s < 3 && (
                     <div className={`flex-1 h-1 mx-2 transition-all ${
-                      step > s ? 'bg-[#ff007f]' : 'bg-gray-700'
+                      step > s ? 'bg-[#ff007f]' : 'bg-gray-200'
                     }`} />
                   )}
                 </div>
@@ -673,7 +673,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Login Link */}
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-center text-sm text-gray-700">
             Vous avez déjà un compte ?{' '}
             <Link href="/login" className="text-[#ff007f] hover:underline font-semibold">
               Se connecter

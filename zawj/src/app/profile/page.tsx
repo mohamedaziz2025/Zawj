@@ -247,7 +247,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Wali Service Section - Only for women without valid Mahram */}
+      {/* Tuteur Service Section - Only for women without valid Tuteur */}
       {profile?.gender === 'female' && !profile?.waliId && !profile?.waliInfo?.platformServicePaid && (
         <div className="glass-card mt-6">
           <div className="p-6">
@@ -255,14 +255,14 @@ export default function ProfilePage() {
               <div className="w-16 h-16 bg-[#ff007f]/10 rounded-full flex items-center justify-center text-[#ff007f] text-2xl mb-4 mx-auto">
                 <User className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Service Mahram Requis</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Service Tuteur Requis</h3>
               <p className="text-gray-400 mb-6">
-                Pour communiquer sur ZAWJ, vous devez avoir un Mahram (tuteur légal) validé.
-                Notre service Mahram plateforme vous permet de bénéficier de ce service de manière sécurisée.
+                Pour communiquer sur ZAWJ, vous devez avoir un Tuteur (tuteur légal) validé.
+                Notre service Tuteur plateforme vous permet de bénéficier de ce service de manière sécurisée.
               </p>
 
               <div className="bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl p-6 mb-6">
-                <h4 className="text-lg font-semibold text-white mb-4">Service Mahram Plateforme</h4>
+                <h4 className="text-lg font-semibold text-white mb-4">Service Tuteur Plateforme</h4>
                 <div className="space-y-3 text-gray-300">
                   <div className="flex items-center">
                     <div className="w-2 h-2 bg-[#ff007f] rounded-full mr-3"></div>
@@ -290,7 +290,7 @@ export default function ProfilePage() {
                 }}
                 className="w-full bg-[#ff007f] hover:bg-[#ff85c1] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,0,127,0.3)]"
               >
-                Demander le Service Mahram
+                Demander le Service Tuteur
               </button>
 
             </div>

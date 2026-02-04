@@ -98,7 +98,7 @@ export default function AdminDashboard() {
             trendPositive={true}
           />
           <StatCard
-            title="Mahrams vérifiés"
+            title="Tuteurs vérifiés"
             value={stats?.totalWalis || 0}
             icon={Heart}
             gradient="from-pink-500 to-rose-500"
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
           />
           <StatCard
             title="En attente d'approbation"
-            value={stats?.pendingMahrams || 0}
+            value={stats?.pendingTuteurs || 0}
             icon={AlertTriangle}
             gradient="from-orange-500 to-amber-500"
             trend="À traiter"
@@ -150,12 +150,12 @@ export default function AdminDashboard() {
               badge={`${stats?.totalUsers || 0}`}
             />
             <QuickAction
-              title="Approuver mahrams"
+              title="Approuver Tuteurs"
               description="Validations en attente"
-              href="/admin/mahrams"
+              href="/admin/Tuteurs"
               icon={Heart}
               gradient="from-pink-500 to-rose-500"
-              badge={`${stats?.pendingMahrams || 0}`}
+              badge={`${stats?.pendingTuteurs || 0}`}
             />
             <QuickAction
               title="Voir messagerie"
@@ -196,9 +196,9 @@ export default function AdminDashboard() {
                 color="blue"
               />
               <ActivityItem
-                type="mahram"
+                type="Tuteur"
                 icon={Heart}
-                message="Mahram approuvé"
+                message="Tuteur approuvé"
                 detail="Validation pour Sophie Martin"
                 time="Il y a 12 min"
                 color="pink"
@@ -245,8 +245,8 @@ export default function AdminDashboard() {
               <h3 className="font-bold text-gray-900 mb-4">Actions requises</h3>
               <div className="space-y-3">
                 <TaskItem
-                  label="Mahrams à approuver"
-                  count={stats?.pendingMahrams || 0}
+                  label="Tuteurs à approuver"
+                  count={stats?.pendingTuteurs || 0}
                   color="pink"
                 />
                 <TaskItem

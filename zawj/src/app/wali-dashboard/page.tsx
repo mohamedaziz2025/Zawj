@@ -49,11 +49,11 @@ export default function WaliDashboardPage() {
     try {
       const token = localStorage.getItem('waliToken')
       if (!token) {
-        router.push('/wali-login')
+        router.push('/Tuteur-login')
         return
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wali/dashboard`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Tuteur/dashboard`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -70,7 +70,7 @@ export default function WaliDashboardPage() {
       setMutualMatches(data.mutualMatches)
     } catch (error) {
       console.error('Error:', error)
-      router.push('/wali-login')
+      router.push('/Tuteur-login')
     } finally {
       setIsLoading(false)
     }
@@ -80,7 +80,7 @@ export default function WaliDashboardPage() {
     try {
       const token = localStorage.getItem('waliToken')
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/wali/conversations/${conversationId}/messages`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/Tuteur/conversations/${conversationId}/messages`,
         {
           headers: { 'Authorization': `Bearer ${token}` },
         }
@@ -99,7 +99,7 @@ export default function WaliDashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('waliToken')
     localStorage.removeItem('protectedUser')
-    router.push('/wali-login')
+    router.push('/Tuteur-login')
   }
 
   if (isLoading) {
@@ -124,7 +124,7 @@ export default function WaliDashboardPage() {
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Espace Wali</h1>
+                <h1 className="text-xl font-bold text-white">Espace Tuteur</h1>
                 <p className="text-sm text-gray-400">
                   Surveillance de {protectedUser?.firstName} {protectedUser?.lastName}
                 </p>

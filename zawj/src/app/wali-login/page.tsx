@@ -19,7 +19,7 @@ export default function WaliLoginPage() {
     setError('')
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wali/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Tuteur/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, accessCode }),
@@ -31,11 +31,11 @@ export default function WaliLoginPage() {
         throw new Error(data.message || 'Échec de connexion')
       }
 
-      // Store Wali token separately
+      // Store Tuteur token separately
       localStorage.setItem('waliToken', data.token)
       localStorage.setItem('protectedUser', JSON.stringify(data.protectedUser))
       
-      router.push('/wali-dashboard')
+      router.push('/Tuteur-dashboard')
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -59,7 +59,7 @@ export default function WaliLoginPage() {
               <span className="text-2xl font-bold tracking-widest text-white">ZAWJ</span>
             </div>
           </Link>
-          <h1 className="text-3xl font-bold text-white mb-2">Espace Wali</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Espace Tuteur</h1>
           <p className="text-gray-400">Accédez au tableau de bord de votre protégée</p>
         </div>
 
@@ -68,7 +68,7 @@ export default function WaliLoginPage() {
           <div className="flex items-start space-x-3">
             <Shield className="h-6 w-6 text-[#ff007f] flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-white font-semibold mb-2">Connexion Sécurisée Wali</h3>
+              <h3 className="text-white font-semibold mb-2">Connexion Sécurisée Tuteur</h3>
               <p className="text-sm text-gray-400">
                 Utilisez l&apos;email que vous avez fourni lors de l&apos;inscription de votre protégée 
                 et le code d&apos;accès qui vous a été communiqué.
@@ -84,7 +84,7 @@ export default function WaliLoginPage() {
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 <div className="flex items-center space-x-2">
                   <Mail className="h-4 w-4" />
-                  <span>Email du Wali</span>
+                  <span>Email du Tuteur</span>
                 </div>
               </label>
               <input
@@ -110,7 +110,7 @@ export default function WaliLoginPage() {
                   value={accessCode}
                   onChange={(e) => setAccessCode(e.target.value)}
                   required
-                  placeholder="WALI-XXXXXX"
+                  placeholder="Tuteur-XXXXXX"
                   className="w-full px-4 py-3 pr-12 bg-[#1a1a1a] border border-[#ff007f]/30 rounded-xl text-white placeholder-gray-500 focus:border-[#ff007f] focus:ring-2 focus:ring-[#ff007f]/20 transition-all uppercase"
                 />
                 <button
@@ -122,7 +122,7 @@ export default function WaliLoginPage() {
                 </button>
               </div>
               <p className="mt-2 text-xs text-gray-500">
-                Format: WALI- suivi de 6 caractères (fourni par votre protégée)
+                Format: Tuteur- suivi de 6 caractères (fourni par votre protégée)
               </p>
             </div>
 

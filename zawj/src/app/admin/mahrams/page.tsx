@@ -3,25 +3,25 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckCircle, XCircle, Clock, FileText, Download } from 'lucide-react'
-import { adminApi, Mahram } from '@/lib/api/admin'
+import { adminApi, Tuteur } from '@/lib/api/admin'
 import { useAuthStore } from '@/store/auth'
 
-export default function AdminMahramsPage() {
+export default function AdminTuteursPage() {
   const [filterStatus, setFilterStatus] = useState<string>('pending')
   const queryClient = useQueryClient()
   const { isAuthenticated, user } = useAuthStore()
 
-  // Fetch mahrams from API
-  const { data: mahramsData, isLoading } = useQuery({
-    queryKey: ['admin-mahrams', filterStatus],
-    queryFn: () => adminApi.getMahrams(filterStatus),
+  // Fetch Tuteurs from API
+  const { data: TuteursData, isLoading } = useQuery({
+    queryKey: ['admin-Tuteurs', filterStatus],
+    queryFn: () => adminApi.getTuteurs(filterStatus),
     enabled: isAuthenticated && user?.role === 'admin',
   })
 
   const approveMutation = useMutation({
     mutationFn: (mahramId: string) => adminApi.approveMahram(mahramId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-mahrams'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-Tuteurs'] })
       queryClient.invalidateQueries({ queryKey: ['admin-stats'] })
     },
   })
@@ -30,15 +30,15 @@ export default function AdminMahramsPage() {
     mutationFn: ({ mahramId, reason }: { mahramId: string; reason: string }) =>
       adminApi.rejectMahram(mahramId, reason),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-mahrams'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-Tuteurs'] })
       queryClient.invalidateQueries({ queryKey: ['admin-stats'] })
     },
   })
 
-  const mahrams = mahramsData?.mahrams || []
+  const Tuteurs = TuteursData?.Tuteurs || []
 
   const handleApprove = (mahramId: string) => {
-    if (confirm('Voulez-vous approuver cette demande de mahram ?')) {
+    if (confirm('Voulez-vous approuver cette demande de Tuteur ?')) {
       approveMutation.mutate(mahramId)
     }
   }
@@ -55,7 +55,7 @@ export default function AdminMahramsPage() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-pink-600 mx-auto"></div>
-          <p className="text-gray-600 mt-4 font-medium">Chargement des mahrams...</p>
+          <p className="text-gray-600 mt-4 font-medium">Chargement des Tuteurs...</p>
         </div>
       </div>
     )
@@ -67,9 +67,9 @@ export default function AdminMahramsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Gestion des Mahrams
+            Gestion des Tuteurs
           </h1>
-          <p className="text-gray-600">Vérification et approbation des demandes de mahram</p>
+          <p className="text-gray-600">Vérification et approbation des demandes de Tuteur</p>
         </div>
 
         {/* Filters */}
@@ -119,58 +119,58 @@ export default function AdminMahramsPage() {
           </button>
         </div>
 
-        {/* Mahrams List */}
+        {/* Tuteurs List */}
         <div className="space-y-4">
-          {mahrams.length === 0 ? (
+          {Tuteurs.length === 0 ? (
             <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-200">
               <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucune demande trouvée</h3>
-              <p className="text-gray-600">Il n'y a pas de demandes de mahram {filterStatus !== 'all' ? `en statut "${filterStatus}"` : ''}</p>
+              <p className="text-gray-600">Il n'y a pas de demandes de Tuteur {filterStatus !== 'all' ? `en statut "${filterStatus}"` : ''}</p>
             </div>
           ) : (
-            mahrams.map((mahram: Mahram) => (
+            Tuteurs.map((Tuteur: Tuteur) => (
               <div
-                key={mahram._id}
+                key={Tuteur._id}
                 className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center gap-4 mb-2">
                       <h3 className="text-xl font-semibold text-gray-900">
-                        {mahram.user?.name || 'Utilisateur'}
+                        {Tuteur.user?.name || 'Utilisateur'}
                       </h3>
                       <span className="text-gray-400">→</span>
                       <h3 className="text-xl font-semibold text-white">
-                        {mahram.mahram.name}
+                        {Tuteur.Tuteur.name}
                       </h3>
                     </div>
                     <div className="flex gap-6 text-sm text-gray-400">
-                      <span>{mahram.mahram.email}</span>
-                      <span>{mahram.mahram.phone}</span>
-                      <span className="capitalize">{mahram.mahram.relationship}</span>
+                      <span>{Tuteur.Tuteur.email}</span>
+                      <span>{Tuteur.Tuteur.phone}</span>
+                      <span className="capitalize">{Tuteur.Tuteur.relationship}</span>
                     </div>
                   </div>
                   <span
                     className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                      mahram.status === 'pending'
+                      Tuteur.status === 'pending'
                         ? 'bg-yellow-500/20 text-yellow-400'
-                        : mahram.status === 'approved'
+                        : Tuteur.status === 'approved'
                         ? 'bg-green-500/20 text-green-400'
                         : 'bg-red-500/20 text-red-400'
                     }`}
                   >
-                    {mahram.status === 'pending'
+                    {Tuteur.status === 'pending'
                       ? 'En attente'
-                      : mahram.status === 'approved'
+                      : Tuteur.status === 'approved'
                       ? 'Approuvé'
                       : 'Rejeté'}
                   </span>
                 </div>
 
-                {mahram.rejectionReason && (
+                {Tuteur.rejectionReason && (
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4">
                     <p className="text-red-400 text-sm">
-                      <strong>Raison du rejet:</strong> {mahram.rejectionReason}
+                      <strong>Raison du rejet:</strong> {Tuteur.rejectionReason}
                     </p>
                   </div>
                 )}
@@ -178,16 +178,16 @@ export default function AdminMahramsPage() {
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="text-sm text-gray-400 mb-2">
-                      Demande le: {new Date(mahram.createdAt).toLocaleDateString('fr-FR')}
+                      Demande le: {new Date(Tuteur.createdAt).toLocaleDateString('fr-FR')}
                     </p>
-                    {mahram.verifiedAt && (
+                    {Tuteur.verifiedAt && (
                       <p className="text-sm text-green-400">
-                        Vérifié le: {new Date(mahram.verifiedAt).toLocaleDateString('fr-FR')}
+                        Vérifié le: {new Date(Tuteur.verifiedAt).toLocaleDateString('fr-FR')}
                       </p>
                     )}
-                    {mahram.documents && mahram.documents.length > 0 && (
+                    {Tuteur.documents && Tuteur.documents.length > 0 && (
                       <div className="flex gap-2 mt-2">
-                        {mahram.documents.map((doc, index) => (
+                        {Tuteur.documents.map((doc, index) => (
                           <a
                             key={index}
                             href={`${process.env.NEXT_PUBLIC_API_URL}${doc.url}`}
@@ -203,10 +203,10 @@ export default function AdminMahramsPage() {
                       </div>
                     )}
                   </div>
-                  {mahram.status === 'pending' && (
+                  {Tuteur.status === 'pending' && (
                     <div className="flex gap-2">
                       <button
-                        onClick={() => handleApprove(mahram._id)}
+                        onClick={() => handleApprove(Tuteur._id)}
                         disabled={approveMutation.isPending}
                         className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
                       >
@@ -214,7 +214,7 @@ export default function AdminMahramsPage() {
                         {approveMutation.isPending ? 'En cours...' : 'Approuver'}
                       </button>
                       <button
-                        onClick={() => handleReject(mahram._id)}
+                        onClick={() => handleReject(Tuteur._id)}
                         disabled={rejectMutation.isPending}
                         className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
                       >

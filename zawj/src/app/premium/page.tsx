@@ -61,7 +61,7 @@ export default function PremiumPage() {
         { text: 'Accès complet illimité', included: true },
         { text: 'Messagerie sans restriction', included: true },
         { text: 'Photos à votre contrôle', included: true },
-        { text: 'Support Wali 24/7', included: true },
+        { text: 'Support Tuteur 24/7', included: true },
         { text: 'Profil certifié', included: true },
       ],
       cta: 'S\'inscrire gratuitement',

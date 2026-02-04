@@ -159,8 +159,8 @@ export default function SettingsPage() {
                       onChange={() => handleToggle('notifications', 'matches')}
                     />
                     <ToggleItem
-                      label="Mises à jour du Wali"
-                      description="Notifications des actions de votre Wali (femmes uniquement)"
+                      label="Mises à jour du Tuteur"
+                      description="Notifications des actions de votre Tuteur (femmes uniquement)"
                       checked={settings.notifications.waliUpdates}
                       onChange={() => handleToggle('notifications', 'waliUpdates')}
                     />

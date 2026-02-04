@@ -39,7 +39,7 @@ export default function SubscribePage() {
         'Matching prioritaire',
         'Conseils personnalisés',
         'Accès aux événements',
-        'Service Wali premium'
+        'Service Tuteur premium'
       ],
       popular: false
     }
