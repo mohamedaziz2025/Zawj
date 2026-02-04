@@ -192,9 +192,17 @@ export default function AdminDashboard() {
               badge={`${stats?.totalUsers || 0}`}
             />
             <QuickAction
+              title="Gérer Modérateurs"
+              description="Supervision utilisatrices"
+              href="/admin/moderators"
+              icon={Shield}
+              gradient="from-purple-500 to-indigo-600"
+              badge="Admin"
+            />
+            <QuickAction
               title="Approuver Tuteurs"
               description="Validations en attente"
-              href="/admin/Tuteurs"
+              href="/admin/mahrams"
               icon={Heart}
               gradient="from-pink-500 to-rose-500"
               badge={`${stats?.pendingTuteurs || 0}`}

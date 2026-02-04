@@ -2,14 +2,16 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChevronLeft, User, Mail, Lock, Eye, EyeOff, Calendar, MapPin, FileText, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { authApi, RegisterData } from '@/lib/api/auth'
+import { adminApi } from '@/lib/api/admin'
 
 export default function CreateUserPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
+  const [selectedModeratorId, setSelectedModeratorId] = useState('')
   const [formData, setFormData] = useState<RegisterData>({
     firstName: '',
     lastName: '',
@@ -22,8 +24,33 @@ export default function CreateUserPage() {
     }
   })
 
+  // Fetch moderators for female users with platform wali
+  const { data: moderators = [] } = useQuery({
+    queryKey: ['moderators'],
+    queryFn: adminApi.getModerators,
+    enabled: formData.gender === 'female' && formData.waliInfo?.type === 'platform'
+  })
+
   const createUserMutation = useMutation({
-    mutationFn: (data: RegisterData) => authApi.register(data),
+    mutationFn: async (data: RegisterData) => {
+      // Create user first
+      const response = await authApi.register(data)
+      
+      // If it's a female with platform wali and a moderator is selected, assign the moderator
+      if (data.gender === 'female' && 
+          data.waliInfo?.type === 'platform' && 
+          selectedModeratorId && 
+          response.user?.id) {
+        try {
+          await adminApi.assignUserToModerator(selectedModeratorId, response.user.id)
+        } catch (error) {
+          console.error('Failed to assign moderator:', error)
+          // Continue anyway, user is created
+        }
+      }
+      
+      return response
+    },
     onSuccess: () => {
       router.push('/admin/users')
     },
@@ -31,6 +58,15 @@ export default function CreateUserPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validation: if female with platform wali, moderator must be selected
+    if (formData.gender === 'female' && 
+        formData.waliInfo?.type === 'platform' && 
+        !selectedModeratorId) {
+      alert('Veuillez sélectionner un modérateur pour cette utilisatrice')
+      return
+    }
+    
     createUserMutation.mutate(formData)
   }
 
@@ -200,24 +236,49 @@ export default function CreateUserPage() {
                 </div>
 
                 {formData.waliInfo?.type === 'platform' && (
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      id="platformServicePaid"
-                      checked={formData.waliInfo?.platformServicePaid || false}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        waliInfo: {
-                          type: prev.waliInfo?.type || 'platform',
-                          platformServicePaid: e.target.checked
-                        }
-                      }))}
-                      className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
-                    />
-                    <label htmlFor="platformServicePaid" className="text-sm text-gray-700">
-                      Service Tuteur plateforme payé
-                    </label>
-                  </div>
+                  <>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        id="platformServicePaid"
+                        checked={formData.waliInfo?.platformServicePaid || false}
+                        onChange={(e) => setFormData(prev => ({
+                          ...prev,
+                          waliInfo: {
+                            type: prev.waliInfo?.type || 'platform',
+                            platformServicePaid: e.target.checked
+                          }
+                        }))}
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
+                      />
+                      <label htmlFor="platformServicePaid" className="text-sm text-gray-700">
+                        Service Tuteur plateforme payé
+                      </label>
+                    </div>
+
+                    {/* Moderator Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Assigner un Modérateur *
+                      </label>
+                      <select
+                        value={selectedModeratorId}
+                        onChange={(e) => setSelectedModeratorId(e.target.value)}
+                        required
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all text-sm sm:text-base"
+                      >
+                        <option value="">Sélectionner un modérateur</option>
+                        {moderators.map((moderator: any) => (
+                          <option key={moderator._id} value={moderator._id}>
+                            {moderator.userId?.firstName} {moderator.userId?.lastName} - {moderator.assignedUsers?.length || 0} utilisatrices
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Le modérateur supervisera les échanges de cette utilisatrice
+                      </p>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
