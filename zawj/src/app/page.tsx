@@ -9,11 +9,11 @@ export default function Home() {
       <div className="hero-aura bottom-[-200px] right-[-100px]"></div>
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 px-6 py-4">
-        <div className="max-w-7xl mx-auto glass-card rounded-full px-8 py-4 flex justify-between items-center shadow-2xl">
+      <nav className="fixed w-full z-50 px-4 md:px-6 py-4">
+        <div className="max-w-7xl mx-auto bg-black/90 backdrop-blur-xl border border-white/10 rounded-full px-4 md:px-8 py-4 flex justify-between items-center shadow-2xl">
           <div className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-[#ff007f] rounded-lg flex items-center justify-center text-white font-black text-xl">Z</div>
-            <span className="text-xl font-bold tracking-widest text-white">ZAWJ</span>
+            <span className="text-lg md:text-xl font-bold tracking-widest text-white">ZAWJ</span>
           </div>
           <div className="hidden lg:flex space-x-8 font-bold text-[10px] uppercase tracking-[0.2em] text-gray-400">
             <a href="#concept" className="hover:text-[#ff007f] transition-colors">Concept</a>
@@ -21,22 +21,22 @@ export default function Home() {
             <a href="#wali" className="hover:text-[#ff007f] transition-colors">Wali</a>
             
           </div>
-          <Link href="/login" className="btn-pink px-6 py-2 rounded-full text-xs font-black uppercase">Connexion</Link>
+          <Link href="/login" className="btn-pink px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase">Connexion</Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="relative min-h-screen flex items-center pt-20">
-        <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+      <header className="relative min-h-screen flex items-center pt-20 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div data-aos="fade-right" data-aos-duration="1000">
             <div className="inline-block border border-[#ff007f] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#ff007f] mb-6">
               Mariage Halal • Premium • Sécurisé
             </div>
-            <h1 className="text-5xl lg:text-7xl font-bold leading-none mb-8 text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-none mb-8 text-white">
               L&apos;union <br />
               <span className="pink-glow-text">D&apos;excellence</span>
             </h1>
-            <p className="text-gray-400 text-lg mb-10 leading-relaxed max-w-md">
+            <p className="text-gray-400 text-base sm:text-lg mb-10 leading-relaxed max-w-md">
               Oubliez les standards. Vivez une expérience matrimoniale où la <strong>pudeur</strong> est magnifiée par la <strong>modernité</strong>.
             </p>
             <div className="flex flex-wrap gap-6">
@@ -56,8 +56,8 @@ export default function Home() {
 
           <div className="relative flex justify-center" data-aos="zoom-in" data-aos-duration="1200">
             <div className="relative z-10 floating">
-              <div className="bg-[#1a1a1a] p-3 rounded-[3rem] shadow-[0_0_50px_rgba(255,0,127,0.3)] border border-[#ff007f]/30">
-                <div className="bg-black rounded-[2.5rem] w-[280px] h-[580px] overflow-hidden relative">
+              <div className="bg-[#1a1a1a] p-2 sm:p-3 rounded-[3rem] shadow-[0_0_50px_rgba(255,0,127,0.3)] border border-[#ff007f]/30">
+                <div className="bg-black rounded-[2.5rem] w-[240px] sm:w-[280px] h-[500px] sm:h-[580px] overflow-hidden relative">
                   {/* App Header */}
                   <div className="p-6 pt-10 flex justify-between items-center">
                     <div className="text-white font-bold text-sm">Découvrir</div>
@@ -93,17 +93,17 @@ export default function Home() {
       </header>
 
       {/* Comment Utiliser - Section Ultra Moderne */}
-      <section id="how-to-use" className="py-32 relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
+      <section id="how-to-use" className="py-16 sm:py-32 relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
         {/* Background Effects */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-100/50 rounded-full blur-[120px]"></div>
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           {/* Header */}
           <div className="text-center mb-20" data-aos="fade-up">
             <div className="inline-block border border-pink-300 bg-pink-50 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-pink-600 mb-6">
               Guide Complet
             </div>
-            <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
               Comment utiliser <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span> en 4 étapes
             </h2>
@@ -354,48 +354,48 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section id="concept" className="py-32 bg-[#0d0d0d]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-24" data-aos="fade-up">
-            <h2 className="text-4xl font-bold mb-4">L&apos;ADN <span className="text-[#ff007f]">ZAWJ</span></h2>
-            <div className="w-20 h-1 bg-[#ff007f] mx-auto"></div>
+      <section id="concept" className="py-16 sm:py-32 bg-gradient-to-b from-white via-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16 sm:mb-24" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">L&apos;ADN <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">ZAWJ</span></h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-pink-600 to-purple-600 mx-auto"></div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up">
-              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-12">
+            <div className="bg-white p-6 sm:p-10 rounded-[2rem] border-2 border-gray-200 hover:border-pink-500 hover:shadow-xl transition-all group" data-aos="fade-up">
+              <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 text-2xl mb-8 group-hover:bg-pink-600 group-hover:text-white transition-all">
                 <Shield className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Protection Wali</h3>
-              <p className="text-gray-500 leading-relaxed">Le premier système au monde d&apos;intégration native du tuteur dans vos échanges.</p>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Protection Wali</h3>
+              <p className="text-gray-700 leading-relaxed">Le premier système au monde d&apos;intégration native du tuteur dans vos échanges.</p>
             </div>
-            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up" data-aos-delay="100">
-              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+            <div className="bg-white p-10 rounded-[2rem] border-2 border-gray-200 hover:border-pink-500 hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="100">
+              <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 text-2xl mb-8 group-hover:bg-pink-600 group-hover:text-white transition-all">
                 <Camera className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Pudeur Visuelle</h3>
-              <p className="text-gray-500 leading-relaxed">Vos photos ne sont révélées qu&apos;avec votre consentement explicite.</p>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Pudeur Visuelle</h3>
+              <p className="text-gray-700 leading-relaxed">Vos photos ne sont révélées qu&apos;avec votre consentement explicite.</p>
             </div>
-            <div className="glass-card p-10 rounded-[2rem] hover:border-[#ff007f] transition-all group" data-aos="fade-up" data-aos-delay="200">
-              <div className="w-16 h-16 bg-[#ff007f]/10 rounded-2xl flex items-center justify-center text-[#ff007f] text-2xl mb-8 group-hover:bg-[#ff007f] group-hover:text-white transition-all">
+            <div className="bg-white p-10 rounded-[2rem] border-2 border-gray-200 hover:border-pink-500 hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="200">
+              <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 text-2xl mb-8 group-hover:bg-pink-600 group-hover:text-white transition-all">
                 <Gem className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Qualité Élite</h3>
-              <p className="text-gray-500 leading-relaxed">Une communauté de profils vérifiés, éduqués et engagés dans leur Deen.</p>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Qualité Élite</h3>
+              <p className="text-gray-700 leading-relaxed">Une communauté de profils vérifiés, éduqués et engagés dans leur Deen.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Section Wali - Innovation Unique */}
-      <section id="wali" className="py-32 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+      <section id="wali" className="py-16 sm:py-32 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
         {/* Background Effect */}
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-100/50 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-pink-100/50 rounded-full blur-[150px]"></div>
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           {/* Header */}
-          <div className="text-center mb-20" data-aos="fade-up">
+          <div className="text-center mb-12 sm:mb-20" data-aos="fade-up">
             <div className="inline-block border border-purple-300 bg-purple-50 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-purple-700 mb-6">
               Innovation Mondiale
             </div>
