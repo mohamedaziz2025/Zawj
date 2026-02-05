@@ -11,12 +11,15 @@ import {
   Moon,
   Save,
   Trash2,
-  AlertTriangle
+  AlertTriangle,
+  Users
 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function SettingsPage() {
   const { user, isAuthenticated } = useAuthStore()
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('notifications')
   const [settings, setSettings] = useState({
     notifications: {
@@ -95,6 +98,15 @@ export default function SettingsPage() {
     { id: 'account', label: 'Compte', icon: Lock },
   ]
 
+  // Ajouter l'onglet Tuteurs uniquement pour les femmes
+  const availableTabs = user?.gender === 'female' 
+    ? [
+        ...tabs.slice(0, 3), // Notifications, Confidentialité, Sécurité
+        { id: 'tuteurs', label: 'Tuteurs', icon: Users },
+        tabs[3] // Compte
+      ]
+    : tabs
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,13 +119,19 @@ export default function SettingsPage() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="glass-card rounded-2xl p-4 space-y-2">
-              {tabs.map((tab) => (
+              {availableTabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    if (tab.id === 'tuteurs') {
+                      router.push('/settings/tuteurs')
+                    } else {
+                      setActiveTab(tab.id)
+                    }
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                     activeTab === tab.id
-                      ? 'bg-gradient-to-r from-[#ff007f] to-[#ff4d94] text-white shadow-lg shadow-[#ff007f]/30'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-600/30'
                       : 'text-gray-400 hover:bg-white/5 hover:text-white'
                   }`}
                 >

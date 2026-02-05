@@ -207,7 +207,7 @@ export default function DemoPage() {
           Étape 1/5 - Commencer
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-gray-900">
-          Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Nissfi</span>
+          Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-purple-600">Nissfi</span>
         </h1>
         <p className="text-gray-700 text-base sm:text-lg max-w-2xl mx-auto mb-8 sm:mb-12">
           Découvrez comment fonctionne notre plateforme matrimoniale halal avec protection Tuteur intégrée
@@ -221,10 +221,10 @@ export default function DemoPage() {
             setUserType("brother");
             setCurrentStep(2);
           }}
-          className="bg-white p-6 sm:p-12 rounded-3xl border-2 border-gray-200 hover:border-pink-500 hover:shadow-xl transition-all group text-left"
+          className="bg-white p-6 sm:p-12 rounded-3xl border-2 border-gray-200 hover:border-red-600 hover:shadow-xl transition-all group text-left"
         >
-          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-pink-100 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 group-hover:bg-pink-600 transition-all">
-            <User className="h-8 sm:h-10 w-8 sm:w-10 text-pink-600 group-hover:text-white" />
+          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-red-50 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 group-hover:bg-red-600 transition-all">
+            <User className="h-8 sm:h-10 w-8 sm:w-10 text-red-600 group-hover:text-white" />
           </div>
           <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Je suis un Frère</h3>
           <p className="text-gray-700 mb-6 leading-relaxed">
@@ -232,19 +232,19 @@ export default function DemoPage() {
           </p>
           <ul className="space-y-3 mb-8">
             <li className="flex items-center gap-2 text-sm text-gray-700">
-              <Check className="h-4 w-4 text-pink-600" />
+              <Check className="h-4 w-4 text-red-600" />
               Accès premium requis
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-700">
-              <Check className="h-4 w-4 text-pink-600" />
+              <Check className="h-4 w-4 text-red-600" />
               Profils vérifiés
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-700">
-              <Check className="h-4 w-4 text-pink-600" />
+              <Check className="h-4 w-4 text-red-600" />
               Respect du processus Tuteur
             </li>
           </ul>
-          <div className="text-pink-600 font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+          <div className="text-red-600 font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
             Continuer en tant que Frère
             <span>→</span>
           </div>
@@ -360,7 +360,7 @@ export default function DemoPage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setCurrentStep(3)}
-                      className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#ff007f] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                      className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#dc2626] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
                     >
                       <Check className="h-5 w-5" />
                       Transmettre au Tuteur
@@ -423,7 +423,7 @@ export default function DemoPage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setCurrentStep(3)}
-                      className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#ff007f] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                      className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-[#dc2626] text-gray-900 rounded-xl font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
                     >
                       <Check className="h-5 w-5" />
                       Transmettre au Tuteur
@@ -477,13 +477,13 @@ export default function DemoPage() {
           <div className="flex justify-center gap-4">
             <button
               onClick={() => setCurrentStep(1)}
-              className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-pink-600 transition-all"
+              className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-600 transition-all"
             >
               ← Retour
             </button>
             <button
               onClick={() => setCurrentStep(3)}
-              className="px-6 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+              className="px-6 py-3 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
             >
               Étape suivante →
             </button>
@@ -513,8 +513,8 @@ export default function DemoPage() {
           onClick={() => setIsPremium(!isPremium)}
           className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold transition-all ${
             isPremium
-              ? "bg-gradient-to-r from-[#ff007f] to-pink-600 text-white"
-              : "bg-gray-100 border border-gray-300 text-gray-700 hover:border-pink-600"
+              ? "bg-gradient-to-r from-[#dc2626] to-red-700 text-white"
+              : "bg-gray-100 border border-gray-300 text-gray-700 hover:border-red-600"
           }`}
         >
           <Crown className="h-5 w-5" />
@@ -528,13 +528,13 @@ export default function DemoPage() {
           <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-4 rounded-2xl">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-700">Likes quotidiens</span>
-              <span className="text-lg font-bold text-pink-600">
+              <span className="text-lg font-bold text-red-600">
                 {likesUsedToday} / {DAILY_LIKE_LIMIT}
               </span>
             </div>
             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#ff007f] to-pink-600 transition-all duration-500"
+                className="h-full bg-gradient-to-r from-[#dc2626] to-red-700 transition-all duration-500"
                 style={{ width: `${(likesUsedToday / DAILY_LIKE_LIMIT) * 100}%` }}
               />
             </div>
@@ -544,15 +544,15 @@ export default function DemoPage() {
 
       {/* Profile Card */}
       <div className="max-w-md mx-auto mb-8">
-        <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-pink-600/30 relative overflow-hidden">
+        <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-red-600/30 relative overflow-hidden">
           {/* Compatibility Badge */}
-          <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-600 to-[#ff007f] px-4 py-2 rounded-full text-gray-900 text-xs font-bold flex items-center gap-2 z-10">
+          <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-600 to-[#dc2626] px-4 py-2 rounded-full text-gray-900 text-xs font-bold flex items-center gap-2 z-10">
             <Star className="h-4 w-4" />
             {currentProfile.compatibility}% Compatible
           </div>
 
           {/* Profile Image */}
-          <div className="relative h-96 bg-gradient-to-br from-purple-500 to-[#ff007f] rounded-2xl mb-6 overflow-hidden">
+          <div className="relative h-96 bg-gradient-to-br from-purple-500 to-[#dc2626] rounded-2xl mb-6 overflow-hidden">
             {currentProfile.imageBlurred && (
               <div className="absolute inset-0 backdrop-blur-3xl bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
@@ -573,7 +573,7 @@ export default function DemoPage() {
             <h3 className="text-3xl font-bold text-gray-900 mb-2">
               {currentProfile.name}, {currentProfile.age}
             </h3>
-            <p className="text-pink-600 font-bold mb-4">
+            <p className="text-red-600 font-bold mb-4">
               {currentProfile.city} • {currentProfile.profession}
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -600,7 +600,7 @@ export default function DemoPage() {
             </button>
             <button
               onClick={handleLike}
-              className="flex-1 py-4 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all flex items-center justify-center gap-2"
+              className="flex-1 py-4 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all flex items-center justify-center gap-2"
             >
               <Heart className="h-5 w-5" />
               J'aime
@@ -615,7 +615,7 @@ export default function DemoPage() {
               key={index}
               className={`w-2 h-2 rounded-full transition-all ${
                 index === currentProfileIndex
-                  ? "bg-pink-600 w-8"
+                  ? "bg-red-600 w-8"
                   : index < currentProfileIndex
                   ? "bg-green-500"
                   : "bg-slate-700"
@@ -645,10 +645,10 @@ export default function DemoPage() {
       {/* Limit Modal */}
       {showLimitModal && (
         <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-          <div className="bg-white border-2 border-gray-200 hover:shadow-xl max-w-lg w-full p-8 rounded-3xl border-2 border-pink-600">
+          <div className="bg-white border-2 border-gray-200 hover:shadow-xl max-w-lg w-full p-8 rounded-3xl border-2 border-red-600">
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-pink-600/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Crown className="h-10 w-10 text-pink-600" />
+              <div className="w-20 h-20 bg-red-600/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Crown className="h-10 w-10 text-red-600" />
               </div>
               <h3 className="text-3xl font-bold mb-4 text-gray-900">
                 Limite quotidienne atteinte
@@ -661,19 +661,19 @@ export default function DemoPage() {
 
             <div className="space-y-4 mb-8">
               <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-300/50">
-                <Check className="h-5 w-5 text-pink-600" />
+                <Check className="h-5 w-5 text-red-600" />
                 <span className="text-gray-700">Likes illimités</span>
               </div>
               <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-300/50">
-                <Check className="h-5 w-5 text-pink-600" />
+                <Check className="h-5 w-5 text-red-600" />
                 <span className="text-gray-700">Voir qui vous a liké</span>
               </div>
               <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-300/50">
-                <Check className="h-5 w-5 text-pink-600" />
+                <Check className="h-5 w-5 text-red-600" />
                 <span className="text-gray-700">Badge vérifié</span>
               </div>
               <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-300/50">
-                <Check className="h-5 w-5 text-pink-600" />
+                <Check className="h-5 w-5 text-red-600" />
                 <span className="text-gray-700">Filtres avancés</span>
               </div>
             </div>
@@ -681,13 +681,13 @@ export default function DemoPage() {
             <div className="flex gap-4">
               <button
                 onClick={() => setShowLimitModal(false)}
-                className="flex-1 py-4 bg-gray-100 border border-gray-300 text-gray-900 rounded-2xl font-bold hover:border-pink-600 transition-all"
+                className="flex-1 py-4 bg-gray-100 border border-gray-300 text-gray-900 rounded-2xl font-bold hover:border-red-600 transition-all"
               >
                 Plus tard
               </button>
               <button
                 onClick={handleUpgradeToPremium}
-                className="flex-1 py-4 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+                className="flex-1 py-4 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
               >
                 Passer Premium
               </button>
@@ -699,8 +699,8 @@ export default function DemoPage() {
       {/* Premium Features Unlocked */}
       {showPremiumFeatures && (
         <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-          <div className="bg-white border-2 border-gray-200 hover:shadow-xl max-w-lg w-full p-8 rounded-3xl border-2 border-pink-600 text-center">
-            <div className="w-24 h-24 bg-gradient-to-r from-[#ff007f] to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="bg-white border-2 border-gray-200 hover:shadow-xl max-w-lg w-full p-8 rounded-3xl border-2 border-red-600 text-center">
+            <div className="w-24 h-24 bg-gradient-to-r from-[#dc2626] to-red-700 rounded-full flex items-center justify-center mx-auto mb-6">
               <Sparkles className="h-12 w-12 text-white" />
             </div>
             <h3 className="text-3xl font-bold mb-4 text-gray-900">
@@ -717,13 +717,13 @@ export default function DemoPage() {
       <div className="flex justify-center gap-4 mt-12">
         <button
           onClick={() => setCurrentStep(1)}
-          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-pink-600 transition-all"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-600 transition-all"
         >
           ← Retour
         </button>
         <button
           onClick={() => setCurrentStep(3)}
-          className="px-6 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+          className="px-6 py-3 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
         >
           Étape suivante →
         </button>
@@ -739,7 +739,7 @@ export default function DemoPage() {
           Étape 3/5 - Système Tuteur
         </div>
         <h2 className="text-4xl font-bold mb-4 text-gray-900">
-          Protection par le <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#ff007f]">Tuteur</span>
+          Protection par le <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#dc2626]">Tuteur</span>
         </h2>
         <p className="text-gray-700 max-w-2xl mx-auto">
           {userType === "sister" 
@@ -780,29 +780,29 @@ export default function DemoPage() {
 
           <button
             onClick={() => setWaliType("platform")}
-            className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-gray-300/50 hover:border-pink-600 transition-all group text-left"
+            className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-gray-300/50 hover:border-red-600 transition-all group text-left"
           >
-            <div className="w-16 h-16 bg-pink-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-all">
+            <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-all">
               <span className="text-3xl">🛡️</span>
             </div>
             <div className="flex items-center gap-2 mb-4">
               <h3 className="text-2xl font-bold text-gray-900">Tuteur Plateforme</h3>
-              <span className="px-2 py-1 bg-pink-600/20 text-pink-600 text-[8px] font-black rounded uppercase">Premium</span>
+              <span className="px-2 py-1 bg-red-600/20 text-red-600 text-[8px] font-black rounded uppercase">Premium</span>
             </div>
             <p className="text-gray-700 mb-6 leading-relaxed">
               Un Tuteur certifié Nissfi supervise vos échanges en toute discrétion
             </p>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-gray-700">
-                <Check className="h-4 w-4 text-pink-600" />
+                <Check className="h-4 w-4 text-red-600" />
                 Confidentialité familiale
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-700">
-                <Check className="h-4 w-4 text-pink-600" />
+                <Check className="h-4 w-4 text-red-600" />
                 Professionnel certifié
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-700">
-                <Check className="h-4 w-4 text-pink-600" />
+                <Check className="h-4 w-4 text-red-600" />
                 Disponible 24/7
               </li>
             </ul>
@@ -815,7 +815,7 @@ export default function DemoPage() {
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-white border-2 border-gray-200 hover:shadow-xl p-8 rounded-3xl border-2 border-purple-500/30">
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-[#ff007f] rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-[#dc2626] rounded-2xl flex items-center justify-center">
                 <Shield className="h-8 w-8 text-white" />
               </div>
               <div>
@@ -931,13 +931,13 @@ export default function DemoPage() {
       <div className="flex justify-center gap-4">
         <button
           onClick={() => setCurrentStep(2)}
-          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-pink-600 transition-all"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-600 transition-all"
         >
           ← Retour
         </button>
         <button
           onClick={() => waliDecision === "approved" ? setCurrentStep(4) : setCurrentStep(4)}
-          className="px-6 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+          className="px-6 py-3 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
         >
           Étape suivante →
         </button>
@@ -952,7 +952,7 @@ export default function DemoPage() {
           Étape 4/5 - Messagerie
         </div>
         <h2 className="text-4xl font-bold mb-4 text-gray-900">
-          Échangez en toute <span className="text-pink-600">sécurité</span>
+          Échangez en toute <span className="text-red-600">sécurité</span>
         </h2>
         <p className="text-gray-700">
           Tous les messages sont supervisés par le Tuteur pour garantir un environnement respectueux
@@ -961,11 +961,11 @@ export default function DemoPage() {
 
       <div className="max-w-2xl mx-auto">
         {/* Chat Container */}
-        <div className="bg-white border-2 border-gray-200 hover:shadow-xl rounded-3xl border-2 border-pink-600/30 overflow-hidden mb-6">
+        <div className="bg-white border-2 border-gray-200 hover:shadow-xl rounded-3xl border-2 border-red-600/30 overflow-hidden mb-6">
           {/* Chat Header */}
           <div className="bg-gray-50 p-6 border-b border-gray-300/50">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-[#ff007f] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-[#dc2626] flex items-center justify-center">
                 <User className="h-6 w-6 text-white" />
               </div>
               <div className="flex-1">
@@ -996,7 +996,7 @@ export default function DemoPage() {
                 <div
                   className={`max-w-[70%] p-4 rounded-2xl ${
                     msg.from === "Vous"
-                      ? "bg-gradient-to-r from-[#ff007f] to-pink-600 text-white"
+                      ? "bg-gradient-to-r from-[#dc2626] to-red-700 text-white"
                       : "bg-gray-100 border border-gray-300/50 text-gray-700"
                   }`}
                 >
@@ -1023,11 +1023,11 @@ export default function DemoPage() {
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                 placeholder="Écrivez votre message..."
-                className="flex-1 px-4 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-pink-600 transition-all"
+                className="flex-1 px-4 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-red-600 transition-all"
               />
               <button
                 onClick={handleSendMessage}
-                className="px-6 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-xl font-bold hover:shadow-xl hover:shadow-[#ff007f]/50 transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-xl font-bold hover:shadow-xl hover:shadow-[#dc2626]/50 transition-all"
               >
                 Envoyer
               </button>
@@ -1050,7 +1050,7 @@ export default function DemoPage() {
         {/* Info Box */}
         <div className="bg-gray-50 border border-gray-300/50 rounded-2xl p-6">
           <h5 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-pink-600" />
+            <MessageCircle className="h-5 w-5 text-red-600" />
             Règles de la messagerie
           </h5>
           <ul className="space-y-3">
@@ -1080,13 +1080,13 @@ export default function DemoPage() {
       <div className="flex justify-center gap-4 mt-12">
         <button
           onClick={() => setCurrentStep(3)}
-          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-pink-600 transition-all"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-600 transition-all"
         >
           ← Retour
         </button>
         <button
           onClick={() => setCurrentStep(5)}
-          className="px-6 py-3 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+          className="px-6 py-3 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-xl font-bold hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
         >
           Étape suivante →
         </button>
@@ -1154,7 +1154,7 @@ export default function DemoPage() {
         </div>
 
         {/* Premium Plan */}
-        <div className="bg-gradient-to-br from-[#ff007f] to-pink-600 p-8 rounded-3xl text-gray-900 shadow-2xl shadow-[#ff007f]/50 transform scale-105">
+        <div className="bg-gradient-to-br from-[#dc2626] to-red-700 p-8 rounded-3xl text-gray-900 shadow-2xl shadow-[#dc2626]/50 transform scale-105">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <h3 className="text-2xl font-bold">Premium</h3>
@@ -1193,7 +1193,7 @@ export default function DemoPage() {
               <span className="font-medium">Priorité dans les suggestions</span>
             </li>
           </ul>
-          <button className="w-full py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-xl font-bold hover:opacity-90 transition-all shadow-xl">
+          <button className="w-full py-4 bg-gradient-to-r from-red-600 to-purple-600 text-white rounded-xl font-bold hover:opacity-90 transition-all shadow-xl">
             Passer Premium
           </button>
         </div>
@@ -1214,7 +1214,7 @@ export default function DemoPage() {
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="/register"
-            className="px-10 py-5 bg-gradient-to-r from-[#ff007f] to-pink-600 text-gray-900 rounded-2xl font-black uppercase tracking-widest hover:shadow-2xl hover:shadow-[#ff007f]/50 transition-all"
+            className="px-10 py-5 bg-gradient-to-r from-[#dc2626] to-red-700 text-gray-900 rounded-2xl font-black uppercase tracking-widest hover:shadow-2xl hover:shadow-[#dc2626]/50 transition-all"
           >
             Créer mon compte
           </Link>
@@ -1230,7 +1230,7 @@ export default function DemoPage() {
               setWaliDecision("pending");
               setMessages(FAKE_MESSAGES);
             }}
-            className="px-10 py-5 bg-gray-100 border border-gray-300 text-gray-900 rounded-2xl font-black uppercase tracking-widest hover:border-pink-600 transition-all"
+            className="px-10 py-5 bg-gray-100 border border-gray-300 text-gray-900 rounded-2xl font-black uppercase tracking-widest hover:border-red-600 transition-all"
           >
             Recommencer la démo
           </button>
@@ -1241,7 +1241,7 @@ export default function DemoPage() {
       <div className="flex justify-center gap-4 mt-12">
         <button
           onClick={() => setCurrentStep(4)}
-          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-pink-600 transition-all"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 text-gray-900 rounded-xl font-bold hover:border-red-600 transition-all"
         >
           ← Retour
         </button>
@@ -1259,7 +1259,7 @@ export default function DemoPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-pink-600 transition-colors font-medium text-sm sm:text-base"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors font-medium text-sm sm:text-base"
         >
           <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           Retour à l'accueil
@@ -1274,7 +1274,7 @@ export default function DemoPage() {
               <div
                 className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold transition-all text-sm sm:text-base ${
                   currentStep === step
-                    ? "bg-gradient-to-r from-pink-600 to-purple-600 text-gray-900 scale-110 shadow-lg"
+                    ? "bg-gradient-to-r from-red-600 to-purple-600 text-gray-900 scale-110 shadow-lg"
                     : currentStep > step
                     ? "bg-green-500 text-white"
                     : "bg-gray-200 text-gray-500"
@@ -1305,3 +1305,4 @@ export default function DemoPage() {
     </div>
   );
 }
+

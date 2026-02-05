@@ -33,20 +33,15 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
     }
 
     // Validate tuteur info for women
-    if (data.gender === 'female' && !data.tuteurChoice) {
-      res.status(400).json({ message: 'Tuteur choice is required for women' })
-      return
-    }
-
-    // Handle tuteur choice for women
     if (data.gender === 'female') {
-      if (data.tuteurChoice === 'info' && !data.waliInfo) {
-        res.status(400).json({ message: 'Tuteur information is required when choosing "info"' })
-        return
+      if (data.tuteurChoice === 'info') {
+        // If woman chose to provide tuteur info, validate required fields
+        if (!data.waliInfo || !data.waliInfo.fullName || !data.waliInfo.email || !data.waliInfo.relationship) {
+          res.status(400).json({ message: 'Tuteur information (fullName, email, relationship) is required when choosing "info"' })
+          return
+        }
       }
-      
-      // If 'paid' is chosen, we'll create a pending tuteur request later
-      // For now, just allow registration
+      // If 'paid' is chosen or no choice, we allow registration
     }
 
     // Create user
@@ -134,8 +129,21 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
       accessToken,
     })
   } catch (error: any) {
+    console.error('Registration error:', error)
     if (error.errors) {
-      res.status(400).json({ errors: error.errors })
+      console.error('Validation errors:', JSON.stringify(error.errors, null, 2))
+      res.status(400).json({ 
+        message: 'Validation error',
+        errors: error.errors 
+      })
+      return
+    }
+    if (error.name === 'ZodError') {
+      console.error('Zod validation error:', JSON.stringify(error.issues, null, 2))
+      res.status(400).json({ 
+        message: 'Validation error',
+        errors: error.issues 
+      })
       return
     }
     res.status(500).json({ message: error.message })

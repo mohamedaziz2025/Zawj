@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Shield, Plus, Check, X, Clock, UserCheck, Trash2 } from 'lucide-react'
+import { Shield, Plus, Check, X, Clock, UserCheck, Trash2, ArrowLeft } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { tuteurApi } from '@/lib/api/tuteur'
+import Link from 'next/link'
 
 interface Tuteur {
   _id: string
@@ -139,6 +140,13 @@ export default function MesTuteursPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
+          <Link
+            href="/settings"
+            className="inline-flex items-center gap-2 text-black hover:text-red-600 transition-colors mb-4"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Retour aux paramètres
+          </Link>
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Mes Tuteurs (Wali)</h1>
