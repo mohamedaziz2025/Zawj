@@ -9,7 +9,7 @@ export const RegisterSchema = z.object({
   gender: z.enum(['male', 'female'], {
     errorMap: () => ({ message: 'Gender must be male or female' })
   }),
-  age: z.number().min(18).max(100).optional(),
+  age: z.coerce.number().min(18).max(100).optional(),
   dateOfBirth: z.string().optional(),
   city: z.string().optional(),
   country: z.string().optional(),
@@ -35,7 +35,7 @@ export const RegisterSchema = z.object({
     willingToRelocate: z.boolean().optional(),
     preferredCountries: z.array(z.string()).optional(),
     wantsChildren: z.boolean().optional(),
-    numberOfChildrenDesired: z.number().optional(),
+    numberOfChildrenDesired: z.coerce.number().optional(),
   }).optional(),
   
   // Tuteur choice for women
