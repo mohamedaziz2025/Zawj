@@ -239,11 +239,24 @@ router.post('/tuteurs/request', authenticateToken, async (req: AuthRequest, res:
     
     const { name, email, phone, relationship, type, hasAccessToDashboard, notifyOnNewMessage } = req.body
     
+    // Validation
+    if (!name || !email || !relationship) {
+      res.status(400).json({ message: 'Le nom, l\'email et la relation sont requis' })
+      return
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      res.status(400).json({ message: 'Format d\'email invalide' })
+      return
+    }
+    
     const tuteur = await Tuteur.create({
       userId: req.user!._id,
       name,
       email,
-      phone,
+      phone: phone || '',
       relationship,
       type: type || 'family',
       isPaid: type === 'paid',
@@ -253,9 +266,10 @@ router.post('/tuteurs/request', authenticateToken, async (req: AuthRequest, res:
       notifyOnNewMessage: notifyOnNewMessage !== undefined ? notifyOnNewMessage : true,
     })
     
-    res.status(201).json({ message: 'Demande de tuteur envoyée', tuteur })
+    res.status(201).json({ message: 'Demande de tuteur envoyée avec succès', tuteur })
   } catch (error: any) {
-    res.status(500).json({ message: 'Erreur serveur', error: error.message })
+    console.error('Error creating tuteur request:', error)
+    res.status(500).json({ message: 'Erreur lors de l\'envoi de la demande', error: error.message })
   }
 })
 

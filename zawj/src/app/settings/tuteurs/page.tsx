@@ -35,6 +35,7 @@ export default function MesTuteursPage() {
   const [loading, setLoading] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const [newTuteur, setNewTuteur] = useState({
     name: '',
@@ -72,12 +73,17 @@ export default function MesTuteursPage() {
   const handleAddTuteur = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccess('')
     
     try {
       const token = localStorage.getItem('token')
-      if (!token) return
+      if (!token) {
+        setError('Vous devez être connecté')
+        return
+      }
 
-      await tuteurApi.requestTuteur(token, newTuteur)
+      console.log('Envoi de la demande avec:', newTuteur)
+      const response = await tuteurApi.requestTuteur(token, newTuteur)
       
       setShowAddModal(false)
       setNewTuteur({
@@ -90,9 +96,16 @@ export default function MesTuteursPage() {
         notifyOnNewMessage: true
       })
       
+      setSuccess(response.message || 'Demande de tuteur envoyée avec succès')
       fetchTuteurs()
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => setSuccess(''), 5000)
     } catch (error: any) {
-      setError(error.response?.data?.message || 'Erreur lors de l\'ajout du tuteur')
+      console.error('Erreur complète:', error)
+      console.error('Response data:', error.response?.data)
+      const errorMessage = error.response?.data?.message || error.message || 'Erreur lors de l\'envoi de la demande'
+      setError(errorMessage)
     }
   }
 
@@ -164,6 +177,12 @@ export default function MesTuteursPage() {
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
               <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          )}
+
+          {success && (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+              <p className="text-green-700 text-sm">{success}</p>
             </div>
           )}
 
@@ -261,7 +280,7 @@ export default function MesTuteursPage() {
                     </div>
                   )}
 
-                  {tuteur.moderatorId && (
+                  {tuteur.moderatorId && tuteur.moderatorId.firstName && (
                     <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-4">
                       <p className="text-sm text-purple-900">
                         <strong>Modérateur:</strong> {tuteur.moderatorId.firstName} {tuteur.moderatorId.lastName}
@@ -406,10 +425,19 @@ export default function MesTuteursPage() {
                 </p>
               </div>
 
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-sm text-red-900">{error}</p>
+                </div>
+              )}
+
               <div className="flex gap-3 pt-4">
                 <button
                   type="button"
-                  onClick={() => setShowAddModal(false)}
+                  onClick={() => {
+                    setShowAddModal(false)
+                    setError('')
+                  }}
                   className="flex-1 px-4 py-2 border-2 border-gray-300 text-black rounded-xl font-semibold hover:bg-gray-50 transition-all"
                 >
                   Annuler
