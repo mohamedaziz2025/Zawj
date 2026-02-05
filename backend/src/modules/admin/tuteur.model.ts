@@ -122,4 +122,4 @@ TuteurSchema.index({ status: 1, createdAt: -1 })
 TuteurSchema.index({ userId: 1, status: 1 })
 TuteurSchema.index({ moderatorId: 1 })
 
-export const Tuteur = mongoose.model<ITuteur>('Tuteur', TuteurSchema)
+export const Tuteur = mongoose.models.Tuteur || mongoose.model<ITuteur>('Tuteur', TuteurSchema)

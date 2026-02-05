@@ -50,4 +50,4 @@ const ContactMessageSchema = new mongoose.Schema<IContactMessage>(
   { timestamps: true }
 )
 
-export const ContactMessage = mongoose.model<IContactMessage>('ContactMessage', ContactMessageSchema)
+export const ContactMessage = mongoose.models.ContactMessage || mongoose.model<IContactMessage>('ContactMessage', ContactMessageSchema)

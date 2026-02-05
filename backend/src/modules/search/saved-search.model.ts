@@ -65,4 +65,4 @@ const SavedSearchSchema = new mongoose.Schema<ISavedSearch>(
   { timestamps: true }
 )
 
-export const SavedSearch = mongoose.model<ISavedSearch>('SavedSearch', SavedSearchSchema)
+export const SavedSearch = mongoose.models.SavedSearch || mongoose.model<ISavedSearch>('SavedSearch', SavedSearchSchema)
