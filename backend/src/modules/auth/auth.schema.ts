@@ -38,6 +38,9 @@ export const RegisterSchema = z.object({
     numberOfChildrenDesired: z.number().optional(),
   }).optional(),
   
+  // Tuteur choice for women
+  tuteurChoice: z.enum(['paid', 'info', '']).optional(),
+  
   // Wali Information (for women)
   waliInfo: z.object({
     type: z.enum(['family', 'platform']).optional(),

@@ -32,18 +32,21 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
       return
     }
 
-    // Validate Wali info for women
-    if (data.gender === 'female' && !data.waliInfo) {
-      res.status(400).json({ message: 'Wali information is required for women' })
+    // Validate tuteur info for women
+    if (data.gender === 'female' && !data.tuteurChoice) {
+      res.status(400).json({ message: 'Tuteur choice is required for women' })
       return
     }
 
-    // If platform Wali is selected, check if payment was made
-    if (data.waliInfo?.type === 'platform') {
-      // For platform Wali, we need to verify payment
-      // This would typically be handled by checking a payment token or session
-      // For now, we'll assume payment is required and mark as unpaid
-      data.waliInfo.platformServicePaid = false
+    // Handle tuteur choice for women
+    if (data.gender === 'female') {
+      if (data.tuteurChoice === 'info' && !data.waliInfo) {
+        res.status(400).json({ message: 'Tuteur information is required when choosing "info"' })
+        return
+      }
+      
+      // If 'paid' is chosen, we'll create a pending tuteur request later
+      // For now, just allow registration
     }
 
     // Create user
@@ -53,7 +56,25 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
     })
     await user.save()
 
-    // Create subscription based on gender and Wali choice
+    // If woman chose tuteur 'info', create a pending tuteur request
+    if (data.gender === 'female' && data.tuteurChoice === 'info' && data.waliInfo) {
+      const { Tuteur } = await import('../admin/tuteur.model')
+      await Tuteur.create({
+        userId: user._id,
+        name: data.waliInfo.fullName,
+        email: data.waliInfo.email,
+        phone: data.waliInfo.phone,
+        relationship: data.waliInfo.relationship,
+        type: 'family',
+        isPaid: false,
+        assignedByAdmin: false,
+        status: 'pending',
+        hasAccessToDashboard: data.waliInfo.hasAccessToDashboard || false,
+        notifyOnNewMessage: data.waliInfo.notifyOnNewMessage ?? true,
+      })
+    }
+
+    // Create subscription
     let subscriptionPlan = 'free'
     let features = {
       unlimitedLikes: false,
@@ -63,28 +84,7 @@ router.post('/register', authLimiter, async (req, res): Promise<void> => {
       superLikes: 0,
     }
 
-    if (user.gender === 'female') {
-      if (data.waliInfo?.type === 'platform' && !data.waliInfo.platformServicePaid) {
-        // Platform Wali requires payment
-        res.status(402).json({ 
-          message: 'Payment required for platform Wali service',
-          waliService: {
-            type: 'platform',
-            amount: 5.00, // 5€ as per spec
-            currency: 'EUR'
-          }
-        })
-        return
-      }
-      subscriptionPlan = 'free'
-      features = {
-        unlimitedLikes: false,
-        seePhotos: true,
-        priorityMatches: false,
-        waliBadge: false,
-        superLikes: 0,
-      }
-    } else {
+    if (user.gender === 'male') {
       // Men need subscription
       subscriptionPlan = 'basic'
       features = {
