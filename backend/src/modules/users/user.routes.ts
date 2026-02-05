@@ -180,7 +180,7 @@ router.delete('/settings/block/:userId', async (req: AuthRequest, res): Promise<
       return
     }
 
-    settings.blocked = settings.blocked.filter(id => id.toString() !== unblockUserId)
+    settings.blocked = settings.blocked.filter((id: any) => id.toString() !== unblockUserId)
     await settings.save()
 
     res.json({ message: 'Utilisateur débloqué', blocked: settings.blocked })
