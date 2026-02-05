@@ -132,20 +132,30 @@ export default function TuteursAdminPage() {
   const handleApprove = async (id: string) => {
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}/approve`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}/approve`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` }
       })
-      fetchData()
-    } catch (error) {
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors de l\'approbation')
+      }
+
+      const result = await response.json()
+      console.log('Tuteur approuvé:', result)
+      
+      await fetchData()
+    } catch (error: any) {
       console.error('Error approving tuteur:', error)
+      alert(`Erreur lors de l'approbation: ${error.message}`)
     }
   }
 
   const handleReject = async (id: string, reason: string) => {
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}/reject`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}/reject`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -153,9 +163,19 @@ export default function TuteursAdminPage() {
         },
         body: JSON.stringify({ reason })
       })
-      fetchData()
-    } catch (error) {
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors du rejet')
+      }
+
+      const result = await response.json()
+      console.log('Tuteur rejeté:', result)
+      
+      await fetchData()
+    } catch (error: any) {
       console.error('Error rejecting tuteur:', error)
+      alert(`Erreur lors du rejet: ${error.message}`)
     }
   }
 
@@ -163,7 +183,7 @@ export default function TuteursAdminPage() {
     e.preventDefault()
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -171,6 +191,15 @@ export default function TuteursAdminPage() {
         },
         body: JSON.stringify(newTuteur)
       })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors de la création')
+      }
+
+      const result = await response.json()
+      console.log('Tuteur créé:', result)
+      
       setShowCreateModal(false)
       setNewTuteur({
         userId: '',
@@ -183,9 +212,10 @@ export default function TuteursAdminPage() {
         hasAccessToDashboard: true,
         notifyOnNewMessage: true
       })
-      fetchData()
-    } catch (error) {
+      await fetchData()
+    } catch (error: any) {
       console.error('Error creating tuteur:', error)
+      alert(`Erreur lors de la création: ${error.message}`)
     }
   }
 
@@ -193,7 +223,7 @@ export default function TuteursAdminPage() {
     e.preventDefault()
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/assign-moderator`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/assign-moderator`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -204,12 +234,22 @@ export default function TuteursAdminPage() {
           moderatorId: selectedModeratorId
         })
       })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors de l\'assignation')
+      }
+
+      const result = await response.json()
+      console.log('Modérateur assigné:', result)
+      
       setShowAssignModeratorModal(false)
       setSelectedUserId('')
       setSelectedModeratorId('')
-      fetchData()
-    } catch (error) {
+      await fetchData()
+    } catch (error: any) {
       console.error('Error assigning moderator:', error)
+      alert(`Erreur lors de l'assignation: ${error.message}`)
     }
   }
 
@@ -232,7 +272,7 @@ export default function TuteursAdminPage() {
 
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${selectedTuteur._id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${selectedTuteur._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -240,11 +280,21 @@ export default function TuteursAdminPage() {
         },
         body: JSON.stringify(editTuteur)
       })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors de la mise à jour')
+      }
+
+      const result = await response.json()
+      console.log('Tuteur mis à jour:', result)
+      
       setShowEditModal(false)
       setSelectedTuteur(null)
-      fetchData()
-    } catch (error) {
+      await fetchData()
+    } catch (error: any) {
       console.error('Error updating tuteur:', error)
+      alert(`Erreur lors de la mise à jour: ${error.message}`)
     }
   }
 
@@ -253,13 +303,23 @@ export default function TuteursAdminPage() {
     
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/tuteurs/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       })
-      fetchData()
-    } catch (error) {
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erreur lors de la suppression')
+      }
+
+      const result = await response.json()
+      console.log('Tuteur supprimé:', result)
+      
+      await fetchData()
+    } catch (error: any) {
       console.error('Error deleting tuteur:', error)
+      alert(`Erreur lors de la suppression: ${error.message}`)
     }
   }
 

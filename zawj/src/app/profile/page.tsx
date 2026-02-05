@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Save, User, MapPin, Calendar, FileText, Camera } from 'lucide-react'
+import { Save, User, MapPin, Calendar, FileText, Camera, Shield, Plus, X } from 'lucide-react'
 import { usersApi, UpdateProfileData } from '@/lib/api/users'
 import { useAuthStore } from '@/store/auth'
+import { tuteurApi } from '@/lib/api/tuteur'
 
 export default function ProfilePage() {
   const [formData, setFormData] = useState<UpdateProfileData>({
@@ -14,6 +15,15 @@ export default function ProfilePage() {
     preferences: {}
   })
   const [isEditing, setIsEditing] = useState(false)
+  const [showTuteurModal, setShowTuteurModal] = useState(false)
+  const [tuteurForm, setTuteurForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    relationship: 'father' as string,
+    hasAccessToDashboard: false,
+    notifyOnNewMessage: true
+  })
 
   const { user, isAuthenticated } = useAuthStore()
   const queryClient = useQueryClient()
@@ -30,6 +40,29 @@ export default function ProfilePage() {
       queryClient.invalidateQueries({ queryKey: ['profile'] })
       setIsEditing(false)
     },
+  })
+
+  const createTuteurMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const token = localStorage.getItem('token')
+      if (!token) throw new Error('Non authentifié')
+      return tuteurApi.requestTuteur(token, data)
+    },
+    onSuccess: () => {
+      setShowTuteurModal(false)
+      setTuteurForm({
+        name: '',
+        email: '',
+        phone: '',
+        relationship: 'father',
+        hasAccessToDashboard: false,
+        notifyOnNewMessage: true
+      })
+      alert('Votre demande de tuteur a été envoyée avec succès. Elle sera examinée par un administrateur.')
+    },
+    onError: (error: any) => {
+      alert(error.response?.data?.message || 'Erreur lors de l\'envoi de la demande')
+    }
   })
 
   useEffect(() => {
@@ -54,6 +87,14 @@ export default function ProfilePage() {
       ...prev,
       [name]: name === 'age' ? (value ? parseInt(value) : undefined) : value
     }))
+  }
+
+  const handleTuteurSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    createTuteurMutation.mutate({
+      ...tuteurForm,
+      type: 'family'
+    })
   }
 
   if (!isAuthenticated) {
@@ -247,6 +288,54 @@ export default function ProfilePage() {
         </div>
       </div>
 
+      {/* Tuteur Section - Only for women */}
+      {profile?.gender === 'female' && (
+        <div className="glass-card mt-6">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-red-600/10 rounded-full flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Mon Tuteur (Wali)</h3>
+                  <p className="text-sm text-gray-400">Gérez votre tuteur familial</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowTuteurModal(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all"
+              >
+                <Plus className="h-5 w-5" />
+                Ajouter un Tuteur
+              </button>
+            </div>
+
+            <div className="bg-[#1a1a1a] border border-red-600/30 rounded-xl p-6">
+              <p className="text-gray-300 mb-4">
+                Conformément aux principes islamiques, votre tuteur (père, frère, oncle, etc.) 
+                doit approuver vos échanges. Ajoutez les informations de votre tuteur pour 
+                soumettre une demande à l'administration.
+              </p>
+              <div className="space-y-3 text-gray-300">
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                  <span>Le tuteur sera notifié de vos demandes de contact</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                  <span>Validation nécessaire pour les échanges</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                  <span>Protection et conformité islamique garanties</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Tuteur Service Section - Only for women without valid Tuteur */}
       {profile?.gender === 'female' && !profile?.waliId && !profile?.waliInfo?.platformServicePaid && (
         <div className="glass-card mt-6">
@@ -294,6 +383,133 @@ export default function ProfilePage() {
               </button>
 
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Ajouter Tuteur */}
+      {showTuteurModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-[#1a1a1a] border border-gray-700 rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-2xl font-bold text-white">Ajouter un Tuteur</h3>
+              <button
+                onClick={() => setShowTuteurModal(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleTuteurSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Nom complet du tuteur *
+                </label>
+                <input
+                  type="text"
+                  value={tuteurForm.name}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, name: e.target.value })}
+                  required
+                  className="w-full px-4 py-2 bg-[#0a0a0a] border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+                  placeholder="Ahmed Ben Ali"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email du tuteur *
+                </label>
+                <input
+                  type="email"
+                  value={tuteurForm.email}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, email: e.target.value })}
+                  required
+                  className="w-full px-4 py-2 bg-[#0a0a0a] border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+                  placeholder="ahmed@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Téléphone (optionnel)
+                </label>
+                <input
+                  type="tel"
+                  value={tuteurForm.phone}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, phone: e.target.value })}
+                  className="w-full px-4 py-2 bg-[#0a0a0a] border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+                  placeholder="+33612345678"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Relation avec vous *
+                </label>
+                <select
+                  value={tuteurForm.relationship}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, relationship: e.target.value })}
+                  required
+                  className="w-full px-4 py-2 bg-[#0a0a0a] border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+                >
+                  <option value="father">Père</option>
+                  <option value="brother">Frère</option>
+                  <option value="uncle">Oncle</option>
+                  <option value="grandfather">Grand-père</option>
+                  <option value="imam">Imam</option>
+                  <option value="trusted-community-member">Membre de confiance de la communauté</option>
+                </select>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  checked={tuteurForm.hasAccessToDashboard}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, hasAccessToDashboard: e.target.checked })}
+                  className="w-5 h-5 text-red-600 rounded"
+                />
+                <label className="text-sm text-gray-300">
+                  Donner accès au tableau de bord
+                </label>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  checked={tuteurForm.notifyOnNewMessage}
+                  onChange={(e) => setTuteurForm({ ...tuteurForm, notifyOnNewMessage: e.target.checked })}
+                  className="w-5 h-5 text-red-600 rounded"
+                />
+                <label className="text-sm text-gray-300">
+                  Recevoir des notifications par email
+                </label>
+              </div>
+
+              <div className="bg-red-600/10 border border-red-600/30 rounded-lg p-4">
+                <p className="text-sm text-gray-300">
+                  <strong className="text-red-400">Important :</strong> Votre demande sera examinée par un administrateur. 
+                  Vous serez notifiée une fois votre tuteur approuvé ou si des informations supplémentaires sont nécessaires.
+                </p>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowTuteurModal(false)}
+                  className="flex-1 px-4 py-2 border-2 border-gray-700 text-gray-300 rounded-xl font-semibold hover:bg-gray-800 transition-all"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  disabled={createTuteurMutation.isPending}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all disabled:opacity-50"
+                >
+                  {createTuteurMutation.isPending ? 'Envoi...' : 'Envoyer la demande'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
