@@ -1,313 +1,414 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { waliApi, WaliDashboard } from '@/lib/api/wali'
 import { useRouter } from 'next/navigation'
-import { Shield, LogOut, MessageCircle, Heart, Users, Bell, Eye, CheckCircle, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
-
-interface ProtectedUser {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-  age?: number
-  city?: string
-  religiousInfo?: any
-}
-
-interface Conversation {
-  id: string
-  participants: any[]
-  lastMessage: string
-  lastMessageAt: Date
-  unreadCount: number
-}
-
-interface Like {
-  id: string
-  from: any
-  message?: string
-  mutualMatch: boolean
-  createdAt: Date
-}
 
 export default function WaliDashboardPage() {
-  const [protectedUser, setProtectedUser] = useState<ProtectedUser | null>(null)
-  const [conversations, setConversations] = useState<Conversation[]>([])
-  const [receivedLikes, setReceivedLikes] = useState<Like[]>([])
-  const [mutualMatches, setMutualMatches] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
-  const [selectedConversation, setSelectedConversation] = useState<string | null>(null)
-  const [messages, setMessages] = useState<any[]>([])
   const router = useRouter()
+  const [dashboard, setDashboard] = useState<WaliDashboard | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'overview' | 'conversations' | 'likes' | 'matches'>(
+    'overview'
+  )
+  const [selectedConversation, setSelectedConversation] = useState<any>(null)
+  const [conversationMessages, setConversationMessages] = useState<any[]>([])
 
   useEffect(() => {
-    fetchDashboardData()
+    loadDashboard()
   }, [])
 
-  const fetchDashboardData = async () => {
+  const loadDashboard = async () => {
     try {
-      const token = localStorage.getItem('waliToken')
+      const token = localStorage.getItem('wali_token')
       if (!token) {
-        router.push('/Tuteur-login')
+        router.push('/wali-login')
         return
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Tuteur/dashboard`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error('Échec de chargement')
-      }
-
-      const data = await response.json()
-      setProtectedUser(data.protectedUser)
-      setConversations(data.conversations)
-      setReceivedLikes(data.receivedLikes)
-      setMutualMatches(data.mutualMatches)
+      const data = await waliApi.getDashboard(token)
+      setDashboard(data)
     } catch (error) {
-      console.error('Error:', error)
-      router.push('/Tuteur-login')
+      console.error('Erreur chargement dashboard:', error)
+      router.push('/wali-login')
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
-  const fetchConversationMessages = async (conversationId: string) => {
+  const handleViewConversation = async (conversation: any) => {
     try {
-      const token = localStorage.getItem('waliToken')
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/Tuteur/conversations/${conversationId}/messages`,
-        {
-          headers: { 'Authorization': `Bearer ${token}` },
-        }
-      )
+      const token = localStorage.getItem('wali_token')
+      if (!token) return
 
-      if (response.ok) {
-        const data = await response.json()
-        setMessages(data)
-        setSelectedConversation(conversationId)
-      }
+      const messages = await waliApi.getConversationMessages(token, conversation.id)
+      setSelectedConversation(conversation)
+      setConversationMessages(messages)
     } catch (error) {
-      console.error('Error fetching messages:', error)
+      console.error('Erreur chargement messages:', error)
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('waliToken')
-    localStorage.removeItem('protectedUser')
-    router.push('/Tuteur-login')
+  const handleManageConversation = async (action: 'approve' | 'reject') => {
+    if (!selectedConversation) return
+
+    try {
+      const token = localStorage.getItem('wali_token')
+      if (!token) return
+
+      await waliApi.manageConversation(token, selectedConversation.id, action)
+      alert(action === 'approve' ? 'Conversation approuvée' : 'Conversation rejetée')
+      setSelectedConversation(null)
+      loadDashboard()
+    } catch (error) {
+      console.error('Erreur gestion conversation:', error)
+      alert('Erreur lors de la gestion de la conversation')
+    }
   }
 
-  if (isLoading) {
+  const handleManageLike = async (likeId: string, action: 'approve' | 'reject') => {
+    try {
+      const token = localStorage.getItem('wali_token')
+      if (!token) return
+
+      await waliApi.manageLike(token, likeId, action)
+      alert(action === 'approve' ? 'Like approuvé' : 'Like rejeté')
+      loadDashboard()
+    } catch (error) {
+      console.error('Erreur gestion like:', error)
+      alert('Erreur lors de la gestion du like')
+    }
+  }
+
+  if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#ff007f] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400">Chargement du tableau de bord...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement du tableau de bord...</p>
         </div>
       </div>
     )
   }
 
+  if (!dashboard) return null
+
   return (
-    <div className="min-h-screen bg-[#0d0d0d]">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <nav className="border-b border-gray-800 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-[#ff007f] rounded-lg flex items-center justify-center">
-                <Shield className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-white">Espace Tuteur</h1>
-                <p className="text-sm text-gray-400">
-                  Surveillance de {protectedUser?.firstName} {protectedUser?.lastName}
-                </p>
-              </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Dashboard Wali - {dashboard.protectedUser.firstName}
+              </h1>
+              <p className="mt-1 text-gray-600">
+                Gestion et supervision du profil de votre protégée
+              </p>
             </div>
             <button
-              onClick={handleLogout}
-              className="flex items-center space-x-2 px-4 py-2 border border-gray-700 rounded-lg text-gray-300 hover:border-[#ff007f] hover:text-[#ff007f] transition-colors"
+              onClick={() => {
+                localStorage.removeItem('wali_token')
+                router.push('/wali-login')
+              }}
+              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
             >
-              <LogOut className="h-4 w-4" />
-              <span className="text-sm">Déconnexion</span>
+              Déconnexion
             </button>
           </div>
         </div>
-      </nav>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="glass-card rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-3">
-              <MessageCircle className="h-8 w-8 text-[#ff007f]" />
-              <span className="text-3xl font-bold text-white">{conversations.length}</span>
-            </div>
-            <p className="text-sm text-gray-400">Conversations</p>
+      {/* Stats Cards */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="text-3xl font-bold text-red-600">{dashboard.stats.totalConversations}</div>
+            <div className="text-gray-600 mt-1">Conversations</div>
           </div>
-
-          <div className="glass-card rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-3">
-              <Heart className="h-8 w-8 text-[#ff007f]" />
-              <span className="text-3xl font-bold text-white">{receivedLikes.length}</span>
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="text-3xl font-bold text-blue-600">
+              {dashboard.stats.totalLikesReceived}
             </div>
-            <p className="text-sm text-gray-400">Likes Reçus</p>
+            <div className="text-gray-600 mt-1">Likes Reçus</div>
           </div>
-
-          <div className="glass-card rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-3">
-              <CheckCircle className="h-8 w-8 text-red-500" />
-              <span className="text-3xl font-bold text-white">{mutualMatches}</span>
-            </div>
-            <p className="text-sm text-gray-400">Matches Mutuels</p>
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="text-3xl font-bold text-green-600">{dashboard.stats.totalMatches}</div>
+            <div className="text-gray-600 mt-1">Matchs</div>
           </div>
-
-          <div className="glass-card rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-3">
-              <Bell className="h-8 w-8 text-[#ff007f]" />
-              <span className="text-3xl font-bold text-white">
-                {conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0)}
-              </span>
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="text-3xl font-bold text-purple-600">{dashboard.stats.totalLikesSent}</div>
+            <div className="text-gray-600 mt-1">Likes Envoyés</div>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="text-3xl font-bold text-orange-600">
+              {dashboard.stats.activeConversations}
             </div>
-            <p className="text-sm text-gray-400">Non lus</p>
+            <div className="text-gray-600 mt-1">Conv. Actives</div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Conversations List */}
-          <div className="lg:col-span-1 glass-card rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center space-x-2">
-              <MessageCircle className="h-5 w-5 text-[#ff007f]" />
-              <span>Conversations</span>
-            </h2>
-
-            <div className="space-y-4">
-              {conversations.length === 0 ? (
-                <p className="text-center text-gray-500 py-8">Aucune conversation</p>
-              ) : (
-                conversations.map((conv) => {
-                  const otherParticipant = conv.participants.find(
-                    (p: any) => p._id !== protectedUser?.id
-                  )
-                  return (
-                    <button
-                      key={conv.id}
-                      onClick={() => fetchConversationMessages(conv.id)}
-                      className={`w-full p-4 rounded-xl text-left transition-all ${
-                        selectedConversation === conv.id
-                          ? 'bg-[#ff007f]/20 border-2 border-[#ff007f]'
-                          : 'bg-[#1a1a1a] border border-gray-800 hover:border-[#ff007f]/50'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-semibold text-white">
-                          {otherParticipant?.firstName} {otherParticipant?.lastName}
-                        </h3>
-                        {conv.unreadCount > 0 && (
-                          <span className="bg-[#ff007f] text-white text-xs font-bold px-2 py-1 rounded-full">
-                            {conv.unreadCount}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-400 truncate">{conv.lastMessage}</p>
-                      <p className="text-xs text-gray-600 mt-1">
-                        {new Date(conv.lastMessageAt).toLocaleDateString('fr-FR')}
-                      </p>
-                    </button>
-                  )
-                })
-              )}
-            </div>
+        {/* Tabs */}
+        <div className="bg-white rounded-xl shadow-sm">
+          <div className="border-b px-6">
+            <nav className="flex space-x-8">
+              {(['overview', 'conversations', 'likes', 'matches'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm transition ${
+                    activeTab === tab
+                      ? 'border-red-600 text-red-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  {tab === 'overview'
+                    ? 'Vue d\'ensemble'
+                    : tab === 'conversations'
+                    ? 'Conversations'
+                    : tab === 'likes'
+                    ? 'Likes Reçus'
+                    : 'Matchs'}
+                </button>
+              ))}
+            </nav>
           </div>
 
-          {/* Messages View */}
-          <div className="lg:col-span-2 glass-card rounded-2xl p-6">
-            {selectedConversation ? (
-              <>
-                <h2 className="text-xl font-bold text-white mb-6 flex items-center space-x-2">
-                  <Eye className="h-5 w-5 text-[#ff007f]" />
-                  <span>Messages de la conversation</span>
-                </h2>
-
-                <div className="space-y-4 max-h-[500px] overflow-y-auto">
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`p-4 rounded-xl ${
-                        msg.senderId === protectedUser?.id
-                          ? 'bg-[#ff007f]/10 ml-12'
-                          : 'bg-[#1a1a1a] mr-12'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold text-white">
-                          {msg.senderId === protectedUser?.id ? protectedUser?.firstName : msg.senderName}
-                        </span>
-                        <span className="text-xs text-gray-500">
-                          {new Date(msg.createdAt).toLocaleTimeString('fr-FR')}
-                        </span>
-                      </div>
-                      <p className="text-gray-300">{msg.text}</p>
-                      {msg.isBlocked && (
-                        <div className="mt-2 p-2 bg-red-500/10 border border-red-500/30 rounded text-xs text-red-400">
-                          ⚠️ Contenu bloqué: {msg.blockReason}
-                        </div>
-                      )}
+          <div className="p-6">
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Profil */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Profil de {dashboard.protectedUser.firstName}</h3>
+                    <div className="space-y-2 text-sm">
+                      <p>
+                        <span className="text-gray-600">Âge:</span>{' '}
+                        <span className="font-medium">{dashboard.protectedUser.age} ans</span>
+                      </p>
+                      <p>
+                        <span className="text-gray-600">Ville:</span>{' '}
+                        <span className="font-medium">{dashboard.protectedUser.city}</span>
+                      </p>
+                      <p>
+                        <span className="text-gray-600">Bio:</span>{' '}
+                        <span className="font-medium">{dashboard.protectedUser.bio}</span>
+                      </p>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Infos religieuses */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Informations Religieuses</h3>
+                    <div className="space-y-2 text-sm">
+                      <p>
+                        <span className="text-gray-600">Madhab:</span>{' '}
+                        <span className="font-medium">
+                          {dashboard.protectedUser.religiousInfo?.madhab || 'Non spécifié'}
+                        </span>
+                      </p>
+                      <p>
+                        <span className="text-gray-600">Prière:</span>{' '}
+                        <span className="font-medium">
+                          {dashboard.protectedUser.religiousInfo?.prayerFrequency || 'Non spécifié'}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </>
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full text-center py-20">
-                <Eye className="h-16 w-16 text-gray-700 mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Sélectionnez une conversation
-                </h3>
-                <p className="text-gray-400">
-                  Cliquez sur une conversation pour voir les messages échangés
-                </p>
+              </div>
+            )}
+
+            {/* Conversations Tab */}
+            {activeTab === 'conversations' && (
+              <div className="space-y-4">
+                {dashboard.conversations.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">Aucune conversation</p>
+                ) : (
+                  dashboard.conversations.map((conv: any) => (
+                    <div
+                      key={conv.id}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
+                          {conv.otherUser?.firstName?.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">
+                            {conv.otherUser?.firstName} {conv.otherUser?.lastName}
+                          </h4>
+                          <p className="text-sm text-gray-500">{conv.lastMessage}</p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {new Date(conv.lastMessageAt).toLocaleDateString('fr-FR')}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {conv.isApprovedByWali ? (
+                          <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                            Approuvée
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">
+                            En attente
+                          </span>
+                        )}
+                        <button
+                          onClick={() => handleViewConversation(conv)}
+                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                        >
+                          Voir
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            {/* Likes Tab */}
+            {activeTab === 'likes' && (
+              <div className="space-y-4">
+                {dashboard.receivedLikes.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">Aucun like reçu</p>
+                ) : (
+                  dashboard.receivedLikes.map((like: any) => (
+                    <div
+                      key={like.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
+                          {like.from?.firstName?.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">
+                            {like.from?.firstName} {like.from?.lastName}
+                          </h4>
+                          <p className="text-sm text-gray-600">
+                            {like.from?.age} ans - {like.from?.city}
+                          </p>
+                          {like.message && (
+                            <p className="text-sm text-gray-500 mt-1 italic">&quot;{like.message}&quot;</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleManageLike(like.id, 'approve')}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                        >
+                          Approuver
+                        </button>
+                        <button
+                          onClick={() => handleManageLike(like.id, 'reject')}
+                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                        >
+                          Rejeter
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            {/* Matches Tab */}
+            {activeTab === 'matches' && (
+              <div className="space-y-4">
+                {dashboard.mutualMatches.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">Aucun match</p>
+                ) : (
+                  dashboard.mutualMatches.map((match: any) => (
+                    <div
+                      key={match.id}
+                      className="flex items-center justify-between p-4 border rounded-lg bg-green-50"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-green-200 flex items-center justify-center text-xl font-bold text-green-800">
+                          {match.from?.firstName?.charAt(0)}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">
+                            {match.from?.firstName} {match.from?.lastName}
+                          </h4>
+                          <p className="text-sm text-gray-600">
+                            {match.from?.age} ans - {match.from?.city}
+                          </p>
+                          <p className="text-sm text-green-600 font-medium mt-1">✓ Match mutuel</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>
         </div>
+      </div>
 
-        {/* Likes Section */}
-        <div className="mt-8 glass-card rounded-2xl p-6">
-          <h2 className="text-xl font-bold text-white mb-6 flex items-center space-x-2">
-            <Heart className="h-5 w-5 text-[#ff007f]" />
-            <span>Likes Reçus Récents</span>
-          </h2>
+      {/* Conversation Modal */}
+      {selectedConversation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] flex flex-col">
+            <div className="p-6 border-b flex items-center justify-between">
+              <h3 className="text-xl font-bold">
+                Conversation avec {selectedConversation.otherUser?.firstName}
+              </h3>
+              <button
+                onClick={() => setSelectedConversation(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+            </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {receivedLikes.slice(0, 6).map((like) => (
-              <div key={like.id} className="bg-[#1a1a1a] border border-gray-800 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-white">
-                    {like.from.firstName}, {like.from.age}
-                  </h3>
-                  {like.mutualMatch && (
-                    <CheckCircle className="h-5 w-5 text-red-500" />
-                  )}
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {conversationMessages.map((msg: any) => (
+                <div
+                  key={msg._id}
+                  className={`flex ${
+                    msg.senderId._id === dashboard.protectedUser.id ? 'justify-end' : 'justify-start'
+                  }`}
+                >
+                  <div
+                    className={`max-w-xs px-4 py-2 rounded-lg ${
+                      msg.senderId._id === dashboard.protectedUser.id
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-200 text-gray-900'
+                    }`}
+                  >
+                    <p>{msg.text}</p>
+                    <p className="text-xs mt-1 opacity-75">
+                      {new Date(msg.createdAt).toLocaleString('fr-FR')}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-400 mb-2">{like.from.city}</p>
-                {like.message && (
-                  <p className="text-sm text-gray-300 italic">&quot;{like.message}&quot;</p>
-                )}
-                <p className="text-xs text-gray-600 mt-2">
-                  {new Date(like.createdAt).toLocaleDateString('fr-FR')}
-                </p>
+              ))}
+            </div>
+
+            {!selectedConversation.isApprovedByWali && (
+              <div className="p-6 border-t flex space-x-4">
+                <button
+                  onClick={() => handleManageConversation('approve')}
+                  className="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
+                >
+                  Approuver cette conversation
+                </button>
+                <button
+                  onClick={() => handleManageConversation('reject')}
+                  className="flex-1 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium"
+                >
+                  Rejeter et supprimer
+                </button>
               </div>
-            ))}
+            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

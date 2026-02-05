@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Search, Filter, MapPin, Calendar, Heart, MessageCircle, Lock, Crown, Save, Bell, X, Check } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { usersApi, User } from '@/lib/api/users'
+import { savedSearchApi } from '@/lib/api/savedSearch'
 import { useAuthStore } from '@/store/auth'
 import Link from 'next/link'
 
@@ -85,10 +86,25 @@ export default function SearchPage() {
   }
 
   const handleSaveSearch = async () => {
-    // TODO: Implement API call to save search
-    console.log('Saving search:', { name: searchName, filters })
-    setShowSaveModal(false)
-    setSearchName('')
+    if (!searchName.trim()) {
+      alert('Veuillez donner un nom à votre recherche')
+      return
+    }
+
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        alert('Vous devez être connecté')
+        return
+      }
+
+      await savedSearchApi.save(token, searchName, filters, false)
+      alert('Recherche sauvegardée avec succès!')
+      setShowSaveModal(false)
+      setSearchName('')
+    } catch (error: any) {
+      alert(error.response?.data?.message || 'Erreur lors de la sauvegarde')
+    }
   }
 
   if (!isAuthenticated) {

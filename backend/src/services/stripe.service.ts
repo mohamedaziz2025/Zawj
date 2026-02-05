@@ -257,7 +257,20 @@ export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice): Promi
 
   console.log(`⚠️ Payment failed for subscription ${invoice.subscription}`)
 
-  // TODO: Send email notification to user about payment failure
+  // Send email notification to user about payment failure
+  const user = await User.findById(dbSubscription.userId)
+  if (user && user.email) {
+    const { sendEmail, getPaymentFailedEmailHTML } = await import('./email.service')
+    await sendEmail({
+      to: user.email,
+      subject: '⚠️ Échec de paiement - ZAWJ',
+      html: getPaymentFailedEmailHTML(
+        user.firstName,
+        dbSubscription.plan,
+        new Date(invoice.period_end * 1000)
+      ),
+    })
+  }
 }
 
 /**

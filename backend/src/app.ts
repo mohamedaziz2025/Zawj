@@ -18,6 +18,7 @@ import { waliRoutes } from '@/modules/wali'
 import { likeRoutes } from '@/modules/likes'
 import { searchRoutes } from '@/modules/search'
 import { moderatorRoutes } from '@/modules/moderator'
+import { contactRoutes } from '@/modules/contact'
 import webhookRoutes from '@/routes/webhooks.routes'
 
 export function createApp(): Express {
@@ -51,6 +52,7 @@ export function createApp(): Express {
 
   // Public routes
   app.use('/api/auth', authRoutes)
+  app.use('/api/contact', contactRoutes)
 
   // Protected routes - Use authenticateToken for header-based auth
   app.use('/api/users', authenticateToken, userRoutes)

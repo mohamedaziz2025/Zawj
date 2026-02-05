@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Send, Mail, MessageSquare, MapPin, Phone } from 'lucide-react'
+import { contactApi } from '@/lib/api/contact'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -25,14 +27,18 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError('')
 
-    // TODO: Implement API call
-    setTimeout(() => {
-      setIsSubmitting(false)
+    try {
+      await contactApi.submit(formData)
       setIsSuccess(true)
       setFormData({ name: '', email: '', subject: '', message: '' })
-      setTimeout(() => setIsSuccess(false), 3000)
-    }, 1000)
+      setTimeout(() => setIsSuccess(false), 5000)
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Erreur lors de l\'envoi du message')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -55,6 +61,20 @@ export default function ContactPage() {
             Une question ? Une suggestion ? Notre équipe est là pour vous aider
           </p>
         </div>
+
+        {/* Success Message */}
+        {isSuccess && (
+          <div className="mb-8 p-4 bg-green-500/20 border border-green-500 rounded-xl text-green-300 text-center">
+            ✅ Message envoyé avec succès! Nous vous répondrons dans les plus brefs délais.
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-8 p-4 bg-red-500/20 border border-red-500 rounded-xl text-red-300 text-center">
+            ❌ {error}
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Contact Info Cards */}

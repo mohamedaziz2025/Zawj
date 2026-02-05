@@ -1,70 +1,92 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuthStore } from '@/store/auth'
+import { settingsApi, UserSettings } from '@/lib/api/settings'
 import {
   Bell,
   Lock,
   Eye,
-  Shield,
-  Globe,
-  Moon,
   Save,
   Trash2,
-  AlertTriangle,
-  Users
+  AlertTriangle
 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function SettingsPage() {
   const { user, isAuthenticated } = useAuthStore()
-  const router = useRouter()
   const [activeTab, setActiveTab] = useState('notifications')
-  const [settings, setSettings] = useState({
-    notifications: {
-      newMessages: true,
-      newLikes: true,
-      matches: true,
-      waliUpdates: true,
-      emailNotifications: false,
-    },
-    privacy: {
-      showOnline: true,
-      showAge: true,
-      showLocation: true,
-      allowMessages: 'everyone', // everyone, matches, none
-      profileVisibility: 'public', // public, members, private
-    },
-    security: {
-      twoFactorAuth: false,
-      loginAlerts: true,
-    },
-  })
+  const [settings, setSettings] = useState<Partial<UserSettings> | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
+  const [message, setMessage] = useState('')
 
-  const handleToggle = (category: string, key: string) => {
-    setSettings((prev: any) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [key]: !prev[category][key],
-      },
-    }))
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadSettings()
+    }
+  }, [isAuthenticated])
+
+  const loadSettings = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+
+      const data = await settingsApi.get(token)
+      setSettings(data)
+    } catch (error) {
+      console.error('Error loading settings:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleSelect = (category: string, key: string, value: string) => {
-    setSettings((prev: any) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [key]: value,
-      },
-    }))
+  const handleToggle = (category: string, subcategory: string, key: string) => {
+    if (!settings) return
+    
+    if (subcategory) {
+      setSettings((prev: any) => ({
+        ...prev,
+        [category]: {
+          ...prev?.[category],
+          [subcategory]: {
+            ...prev?.[category]?.[subcategory],
+            [key]: !prev?.[category]?.[subcategory]?.[key],
+          },
+        },
+      }))
+    } else {
+      setSettings((prev: any) => ({
+        ...prev,
+        [category]: {
+          ...prev?.[category],
+          [key]: !prev?.[category]?.[key],
+        },
+      }))
+    }
   }
 
-  const handleSave = () => {
-    // TODO: Save settings to API
-    console.log('Saving settings:', settings)
+  const handleSave = async () => {
+    if (!settings) return
+    
+    setIsSaving(true)
+    setMessage('')
+
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        setMessage('Non authentifié')
+        return
+      }
+
+      await settingsApi.update(token, settings)
+      setMessage('Paramètres sauvegardés avec succès!')
+      setTimeout(() => setMessage(''), 3000)
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || 'Erreur lors de la sauvegarde')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   if (!isAuthenticated) {
@@ -91,235 +113,184 @@ export default function SettingsPage() {
     )
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff007f]"></div>
+      </div>
+    )
+  }
+
   const tabs = [
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'privacy', label: 'Confidentialité', icon: Eye },
-    { id: 'security', label: 'Sécurité', icon: Shield },
     { id: 'account', label: 'Compte', icon: Lock },
   ]
 
-  // Ajouter l'onglet Tuteurs uniquement pour les femmes
-  const availableTabs = user?.gender === 'female' 
-    ? [
-        ...tabs.slice(0, 3), // Notifications, Confidentialité, Sécurité
-        { id: 'tuteurs', label: 'Tuteurs', icon: Users },
-        tabs[3] // Compte
-      ]
-    : tabs
-
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#0a0a0a] py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Paramètres</h1>
-          <p className="text-gray-400">Gérez vos préférences et votre compte</p>
+          <h1 className="text-3xl font-bold text-white mb-2">
+            Paramètres du <span className="text-[#ff007f]">compte</span>
+          </h1>
+          <p className="text-gray-400">Gérez vos préférences et votre confidentialité</p>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-6">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="glass-card rounded-2xl p-4 space-y-2">
-              {availableTabs.map((tab) => (
+        {/* Message */}
+        {message && (
+          <div className={`mb-6 p-4 rounded-xl ${
+            message.includes('succès') 
+              ? 'bg-green-500/20 border border-green-500 text-green-300'
+              : 'bg-red-500/20 border border-red-500 text-red-300'
+          }`}>
+            {message}
+          </div>
+        )}
+
+        <div className="glass-card overflow-hidden">
+          {/* Tabs */}
+          <div className="border-b border-white/10">
+            <div className="flex overflow-x-auto">
+              {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => {
-                    if (tab.id === 'tuteurs') {
-                      router.push('/settings/tuteurs')
-                    } else {
-                      setActiveTab(tab.id)
-                    }
-                  }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-600/30'
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                      ? 'text-[#ff007f] border-b-2 border-[#ff007f]'
+                      : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   <tab.icon className="h-5 w-5" />
-                  <span className="font-medium">{tab.label}</span>
+                  {tab.label}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Content */}
-          <div className="lg:col-span-3">
-            <div className="glass-card rounded-2xl p-6">
-              {/* Notifications Tab */}
-              {activeTab === 'notifications' && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">
-                      Notifications
-                    </h2>
-                    <p className="text-gray-400 mb-6">
-                      Choisissez les notifications que vous souhaitez recevoir
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <ToggleItem
-                      label="Nouveaux messages"
-                      description="Recevez une notification pour chaque nouveau message"
-                      checked={settings.notifications.newMessages}
-                      onChange={() => handleToggle('notifications', 'newMessages')}
-                    />
-                    <ToggleItem
-                      label="Nouveaux likes"
-                      description="Soyez notifié quand quelqu'un aime votre profil"
-                      checked={settings.notifications.newLikes}
-                      onChange={() => handleToggle('notifications', 'newLikes')}
-                    />
-                    <ToggleItem
-                      label="Nouveaux matchs"
-                      description="Recevez une notification pour chaque nouveau match"
-                      checked={settings.notifications.matches}
-                      onChange={() => handleToggle('notifications', 'matches')}
-                    />
-                    <ToggleItem
-                      label="Mises à jour du Tuteur"
-                      description="Notifications des actions de votre Tuteur (femmes uniquement)"
-                      checked={settings.notifications.waliUpdates}
-                      onChange={() => handleToggle('notifications', 'waliUpdates')}
-                    />
-                    <ToggleItem
-                      label="Notifications par email"
-                      description="Recevez également les notifications par email"
-                      checked={settings.notifications.emailNotifications}
-                      onChange={() =>
-                        handleToggle('notifications', 'emailNotifications')
-                      }
-                    />
-                  </div>
+          <div className="p-6">
+            {/* Notifications Tab */}
+            {activeTab === 'notifications' && (
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-4">Notifications</h2>
+                  <p className="text-gray-400 mb-6">
+                    Choisissez les notifications que vous souhaitez recevoir
+                  </p>
                 </div>
-              )}
 
-              {/* Privacy Tab */}
-              {activeTab === 'privacy' && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">
-                      Confidentialité
-                    </h2>
-                    <p className="text-gray-400 mb-6">
-                      Contrôlez qui peut voir vos informations
-                    </p>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-white font-medium mb-3">
-                        Visibilité du profil
-                      </label>
-                      <div className="space-y-2">
-                        <RadioOption
-                          name="profileVisibility"
-                          value="public"
-                          label="Public"
-                          description="Visible par tous les membres"
-                          checked={settings.privacy.profileVisibility === 'public'}
-                          onChange={() =>
-                            handleSelect('privacy', 'profileVisibility', 'public')
-                          }
-                        />
-                        <RadioOption
-                          name="profileVisibility"
-                          value="members"
-                          label="Membres uniquement"
-                          description="Visible uniquement par les membres inscrits"
-                          checked={settings.privacy.profileVisibility === 'members'}
-                          onChange={() =>
-                            handleSelect('privacy', 'profileVisibility', 'members')
-                          }
-                        />
-                        <RadioOption
-                          name="profileVisibility"
-                          value="private"
-                          label="Privé"
-                          description="Visible uniquement par vos matchs"
-                          checked={settings.privacy.profileVisibility === 'private'}
-                          onChange={() =>
-                            handleSelect('privacy', 'profileVisibility', 'private')
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <ToggleItem
-                      label="Afficher le statut en ligne"
-                      description="Les autres peuvent voir quand vous êtes en ligne"
-                      checked={settings.privacy.showOnline}
-                      onChange={() => handleToggle('privacy', 'showOnline')}
-                    />
-                    <ToggleItem
-                      label="Afficher l'âge"
-                      description="Votre âge sera visible sur votre profil"
-                      checked={settings.privacy.showAge}
-                      onChange={() => handleToggle('privacy', 'showAge')}
-                    />
-                    <ToggleItem
-                      label="Afficher la localisation"
-                      description="Votre ville sera visible sur votre profil"
-                      checked={settings.privacy.showLocation}
-                      onChange={() => handleToggle('privacy', 'showLocation')}
-                    />
-                  </div>
+                <div className="space-y-4">
+                  <ToggleItem
+                    label="Nouveaux messages"
+                    description="Recevez une notification pour chaque nouveau message"
+                    checked={settings?.notifications?.email?.newMessages || false}
+                    onChange={() => handleToggle('notifications', 'email', 'newMessages')}
+                  />
+                  <ToggleItem
+                    label="Nouveaux likes"
+                    description="Soyez notifié quand quelqu'un aime votre profil"
+                    checked={settings?.notifications?.email?.likes || false}
+                    onChange={() => handleToggle('notifications', 'email', 'likes')}
+                  />
+                  <ToggleItem
+                    label="Nouveaux matchs"
+                    description="Recevez une notification pour chaque nouveau match"
+                    checked={settings?.notifications?.email?.newMatches || false}
+                    onChange={() => handleToggle('notifications', 'email', 'newMatches')}
+                  />
+                  <ToggleItem
+                    label="Vues de profil"
+                    description="Soyez notifié quand quelqu'un visite votre profil"
+                    checked={settings?.notifications?.email?.profileViews || false}
+                    onChange={() => handleToggle('notifications', 'email', 'profileViews')}
+                  />
+                  <ToggleItem
+                    label="Newsletter"
+                    description="Recevez nos actualités et conseils par email"
+                    checked={settings?.notifications?.email?.newsletter || false}
+                    onChange={() => handleToggle('notifications', 'email', 'newsletter')}
+                  />
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Security Tab */}
-              {activeTab === 'security' && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">Sécurité</h2>
-                    <p className="text-gray-400 mb-6">
-                      Protégez votre compte avec des mesures de sécurité avancées
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <ToggleItem
-                      label="Authentification à deux facteurs"
-                      description="Ajoutez une couche de sécurité supplémentaire"
-                      checked={settings.security.twoFactorAuth}
-                      onChange={() => handleToggle('security', 'twoFactorAuth')}
-                    />
-                    <ToggleItem
-                      label="Alertes de connexion"
-                      description="Recevez une notification pour chaque nouvelle connexion"
-                      checked={settings.security.loginAlerts}
-                      onChange={() => handleToggle('security', 'loginAlerts')}
-                    />
-
-                    <div className="pt-4 border-t border-white/10">
-                      <button className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-xl hover:bg-blue-500/20 transition-all">
-                        <Lock className="h-5 w-5" />
-                        Changer le mot de passe
-                      </button>
-                    </div>
-                  </div>
+            {/* Privacy Tab */}
+            {activeTab === 'privacy' && (
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-4">Confidentialité</h2>
+                  <p className="text-gray-400 mb-6">
+                    Contrôlez qui peut voir vos informations
+                  </p>
                 </div>
-              )}
 
-              {/* Account Tab */}
-              {activeTab === 'account' && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4">Compte</h2>
-                    <p className="text-gray-400 mb-6">
-                      Gérez votre compte et vos données
-                    </p>
+                <div className="space-y-4">
+                  <ToggleItem
+                    label="Afficher le statut en ligne"
+                    description="Les autres utilisateurs peuvent voir quand vous êtes connecté"
+                    checked={settings?.privacy?.showOnlineStatus || false}
+                    onChange={() => handleToggle('privacy', '', 'showOnlineStatus')}
+                  />
+                  <ToggleItem
+                    label="Afficher la dernière connexion"
+                    description="Afficher quand vous vous êtes connecté pour la dernière fois"
+                    checked={settings?.privacy?.showLastSeen || false}
+                    onChange={() => handleToggle('privacy', '', 'showLastSeen')}
+                  />
+                  <ToggleItem
+                    label="Afficher les vues de profil"
+                    description="Autoriser les autres à voir quand vous avez visité leur profil"
+                    checked={settings?.privacy?.showProfileViews || false}
+                    onChange={() => handleToggle('privacy', '', 'showProfileViews')}
+                  />
+                  <ToggleItem
+                    label="Cacher mon profil des recherches"
+                    description="Votre profil ne sera pas visible dans les résultats de recherche"
+                    checked={settings?.privacy?.hideProfileFromSearch || false}
+                    onChange={() => handleToggle('privacy', '', 'hideProfileFromSearch')}
+                  />
+                  <ToggleItem
+                    label="Autoriser les messages des non-matchs"
+                    description="Recevoir des messages d'utilisateurs avec qui vous n'avez pas matché"
+                    checked={settings?.privacy?.allowMessagesFromNonMatches || false}
+                    onChange={() => handleToggle('privacy', '', 'allowMessagesFromNonMatches')}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Account Tab */}
+            {activeTab === 'account' && (
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-4">Compte</h2>
+                  <p className="text-gray-400 mb-6">
+                    Gérez votre compte et vos données
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+                    <h3 className="text-white font-semibold mb-2">Informations du compte</h3>
+                    <p className="text-gray-400 text-sm mb-1">Email: {user?.email}</p>
+                    <p className="text-gray-400 text-sm">Rôle: {user?.role}</p>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">
+                  <button className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-xl hover:bg-blue-500/20 transition-all">
+                    <Lock className="h-5 w-5" />
+                    Changer le mot de passe
+                  </button>
+
+                  <div className="pt-4 border-t border-white/10">
+                    <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl mb-4">
                       <div className="flex items-start gap-3">
                         <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5" />
                         <div>
-                          <h3 className="text-white font-semibold mb-1">
-                            Zone dangereuse
-                          </h3>
-                          <p className="text-gray-400 text-sm mb-4">
+                          <h3 className="text-white font-semibold mb-1">Zone dangereuse</h3>
+                          <p className="text-gray-400 text-sm">
                             Les actions suivantes sont irréversibles
                           </p>
                         </div>
@@ -332,18 +303,19 @@ export default function SettingsPage() {
                     </button>
                   </div>
                 </div>
-              )}
-
-              {/* Save Button */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <button
-                  onClick={handleSave}
-                  className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-[#ff007f] to-[#ff4d94] text-white font-semibold rounded-xl shadow-lg shadow-[#ff007f]/30 hover:shadow-[#ff007f]/50 hover:scale-105 transition-all"
-                >
-                  <Save className="h-5 w-5" />
-                  Enregistrer les modifications
-                </button>
               </div>
+            )}
+
+            {/* Save Button */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-[#ff007f] to-[#ff4d94] text-white font-semibold rounded-xl shadow-lg shadow-[#ff007f]/30 hover:shadow-[#ff007f]/50 hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Save className="h-5 w-5" />
+                {isSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+              </button>
             </div>
           </div>
         </div>
@@ -383,39 +355,5 @@ function ToggleItem({
         />
       </button>
     </div>
-  )
-}
-
-// Composant Radio réutilisable
-function RadioOption({
-  name,
-  value,
-  label,
-  description,
-  checked,
-  onChange,
-}: {
-  name: string
-  value: string
-  label: string
-  description: string
-  checked: boolean
-  onChange: () => void
-}) {
-  return (
-    <label className="flex items-start gap-3 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer">
-      <input
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        className="mt-1 h-4 w-4 text-[#ff007f] focus:ring-[#ff007f] focus:ring-offset-0 bg-gray-700 border-gray-600"
-      />
-      <div className="flex-1">
-        <h3 className="text-white font-medium mb-1">{label}</h3>
-        <p className="text-sm text-gray-400">{description}</p>
-      </div>
-    </label>
   )
 }

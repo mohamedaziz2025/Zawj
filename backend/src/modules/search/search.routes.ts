@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { AuthRequest } from '@/middlewares/auth.middleware'
-import { SavedSearch } from './search.model'
+import { SavedSearch } from './saved-search.model'
 import { User } from '@/modules/users/user.model'
 
 const router = Router()
@@ -8,7 +8,7 @@ const router = Router()
 // POST /api/search/save - Save a search with filters
 router.post('/save', async (req: AuthRequest, res): Promise<void> => {
   try {
-    const { name, filters, emailAlerts } = req.body
+    const { name, filters, notificationsEnabled } = req.body
 
     if (!name || !filters) {
       res.status(400).json({ message: 'Name and filters are required' })
@@ -26,8 +26,8 @@ router.post('/save', async (req: AuthRequest, res): Promise<void> => {
       userId: req.userId,
       name,
       filters,
-      emailAlerts: emailAlerts ?? true,
-      lastChecked: new Date(),
+      notificationsEnabled: notificationsEnabled ?? false,
+      lastUsed: new Date(),
     })
 
     await savedSearch.save()
@@ -66,6 +66,10 @@ router.get('/saved/:id', async (req: AuthRequest, res): Promise<void> => {
       return
     }
 
+    // Update lastUsed
+    savedSearch.lastUsed = new Date()
+    await savedSearch.save()
+
     res.json(savedSearch)
   } catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -75,11 +79,11 @@ router.get('/saved/:id', async (req: AuthRequest, res): Promise<void> => {
 // PATCH /api/search/saved/:id - Update a saved search
 router.patch('/saved/:id', async (req: AuthRequest, res): Promise<void> => {
   try {
-    const { name, filters, emailAlerts } = req.body
+    const { name, filters, notificationsEnabled } = req.body
 
     const savedSearch = await SavedSearch.findOneAndUpdate(
       { _id: req.params.id, userId: req.userId },
-      { name, filters, emailAlerts },
+      { name, filters, notificationsEnabled },
       { new: true, runValidators: true }
     )
 
@@ -131,7 +135,7 @@ router.post('/saved/:id/check', async (req: AuthRequest, res): Promise<void> => 
       _id: { $ne: req.userId }, 
       isActive: true, 
       isVerified: true,
-      createdAt: { $gt: savedSearch.lastChecked || new Date(0) }
+      createdAt: { $gt: savedSearch.lastUsed || new Date(0) }
     }
 
     const filters = savedSearch.filters
@@ -154,9 +158,8 @@ router.post('/saved/:id/check', async (req: AuthRequest, res): Promise<void> => 
 
     const newMatches = await User.find(query).limit(20)
 
-    // Update saved search
-    savedSearch.lastChecked = new Date()
-    savedSearch.newMatchesCount = newMatches.length
+    // Update saved search lastUsed
+    savedSearch.lastUsed = new Date()
     await savedSearch.save()
 
     res.json({ 

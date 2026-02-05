@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { User } from './user.model'
+import { UserSettings } from './user-settings.model'
 import { AuthRequest } from '@/middlewares/auth.middleware'
 
 const router = Router()
@@ -93,6 +94,96 @@ router.get('/search', async (req: AuthRequest, res): Promise<void> => {
 
     const users = await User.find(query).limit(50)
     res.json(users)
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// GET /api/users/settings - Get user settings
+router.get('/settings', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    let settings = await UserSettings.findOne({ userId: req.userId })
+    
+    // Create default settings if none exist
+    if (!settings) {
+      settings = await UserSettings.create({ userId: req.userId })
+    }
+
+    res.json(settings)
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// PATCH /api/users/settings - Update user settings
+router.patch('/settings', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const { notifications, privacy, searchPreferences, language, timezone } = req.body
+
+    let settings = await UserSettings.findOne({ userId: req.userId })
+    
+    if (!settings) {
+      settings = await UserSettings.create({ userId: req.userId })
+    }
+
+    // Update only provided fields
+    if (notifications) settings.notifications = { ...settings.notifications, ...notifications }
+    if (privacy) settings.privacy = { ...settings.privacy, ...privacy }
+    if (searchPreferences) settings.searchPreferences = { ...settings.searchPreferences, ...searchPreferences }
+    if (language) settings.language = language
+    if (timezone) settings.timezone = timezone
+
+    await settings.save()
+
+    res.json(settings)
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// POST /api/users/settings/block/:userId - Block a user
+router.post('/settings/block/:userId', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const blockUserId = req.params.userId
+
+    if (blockUserId === req.userId) {
+      res.status(400).json({ message: 'Vous ne pouvez pas vous bloquer vous-même' })
+      return
+    }
+
+    let settings = await UserSettings.findOne({ userId: req.userId })
+    
+    if (!settings) {
+      settings = await UserSettings.create({ userId: req.userId })
+    }
+
+    if (!settings.blocked.includes(blockUserId as any)) {
+      settings.blocked.push(blockUserId as any)
+      await settings.save()
+    }
+
+    res.json({ message: 'Utilisateur bloqué', blocked: settings.blocked })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// DELETE /api/users/settings/block/:userId - Unblock a user
+router.delete('/settings/block/:userId', async (req: AuthRequest, res): Promise<void> => {
+  try {
+    const unblockUserId = req.params.userId
+
+    const settings = await UserSettings.findOne({ userId: req.userId })
+    
+    if (!settings) {
+      res.status(404).json({ message: 'Settings not found' })
+      return
+    }
+
+    settings.blocked = settings.blocked.filter(id => id.toString() !== unblockUserId)
+    await settings.save()
+
+    res.json({ message: 'Utilisateur débloqué', blocked: settings.blocked })
   } catch (error: any) {
     res.status(500).json({ message: error.message })
   }
