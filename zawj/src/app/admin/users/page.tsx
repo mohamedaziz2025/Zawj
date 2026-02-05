@@ -90,7 +90,7 @@ export default function AdminUsersPage() {
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <Link
                 href="/admin/create-user"
-                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all text-sm sm:text-base"
+                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all text-sm sm:text-base"
               >
                 <UserCheck className="h-4 w-4 sm:h-5 sm:w-5" />
                 Créer Utilisateur

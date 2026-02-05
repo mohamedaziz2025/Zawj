@@ -162,7 +162,7 @@ export default function WaliDashboardPage() {
 
           <div className="glass-card rounded-2xl p-6">
             <div className="flex items-center justify-between mb-3">
-              <CheckCircle className="h-8 w-8 text-green-500" />
+              <CheckCircle className="h-8 w-8 text-red-500" />
               <span className="text-3xl font-bold text-white">{mutualMatches}</span>
             </div>
             <p className="text-sm text-gray-400">Matches Mutuels</p>
@@ -293,7 +293,7 @@ export default function WaliDashboardPage() {
                     {like.from.firstName}, {like.from.age}
                   </h3>
                   {like.mutualMatch && (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <CheckCircle className="h-5 w-5 text-red-500" />
                   )}
                 </div>
                 <p className="text-sm text-gray-400 mb-2">{like.from.city}</p>

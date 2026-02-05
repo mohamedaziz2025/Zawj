@@ -58,17 +58,17 @@ export default function ModeratorDashboard() {
             <p className="text-sm text-gray-600 font-medium">Utilisatrices Assignées</p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border-2 border-green-200 shadow-sm">
+          <div className="bg-white p-6 rounded-2xl border-2 border-red-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+              <CheckCircle className="h-8 w-8 text-red-600" />
               <span className="text-3xl font-bold text-gray-900">{profile.statistics.totalApprovals}</span>
             </div>
             <p className="text-sm text-gray-600 font-medium">Approbations</p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border-2 border-red-200 shadow-sm">
+          <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <XCircle className="h-8 w-8 text-red-600" />
+              <XCircle className="h-8 w-8 text-gray-600" />
               <span className="text-3xl font-bold text-gray-900">{profile.statistics.totalRejections}</span>
             </div>
             <p className="text-sm text-gray-600 font-medium">Rejets</p>
@@ -87,14 +87,48 @@ export default function ModeratorDashboard() {
           </div>
         </div>
 
+        {/* Special Section for Tuteur Role */}
+        <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border-2 border-purple-200 shadow-lg mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Shield className="h-8 w-8 text-purple-600" />
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Rôle de Tuteur de Société</h2>
+              <p className="text-sm text-black">Vous êtes assigné comme tuteur pour certaines utilisatrices</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl p-4 border border-purple-200">
+            <p className="text-sm text-black mb-3">
+              En tant que <strong>Tuteur de Société</strong>, vous avez des responsabilités spéciales :
+            </p>
+            <ul className="space-y-2 text-sm text-black">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <span>Surveiller et approuver les conversations des utilisatrices assignées</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <span>Recevoir des notifications pour chaque nouveau message</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <span>Conseiller les utilisatrices dans leur démarche matrimoniale</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <span>Garantir le respect des principes islamiques dans les échanges</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         {/* Permissions */}
         <div className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-sm mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Mes Permissions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canViewMessages ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
+            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canViewMessages ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                 {profile.permissions.canViewMessages ? (
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <CheckCircle className="h-6 w-6 text-red-600" />
                 ) : (
                   <XCircle className="h-6 w-6 text-gray-400" />
                 )}
@@ -102,10 +136,10 @@ export default function ModeratorDashboard() {
               </div>
             </div>
             
-            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canApprovePaidTutor ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
+            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canApprovePaidTutor ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                 {profile.permissions.canApprovePaidTutor ? (
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <CheckCircle className="h-6 w-6 text-red-600" />
                 ) : (
                   <XCircle className="h-6 w-6 text-gray-400" />
                 )}
@@ -113,10 +147,10 @@ export default function ModeratorDashboard() {
               </div>
             </div>
             
-            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canBlockUsers ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
+            <div className={`p-4 rounded-xl border-2 ${profile.permissions.canBlockUsers ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                 {profile.permissions.canBlockUsers ? (
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <CheckCircle className="h-6 w-6 text-red-600" />
                 ) : (
                   <XCircle className="h-6 w-6 text-gray-400" />
                 )}

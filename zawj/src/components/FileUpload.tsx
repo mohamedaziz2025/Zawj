@@ -236,9 +236,9 @@ export default function FileUpload({
 
       {/* Success message */}
       {uploadedUrls.length > 0 && !uploading && (
-        <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 flex items-center gap-2">
-          <Check className="h-5 w-5 text-green-400" />
-          <span className="text-green-400 text-sm">
+        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 flex items-center gap-2">
+          <Check className="h-5 w-5 text-red-400" />
+          <span className="text-red-400 text-sm">
             Fichier(s) uploadé(s) avec succès!
           </span>
         </div>

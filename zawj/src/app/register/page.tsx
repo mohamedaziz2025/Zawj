@@ -44,6 +44,7 @@ interface FormData {
   }
   
   // Tuteur pour femmes
+  tuteurChoice?: 'paid' | 'info' | ''
   waliInfo?: {
     fullName: string
     relationship: 'father' | 'brother' | 'uncle' | 'grandfather' | 'imam' | 'trusted-community-member' | ''
@@ -140,82 +141,92 @@ export default function RegisterPage() {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">État Civil</h3>
-        <p className="text-sm text-gray-700">Vos informations personnelles</p>
+        <p className="text-sm text-black">Vos informations personnelles</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Prénom *</label>
+          <label className="block text-sm font-medium text-black mb-2">Prénom *</label>
           <input
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Nom *</label>
+          <label className="block text-sm font-medium text-black mb-2">Nom *</label>
           <input
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+        <label className="block text-sm font-medium text-black mb-2">Email *</label>
         <input
           name="email"
           type="email"
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         />
       </div>
 
+      <div className="relative">
+        <label className="block text-sm font-medium text-black mb-2">Mot de passe *</label>
+        <input
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          value={formData.password}
+          onChange={handleChange}
+          required
+          minLength={8}
+          className="w-full px-4 py-3 pr-12 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-4 top-10 text-black hover:text-red-600"
+        >
+          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+        </button>
+      </div>
+
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Mot de passe *</label>
-        <div className="relative">
-          <input
-            name="password"
-            type={showPassword ? 'text' : 'password'}
-            value={formData.password}
-            onChange={handleChange}
-            required
-            minLength={8}
-            className="w-full px-4 py-3 pr-12 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-3.5 text-gray-700 hover:text-pink-600"
-          >
-            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-          </button>
-        </div>
+        <label className="block text-sm font-medium text-black mb-2">Date de naissance *</label>
+        <input
+          name="dateOfBirth"
+          type="date"
+          value={formData.dateOfBirth}
+          onChange={handleChange}
+          required
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Genre *</label>
+          <label className="block text-sm font-medium text-black mb-2">Genre *</label>
           <select
             name="gender"
             value={formData.gender}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           >
             <option value="male">Homme</option>
             <option value="female">Femme</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Âge *</label>
+          <label className="block text-sm font-medium text-black mb-2">Âge *</label>
           <input
             name="age"
             type="number"
@@ -224,64 +235,64 @@ export default function RegisterPage() {
             value={formData.age}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Ville *</label>
+          <label className="block text-sm font-medium text-black mb-2">Ville *</label>
           <input
             name="city"
             value={formData.city}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Pays *</label>
+          <label className="block text-sm font-medium text-black mb-2">Pays *</label>
           <input
             name="country"
             value={formData.country}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Nationalité *</label>
+          <label className="block text-sm font-medium text-black mb-2">Nationalité *</label>
           <input
             name="nationality"
             value={formData.nationality}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Profession *</label>
+          <label className="block text-sm font-medium text-black mb-2">Profession *</label>
           <input
             name="profession"
             value={formData.profession}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+            className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Niveau d&apos;études</label>
+        <label className="block text-sm font-medium text-black mb-2">Niveau d&apos;études</label>
         <select
           name="education"
           value={formData.education}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="high-school">Baccalauréat</option>
@@ -299,17 +310,17 @@ export default function RegisterPage() {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Pratique Religieuse</h3>
-        <p className="text-sm text-gray-700">Votre relation avec l&apos;Islam</p>
+        <p className="text-sm text-black">Votre relation avec l&apos;Islam</p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Fréquence de Prière *</label>
+        <label className="block text-sm font-medium text-black mb-2">Fréquence de Prière *</label>
         <select
           name="religiousInfo.prayerFrequency"
           value={formData.religiousInfo.prayerFrequency}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="always">Toujours (5 prières/jour)</option>
@@ -321,13 +332,13 @@ export default function RegisterPage() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Madhab (École Juridique) *</label>
+        <label className="block text-sm font-medium text-black mb-2">Madhab (École Juridique) *</label>
         <select
           name="religiousInfo.madhab"
           value={formData.religiousInfo.madhab}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="hanafi">Hanafi</option>
@@ -340,13 +351,13 @@ export default function RegisterPage() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Niveau de Pratique *</label>
+        <label className="block text-sm font-medium text-black mb-2">Niveau de Pratique *</label>
         <select
           name="religiousInfo.practiceLevel"
           value={formData.religiousInfo.practiceLevel}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         >
           <option value="">Sélectionnez...</option>
           <option value="strict">Strict (applique tous les piliers)</option>
@@ -363,9 +374,9 @@ export default function RegisterPage() {
               name="religiousInfo.wearsHijab"
               checked={formData.religiousInfo.wearsHijab || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-pink-600/30 bg-white text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+              className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
             />
-            <span className="text-sm text-gray-300">Je porte le Hijab</span>
+            <span className="text-sm text-black">Je porte le Hijab</span>
           </label>
         </div>
       )}
@@ -378,20 +389,20 @@ export default function RegisterPage() {
               name="religiousInfo.hasBeard"
               checked={formData.religiousInfo.hasBeard || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-pink-600/30 bg-white text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+              className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
             />
-            <span className="text-sm text-gray-300">Je porte la barbe</span>
+            <span className="text-sm text-black">Je porte la barbe</span>
           </label>
         </div>
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Mémorisation du Coran</label>
+        <label className="block text-sm font-medium text-black mb-2">Mémorisation du Coran</label>
         <select
           name="religiousInfo.quranMemorization"
           value={formData.religiousInfo.quranMemorization}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         >
           <option value="none">Aucune</option>
           <option value="few-surahs">Quelques sourates</option>
@@ -402,14 +413,14 @@ export default function RegisterPage() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Formation Islamique</label>
+        <label className="block text-sm font-medium text-black mb-2">Formation Islamique</label>
         <textarea
           name="religiousInfo.islamicEducation"
           value={formData.religiousInfo.islamicEducation || ''}
           onChange={handleChange}
           rows={3}
           placeholder="Ex: Diplômé de l'institut Al-Azhar, cours du soir à la mosquée..."
-          className="w-full px-4 py-3 bg-white border border-pink-600/30 rounded-xl text-gray-900 placeholder-gray-500 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+          className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 placeholder-black/50 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
         />
       </div>
     </div>
@@ -420,10 +431,10 @@ export default function RegisterPage() {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Attentes Matrimoniales</h3>
-        <p className="text-sm text-gray-700">Vos critères pour le mariage</p>
+        <p className="text-sm text-black">Vos critères pour le mariage</p>
       </div>
 
-      <div className="bg-white border border-pink-600/30 rounded-xl p-6 space-y-4">
+      <div className="bg-white border border-red-600/30 rounded-xl p-6 space-y-4">
         {formData.gender === 'female' ? (
           <div>
             <label className="flex items-center space-x-3 cursor-pointer">
@@ -432,9 +443,9 @@ export default function RegisterPage() {
                 name="marriageExpectations.acceptsPolygamy"
                 checked={formData.marriageExpectations.acceptsPolygamy || false}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+                className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
               />
-              <span className="text-sm text-gray-300">J&apos;accepte la polygamie</span>
+              <span className="text-sm text-black">J&apos;accepte la polygamie</span>
             </label>
           </div>
         ) : (
@@ -445,9 +456,9 @@ export default function RegisterPage() {
                 name="marriageExpectations.wantsPolygamy"
                 checked={formData.marriageExpectations.wantsPolygamy || false}
                 onChange={handleChange}
-                className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+                className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
               />
-              <span className="text-sm text-gray-300">Je souhaite la polygamie</span>
+              <span className="text-sm text-black">Je souhaite la polygamie</span>
             </label>
           </div>
         )}
@@ -459,9 +470,9 @@ export default function RegisterPage() {
               name="marriageExpectations.willingToRelocate"
               checked={formData.marriageExpectations.willingToRelocate || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+              className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
             />
-            <span className="text-sm text-gray-300">Prêt(e) à déménager</span>
+            <span className="text-sm text-black">Prêt(e) à déménager</span>
           </label>
         </div>
 
@@ -472,15 +483,15 @@ export default function RegisterPage() {
               name="marriageExpectations.wantsChildren"
               checked={formData.marriageExpectations.wantsChildren || false}
               onChange={handleChange}
-              className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
+              className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
             />
-            <span className="text-sm text-gray-300">Je souhaite avoir des enfants</span>
+            <span className="text-sm text-black">Je souhaite avoir des enfants</span>
           </label>
         </div>
 
         {formData.marriageExpectations.wantsChildren && (
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Nombre d&apos;enfants souhaités</label>
+            <label className="block text-sm font-medium text-black mb-2">Nombre d&apos;enfants souhaités</label>
             <input
               type="number"
               name="marriageExpectations.numberOfChildrenDesired"
@@ -488,7 +499,7 @@ export default function RegisterPage() {
               max="10"
               value={formData.marriageExpectations.numberOfChildrenDesired || ''}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
+              className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
             />
           </div>
         )}
@@ -496,92 +507,155 @@ export default function RegisterPage() {
 
       {/* Tuteur Information for Women */}
       {formData.gender === 'female' && (
-        <div className="bg-white border border-pink-600/30 rounded-xl p-6 space-y-4">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">Informations du Tuteur (Tuteur)</h4>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Nom complet du Tuteur *</label>
-            <input
-              name="waliInfo.fullName"
-              value={formData.waliInfo?.fullName || ''}
-              onChange={handleChange}
-              required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
-            />
+        <>
+          <div className="bg-white border border-red-600/30 rounded-xl p-6 space-y-4">
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Choix du Tuteur</h4>
+            <p className="text-sm text-black mb-4">
+              Veuillez choisir une option pour votre tuteur (Wali)
+            </p>
+            
+            <div className="space-y-3">
+              <label className="flex items-start space-x-3 cursor-pointer p-4 border-2 rounded-xl transition-all" 
+                style={{
+                  borderColor: formData.tuteurChoice === 'info' ? '#dc2626' : '#e5e7eb',
+                  backgroundColor: formData.tuteurChoice === 'info' ? '#fef2f2' : 'white'
+                }}>
+                <input
+                  type="radio"
+                  name="tuteurChoice"
+                  value="info"
+                  checked={formData.tuteurChoice === 'info'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, tuteurChoice: 'info' as 'info' }))}
+                  className="mt-1 w-5 h-5 text-red-600"
+                />
+                <div>
+                  <span className="text-sm font-semibold text-black block">Fournir les informations de mon tuteur</span>
+                  <span className="text-xs text-black/70">Gratuit - Vous fournirez les coordonnées de votre tuteur familial</span>
+                </div>
+              </label>
+
+              <label className="flex items-start space-x-3 cursor-pointer p-4 border-2 rounded-xl transition-all"
+                style={{
+                  borderColor: formData.tuteurChoice === 'paid' ? '#dc2626' : '#e5e7eb',
+                  backgroundColor: formData.tuteurChoice === 'paid' ? '#fef2f2' : 'white'
+                }}>
+                <input
+                  type="radio"
+                  name="tuteurChoice"
+                  value="paid"
+                  checked={formData.tuteurChoice === 'paid'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, tuteurChoice: 'paid' as 'paid' }))}
+                  className="mt-1 w-5 h-5 text-red-600"
+                />
+                <div>
+                  <span className="text-sm font-semibold text-black block">Service de tuteur payant</span>
+                  <span className="text-xs text-black/70">Payant - Un tuteur professionnel sera assigné par la plateforme</span>
+                </div>
+              </label>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Relation *</label>
-            <select
-              name="waliInfo.relationship"
-              value={formData.waliInfo?.relationship || ''}
-              onChange={handleChange}
-              required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
-            >
-              <option value="">Sélectionnez...</option>
-              <option value="father">Père</option>
-              <option value="brother">Frère</option>
-              <option value="uncle">Oncle</option>
-              <option value="grandfather">Grand-père</option>
-              <option value="imam">Imam</option>
-              <option value="trusted-community-member">Membre de confiance de la communauté</option>
-            </select>
-          </div>
+          {formData.tuteurChoice === 'info' && (
+            <div className="bg-white border border-red-600/30 rounded-xl p-6 space-y-4">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Informations du Tuteur (Wali)</h4>
+              
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Nom complet du Tuteur *</label>
+                <input
+                  name="waliInfo.fullName"
+                  value={formData.waliInfo?.fullName || ''}
+                  onChange={handleChange}
+                  required={formData.gender === 'female' && formData.tuteurChoice === 'info'}
+                  className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email du Tuteur *</label>
-            <input
-              name="waliInfo.email"
-              type="email"
-              value={formData.waliInfo?.email || ''}
-              onChange={handleChange}
-              required={formData.gender === 'female'}
-              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Relation *</label>
+                <select
+                  name="waliInfo.relationship"
+                  value={formData.waliInfo?.relationship || ''}
+                  onChange={handleChange}
+                  required={formData.gender === 'female' && formData.tuteurChoice === 'info'}
+                  className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+                >
+                  <option value="">Sélectionnez...</option>
+                  <option value="father">Père</option>
+                  <option value="brother">Frère</option>
+                  <option value="uncle">Oncle</option>
+                  <option value="grandfather">Grand-père</option>
+                  <option value="imam">Imam</option>
+                  <option value="trusted-community-member">Membre de confiance de la communauté</option>
+                </select>
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Téléphone du Tuteur</label>
-            <input
-              name="waliInfo.phone"
-              type="tel"
-              value={formData.waliInfo?.phone || ''}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-gradient-to-br from-gray-50 via-white to-gray-100 border border-pink-600/30 rounded-xl text-gray-900 focus:border-pink-600 focus:ring-2 focus:ring-pink-600/20 transition-all"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Email du Tuteur *</label>
+                <input
+                  name="waliInfo.email"
+                  type="email"
+                  value={formData.waliInfo?.email || ''}
+                  onChange={handleChange}
+                  required={formData.gender === 'female' && formData.tuteurChoice === 'info'}
+                  className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+                />
+              </div>
 
-          <div className="space-y-3 pt-4 border-t border-pink-600/20">
-            <label className="flex items-center space-x-3 cursor-pointer">
-              <input
-                type="checkbox"
-                name="waliInfo.hasAccessToDashboard"
-                checked={formData.waliInfo?.hasAccessToDashboard || false}
-                onChange={handleChange}
-                className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
-              />
-              <span className="text-sm text-gray-300">Donner accès au dashboard (le Tuteur peut voir mes conversations)</span>
-            </label>
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">Téléphone du Tuteur</label>
+                <input
+                  name="waliInfo.phone"
+                  type="tel"
+                  value={formData.waliInfo?.phone || ''}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white border border-red-600/30 rounded-xl text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all"
+                />
+              </div>
 
-            <label className="flex items-center space-x-3 cursor-pointer">
-              <input
-                type="checkbox"
-                name="waliInfo.notifyOnNewMessage"
-                checked={formData.waliInfo?.notifyOnNewMessage ?? true}
-                onChange={handleChange}
-                className="w-5 h-5 rounded border-pink-600/30 bg-gradient-to-br from-gray-50 via-white to-gray-100 text-pink-600 focus:ring-2 focus:ring-pink-600/20"
-              />
-              <span className="text-sm text-gray-300">Notifier par email à chaque nouveau message</span>
-            </label>
-          </div>
-        </div>
+              <div className="space-y-3 pt-4 border-t border-red-600/20">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="waliInfo.hasAccessToDashboard"
+                    checked={formData.waliInfo?.hasAccessToDashboard || false}
+                    onChange={handleChange}
+                    className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
+                  />
+                  <span className="text-sm text-black">Donner accès au dashboard (le Tuteur peut voir mes conversations)</span>
+                </label>
+
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="waliInfo.notifyOnNewMessage"
+                    checked={formData.waliInfo?.notifyOnNewMessage ?? true}
+                    onChange={handleChange}
+                    className="w-5 h-5 rounded border-red-600/30 bg-white text-red-600 focus:ring-2 focus:ring-red-600/20"
+                  />
+                  <span className="text-sm text-black">Notifier par email à chaque nouveau message</span>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {formData.tuteurChoice === 'paid' && (
+            <div className="bg-gradient-to-br from-red-50 to-pink-50 border border-red-600/30 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">Service de Tuteur Payant</h4>
+              <p className="text-sm text-black mb-4">
+                Vous avez choisi le service de tuteur professionnel. Un tuteur qualifié et respectueux des principes islamiques sera assigné par notre plateforme pour accompagner votre démarche matrimoniale.
+              </p>
+              <p className="text-sm text-black/80">
+                <strong>Note:</strong> Le paiement pour ce service sera effectué après la finalisation de votre inscription. Vous recevrez un email avec les instructions de paiement et les détails du service.
+              </p>
+            </div>
+          )}
+        </>
       )}
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative">
+    <div className="min-h-screen bg-gradient-to-br from-black/5 via-white to-black/5 relative">
       {/* Background effects */}
       <div className="hero-aura top-0 left-0"></div>
       <div className="hero-aura bottom-0 right-0"></div>
@@ -592,12 +666,12 @@ export default function RegisterPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-600 to-red-600 rounded-lg flex items-center justify-center text-white font-black text-2xl">N</div>
+                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center text-white font-black text-2xl">N</div>
                 <span className="text-2xl font-bold tracking-widest text-gray-900">Nissfi</span>
               </div>
             </Link>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Créer un compte</h2>
-            <p className="text-gray-700">Rejoignez la plateforme matrimoniale halal</p>
+            <p className="text-black">Rejoignez la plateforme matrimoniale halal</p>
           </div>
 
           {/* Progress Stepper */}
@@ -606,19 +680,19 @@ export default function RegisterPage() {
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center flex-1">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
-                    step >= s ? 'bg-gradient-to-br from-pink-600 to-red-600 border-pink-600 text-white' : 'bg-white border-gray-300 text-gray-500'
+                    step >= s ? 'bg-gradient-to-br from-red-600 to-red-700 border-red-600 text-white' : 'bg-white border-gray-300 text-gray-500'
                   }`}>
                     {step > s ? <Check className="h-5 w-5" /> : s}
                   </div>
                   {s < 3 && (
                     <div className={`flex-1 h-1 mx-2 transition-all ${
-                      step > s ? 'bg-gradient-to-r from-pink-600 to-red-600' : 'bg-gray-200'
+                      step > s ? 'bg-gradient-to-r from-red-600 to-red-700' : 'bg-gray-200'
                     }`} />
                   )}
                 </div>
               ))}
             </div>
-            <div className="flex justify-between mt-2 text-xs text-gray-500">
+            <div className="flex justify-between mt-2 text-xs text-black">
               <span>État Civil</span>
               <span>Religieux</span>
               <span>Attentes</span>
@@ -633,7 +707,7 @@ export default function RegisterPage() {
               {step === 3 && renderStep3()}
 
               {error && (
-                <div className="mt-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 text-sm">
+                <div className="mt-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-600 text-sm font-medium">
                   {error}
                 </div>
               )}
@@ -644,7 +718,7 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="flex items-center space-x-2 px-6 py-3 border border-pink-600 text-pink-600 rounded-xl font-semibold hover:bg-pink-50 transition-all"
+                    className="flex items-center space-x-2 px-6 py-3 border-2 border-red-600 text-red-600 rounded-xl font-semibold hover:bg-red-50 transition-all"
                   >
                     <ChevronLeft className="h-5 w-5" />
                     <span>Précédent</span>
@@ -654,7 +728,7 @@ export default function RegisterPage() {
                 {step < 3 ? (
                   <button
                     type="submit"
-                    className="ml-auto flex items-center space-x-2 px-8 py-3 btn-pink rounded-xl font-semibold"
+                    className="ml-auto flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl"
                   >
                     <span>Suivant</span>
                     <ChevronRight className="h-5 w-5" />
@@ -663,7 +737,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="ml-auto px-8 py-3 btn-pink rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="ml-auto px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? 'Inscription...' : 'Créer mon compte'}
                   </button>
@@ -673,9 +747,9 @@ export default function RegisterPage() {
           </div>
 
           {/* Login Link */}
-          <p className="text-center text-sm text-gray-700">
+          <p className="text-center text-sm text-black">
             Vous avez déjà un compte ?{' '}
-            <Link href="/login" className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 font-semibold">
+            <Link href="/login" className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 font-semibold">
               Se connecter
             </Link>
           </p>

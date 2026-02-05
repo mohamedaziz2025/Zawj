@@ -113,8 +113,8 @@ export default function ContactPage() {
               </h2>
 
               {isSuccess && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
-                  <p className="text-green-400 font-medium">
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+                  <p className="text-red-400 font-medium">
                     ✓ Message envoyé avec succès ! Nous vous répondrons bientôt.
                   </p>
                 </div>

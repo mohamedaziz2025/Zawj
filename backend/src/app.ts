@@ -12,6 +12,7 @@ import userRoutes from '@/modules/users/user.routes'
 import chatRoutes from '@/modules/chat/chat.routes'
 import subscriptionRoutes from '@/modules/subscription/subscription.routes'
 import adminRoutes from '@/modules/admin/admin.routes'
+import tuteurRoutes from '@/modules/admin/tuteur.routes'
 import uploadRoutes from '@/modules/upload/upload.routes'
 import { waliRoutes } from '@/modules/wali'
 import { likeRoutes } from '@/modules/likes'
@@ -61,6 +62,7 @@ export function createApp(): Express {
   app.use('/api/moderators', authenticateToken, moderatorRoutes)
   app.use('/api/upload', uploadRoutes)
   app.use('/api/admin', adminRoutes)
+  app.use('/api', tuteurRoutes)
 
   // 404 handler
   app.use((_req, res) => {

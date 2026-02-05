@@ -288,7 +288,7 @@ export default function ModeratorsPage() {
 
           <div className="bg-white p-4 sm:p-6 rounded-2xl border-2 border-gray-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600" />
+              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" />
               <span className="text-xl sm:text-2xl font-bold text-gray-900">{activeCount}</span>
             </div>
             <p className="text-xs sm:text-sm text-gray-600">Actifs</p>
@@ -343,7 +343,7 @@ export default function ModeratorsPage() {
                           {moderator.userId.firstName} {moderator.userId.lastName}
                         </h3>
                         {moderator.isActive ? (
-                          <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                          <span className="px-2 sm:px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
                             Actif
                           </span>
                         ) : (
@@ -400,7 +400,7 @@ export default function ModeratorsPage() {
                         className={`p-2 rounded-lg transition-colors ${
                           moderator.isActive 
                             ? 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200' 
-                            : 'bg-green-100 text-green-600 hover:bg-green-200'
+                            : 'bg-red-100 text-red-600 hover:bg-red-200'
                         }`}
                         title={moderator.isActive ? 'Désactiver' : 'Activer'}
                       >

@@ -147,8 +147,8 @@ export default function PremiumPage() {
                     </div>
                     <p className="text-sm text-gray-400">{plan.period}</p>
                     {plan.savings && (
-                      <div className="mt-2 inline-block bg-green-500/10 border border-green-500/30 rounded-full px-3 py-1">
-                        <span className="text-xs font-bold text-green-400">{plan.savings}</span>
+                      <div className="mt-2 inline-block bg-red-500/10 border border-red-500/30 rounded-full px-3 py-1">
+                        <span className="text-xs font-bold text-red-400">{plan.savings}</span>
                       </div>
                     )}
                   </div>

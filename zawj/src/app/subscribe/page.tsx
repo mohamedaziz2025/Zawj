@@ -91,7 +91,7 @@ export default function SubscribePage() {
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center">
-                    <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <Check className="h-5 w-5 text-red-500 mr-3 flex-shrink-0" />
                     <span className="text-gray-300">{feature}</span>
                   </li>
                 ))}
